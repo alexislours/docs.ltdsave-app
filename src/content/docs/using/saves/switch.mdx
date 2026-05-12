@@ -2,3 +2,50 @@
 title: Modded Switch
 description: How to copy a Tomodachi Life save from a Switch running custom firmware.
 ---
+
+import { Aside } from '@astrojs/starlight/components';
+
+You'll need a homebrew app to dump your save to your SD card. This guide uses **Checkpoint**, JKSV works too but the steps differ slightly.
+
+## 1. Dump the save with Checkpoint
+
+1. Start any title on your Switch while holding **R** to open the **Homebrew Menu**.
+2. Scroll to **Checkpoint** and launch it.
+3. Use the **D-Pad** to navigate to _Tomodachi Life: Living the Dream_ and press **A**.
+4. Press **A** again on **New...** to name your backup.
+5. When the dump finishes, press **+** to exit Checkpoint.
+
+Checkpoint writes the backup to your SD card under `switch/Checkpoint/saves/0x010051F0207B2000 Living the Dream/`, in a folder named after the backup you just created.
+
+## 2. Copy the backup to your computer
+
+1. Open **USB File Transfer** from the Homebrew Menu and plug your Switch into your computer.
+2. Browse to `switch/Checkpoint/saves/0x010051F0207B2000 Living the Dream/`.
+3. Copy the folder named after your backup over to your computer.
+
+Inside you'll find:
+
+```
+Player.sav
+Mii.sav
+Map.sav
+Ugc/
+  ├── UgcCloth000.canvas.zs
+  ├── UgcCloth000.ugctex.zs
+  ├── ...
+```
+
+The `Ugc/` folder is only present if you've created a UGC in-game, if you haven't yet, it probably doesn't exist.
+
+## 3. Drop into the editor
+
+Open [ltdsave.app](https://ltdsave.app) and drag the three `.sav` files (and, optionally, the `Ugc/` folder) onto the page. See [Loading saves](/using/editor/loading/) for what happens next.
+
+## 4. Put the edited save back
+
+When you download the patched save from the editor, you'll get a zip containing the same filenames. Extract it and overwrite the files inside the Checkpoint backup folder on your SD card, keeping the folder name the same. Then back on your Switch, open Checkpoint, pick _Tomodachi Life: Living the Dream_, select your edited backup from the list, and choose **Restore** to write it back over the game's save data.
+
+<Aside type="caution">
+  Keep the original dump untouched somewhere safe before you overwrite it with the edited files. If
+  something goes wrong, you'll want the original on hand.
+</Aside>
