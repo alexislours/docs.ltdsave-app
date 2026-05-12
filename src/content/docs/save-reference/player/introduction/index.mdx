@@ -10,7 +10,7 @@ leaves:
   - name: EmotionBallAtGraduate
     hash: '0xe6f98671'
     type: UInt
-    state: undocumented
+    state: partial
   - name: IsIslandForIntroduction
     hash: '0xb2a39093'
     type: Bool
@@ -23,6 +23,7 @@ subgroups:
 ---
 
 import LeafMeta from '@components/LeafMeta.astro';
+import Bounds from '@components/Bounds.astro';
 
 {/* Replace this comment with a description for this group. */}
 
@@ -32,7 +33,23 @@ import LeafMeta from '@components/LeafMeta.astro';
 
 <LeafMeta name="EmotionBallAtGraduate" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Total accumulation of emotion balls at the time when the player graduated early stage.
+
+The calculations are done by taking these three parameters:
+
+1. The players currently held emotion balls ([`Player.EmotionBall`](../player/#emotionball)).
+2. Amount of emotion balls inserted into the fountain ([`Liberation.FountainEmotionBall`](../liberation/#fountainemotionball)).
+3. The fountain level ([`Liberation.FountainLevel`](../liberation/#fountainlevel)).
+
+It then calculates how many emotion balls have been spent leveling up the fountain and sums it with the two other parameters. Level costs can be found at `Parameter/LiberationSystemParam/System.game__LiberationSystemParam.bgyml`.
+
+<Bounds>
+  <Fragment slot="ingame">
+    Any `UInt` value; capped at `4,294,967,295`. The game calculates this by summing the costs of
+    every Fountain Level (using Level 10's cost for all levels above 10). Each level cost is forced
+    to a minimum of `1`.
+  </Fragment>
+</Bounds>
 
 ### `IsIslandForIntroduction`
 
