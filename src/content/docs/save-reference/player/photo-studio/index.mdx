@@ -1,0 +1,43 @@
+---
+title: Player.PhotoStudio
+sidebar:
+  label: PhotoStudio
+schema: player
+path: PhotoStudio
+kind: group
+leafCount: 2
+leaves:
+  - name: LastSavePhotoTime
+    hash: '0x333e9729'
+    type: UInt64
+    state: undocumented
+  - name: NextIndex
+    hash: '0x273b3321'
+    type: Int
+    state: undocumented
+subgroups:
+  - name: Picture
+    leafCount: 1
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `LastSavePhotoTime`
+
+<LeafMeta name="LastSavePhotoTime" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `NextIndex`
+
+<LeafMeta name="NextIndex" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+## Subgroups
+
+- [`Picture`](./picture/) - 1 leaf

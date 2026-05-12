@@ -1,0 +1,76 @@
+---
+title: Player.Liberation
+sidebar:
+  label: Liberation
+schema: player
+path: Liberation
+kind: group
+leafCount: 5
+leaves:
+  - name: ComeTrueCount
+    hash: '0xa58f70d5'
+    type: UInt
+    state: undocumented
+  - name: FountainEmotionBall
+    hash: '0x41e43c1e'
+    type: UInt
+    state: undocumented
+  - name: FountainLevel
+    hash: '0xa4e65f79'
+    type: UInt
+    state: undocumented
+  - name: LiberateRightStock
+    hash: '0xa32f7e47'
+    type: UInt
+    state: undocumented
+  - name: SeasonUnlockBeginTime
+    hash: '0xaafc8ab8'
+    type: UInt64
+    state: undocumented
+subgroups:
+  - name: SeasonInfo
+    leafCount: 7
+  - name: WishInfo
+    leafCount: 3
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `ComeTrueCount`
+
+<LeafMeta name="ComeTrueCount" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `FountainEmotionBall`
+
+<LeafMeta name="FountainEmotionBall" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `FountainLevel`
+
+<LeafMeta name="FountainLevel" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `LiberateRightStock`
+
+<LeafMeta name="LiberateRightStock" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `SeasonUnlockBeginTime`
+
+<LeafMeta name="SeasonUnlockBeginTime" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+## Subgroups
+
+- [`SeasonInfo`](./season-info/) - 7 leaves
+- [`WishInfo`](./wish-info/) - 3 leaves

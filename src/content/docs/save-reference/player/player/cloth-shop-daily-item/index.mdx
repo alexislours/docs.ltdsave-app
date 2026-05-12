@@ -1,0 +1,36 @@
+---
+title: Player.Player.ClothShopDailyItem
+sidebar:
+  label: ClothShopDailyItem
+schema: player
+path: Player.ClothShopDailyItem
+kind: group
+leafCount: 1
+leaves:
+  - name: IsNeedShowNew
+    hash: '0x308ef934'
+    type: Bool
+    state: undocumented
+subgroups:
+  - name: DailyClothInfo
+    leafCount: 3
+  - name: DailyCoordinateInfo
+    leafCount: 2
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `IsNeedShowNew`
+
+<LeafMeta name="IsNeedShowNew" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+## Subgroups
+
+- [`DailyClothInfo`](./daily-cloth-info/) - 3 leaves
+- [`DailyCoordinateInfo`](./daily-coordinate-info/) - 2 leaves

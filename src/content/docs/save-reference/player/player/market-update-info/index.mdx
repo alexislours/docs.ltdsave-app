@@ -1,0 +1,53 @@
+---
+title: Player.Player.MarketUpdateInfo
+sidebar:
+  label: MarketUpdateInfo
+schema: player
+path: Player.MarketUpdateInfo
+kind: group
+leafCount: 3
+leaves:
+  - name: LastEnterTime
+    hash: '0x7f2a2aa3'
+    type: UInt64
+    state: undocumented
+  - name: LastUpdateTime
+    hash: '0x148b92d3'
+    type: UInt64
+    state: undocumented
+  - name: MarketFoodStringId
+    hash: '0x7412a782'
+    type: UInt
+    state: undocumented
+subgroups:
+  - name: MarketCoordinateInfo
+    leafCount: 2
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `LastEnterTime`
+
+<LeafMeta name="LastEnterTime" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `LastUpdateTime`
+
+<LeafMeta name="LastUpdateTime" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `MarketFoodStringId`
+
+<LeafMeta name="MarketFoodStringId" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+## Subgroups
+
+- [`MarketCoordinateInfo`](./market-coordinate-info/) - 2 leaves

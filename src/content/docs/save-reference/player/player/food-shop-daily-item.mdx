@@ -1,0 +1,46 @@
+---
+title: Player.Player.FoodShopDailyItem
+sidebar:
+  label: FoodShopDailyItem
+schema: player
+path: Player.FoodShopDailyItem
+kind: group
+leafCount: 3
+leaves:
+  - name: DailyFoodStringId
+    hash: '0xd3c03d76'
+    type: UIntArray
+    state: undocumented
+  - name: IsNeedShowNew
+    hash: '0x94f4b9e5'
+    type: Bool
+    state: undocumented
+  - name: IsUnlockedOtherRegion
+    hash: '0x2941cc0d'
+    type: Bool
+    state: undocumented
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `DailyFoodStringId`
+
+<LeafMeta name="DailyFoodStringId" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `IsNeedShowNew`
+
+<LeafMeta name="IsNeedShowNew" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `IsUnlockedOtherRegion`
+
+<LeafMeta name="IsUnlockedOtherRegion" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}

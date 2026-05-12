@@ -1,0 +1,208 @@
+---
+import { enumValueHash, enumValues, loadEnumUsage } from '../lib/enums.ts';
+
+interface Props {
+  name: string;
+}
+
+const { name } = Astro.props;
+const values = enumValues(name);
+
+if (!values) {
+  throw new Error(`<EnumPage name="${name}" />: enum not found in enumOptions.ts.`);
+}
+
+const usage = (await loadEnumUsage()).get(name) ?? [];
+---
+
+<p class="enum-note">
+  The 32-bit value stored on disk is the murmur3 hash of the name (see
+  <a href="/save-reference/data-types/#enum">Enum</a>). Names are listed in source order.
+</p>
+
+<table class="enum-table">
+  <thead>
+    <tr>
+      <th class="idx">#</th>
+      <th class="hash">Hash</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      values.map((v, i) => (
+        <tr>
+          <td class="idx">
+            <code>{i}</code>
+          </td>
+          <td class="hash">
+            <code>{enumValueHash(v)}</code>
+          </td>
+          <td>
+            <code>{v}</code>
+          </td>
+        </tr>
+      ))
+    }
+  </tbody>
+</table>
+
+<section class="used-by">
+  <h2>Used by</h2>
+  {
+    usage.length === 0 ? (
+      <p class="empty">No documented field references this enum.</p>
+    ) : (
+      <table class="usage-table">
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Group</th>
+            <th class="hash">Hash</th>
+          </tr>
+        </thead>
+        <tbody>
+          {usage.map((u) => (
+            <tr>
+              <td>
+                <a href={u.href}>
+                  <code>{u.leafName}</code>
+                </a>
+              </td>
+              <td class="group">{u.groupTitle}</td>
+              <td class="hash">{u.hash && u.hash !== '-' && <code>{u.hash}</code>}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    )
+  }
+</section>
+
+<style>
+  .enum-table {
+    width: auto;
+    border-collapse: collapse;
+    margin: 0.5rem 0 1.5rem;
+  }
+
+  .enum-table th,
+  .enum-table td {
+    text-align: left;
+    padding: 0.35rem 0.85rem;
+    border-bottom: 1px solid var(--sl-color-gray-6);
+    font-size: 0.9rem;
+  }
+
+  .enum-table th {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--sl-color-gray-3);
+    border-bottom-color: var(--sl-color-gray-5);
+  }
+
+  .enum-table td.idx,
+  .enum-table th.idx {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    color: var(--sl-color-gray-3);
+    width: 1%;
+    white-space: nowrap;
+  }
+
+  .enum-table td.hash,
+  .enum-table th.hash {
+    text-align: left;
+    font-variant-numeric: tabular-nums;
+    width: 1%;
+    white-space: nowrap;
+    padding-right: 1.25rem;
+  }
+
+  .enum-table td.hash code {
+    color: var(--sl-color-orange, #ea580c);
+  }
+
+  .enum-table code {
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-size: 0.88rem;
+  }
+
+  .enum-note {
+    font-size: 0.85rem;
+    color: var(--sl-color-gray-2);
+    margin: 0 0 0.75rem;
+  }
+
+  .used-by {
+    margin-top: 2rem;
+  }
+
+  .used-by h2 {
+    font-size: 1.05rem;
+    margin: 0 0 0.6rem;
+  }
+
+  .used-by .empty {
+    color: var(--sl-color-gray-3);
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  .usage-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+  }
+
+  .usage-table td.group {
+    width: 100%;
+    color: var(--sl-color-gray-2);
+  }
+
+  .usage-table th,
+  .usage-table td {
+    text-align: left;
+    padding: 0.35rem 0.85rem;
+    border-bottom: 1px solid var(--sl-color-gray-6);
+    font-size: 0.88rem;
+  }
+
+  .usage-table th {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--sl-color-gray-3);
+    border-bottom-color: var(--sl-color-gray-5);
+    font-weight: 600;
+  }
+
+  .usage-table td code {
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-size: 0.85rem;
+  }
+
+  .usage-table td a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px dashed var(--sl-color-gray-5);
+  }
+
+  .usage-table td a:hover,
+  .usage-table td a:focus-visible {
+    color: var(--sl-color-text-accent, #ea580c);
+    border-bottom-color: currentColor;
+  }
+
+  .usage-table th.hash,
+  .usage-table td.hash {
+    font-variant-numeric: tabular-nums;
+    color: var(--sl-color-orange, #ea580c);
+    white-space: nowrap;
+  }
+</style>

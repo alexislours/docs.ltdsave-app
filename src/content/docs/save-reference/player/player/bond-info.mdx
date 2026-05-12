@@ -1,0 +1,36 @@
+---
+title: Player.Player.BondInfo
+sidebar:
+  label: BondInfo
+schema: player
+path: Player.BondInfo
+kind: group
+leafCount: 2
+leaves:
+  - name: LotteryForBad
+    hash: '0x6be8d72a'
+    type: Int
+    state: undocumented
+  - name: LotteryForGood
+    hash: '0x169cc016'
+    type: Int
+    state: undocumented
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `LotteryForBad`
+
+<LeafMeta name="LotteryForBad" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `LotteryForGood`
+
+<LeafMeta name="LotteryForGood" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}

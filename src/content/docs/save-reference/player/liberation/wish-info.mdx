@@ -1,0 +1,46 @@
+---
+title: Player.Liberation.WishInfo
+sidebar:
+  label: WishInfo
+schema: player
+path: Liberation.WishInfo
+kind: group
+leafCount: 3
+leaves:
+  - name: IsLiberated
+    hash: '0xe38c7611'
+    type: BoolArray
+    state: undocumented
+  - name: IsNew
+    hash: '0xc6c0f54a'
+    type: BoolArray
+    state: undocumented
+  - name: WishIdValue
+    hash: '0xf91e67be'
+    type: UIntArray
+    state: undocumented
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `IsLiberated`
+
+<LeafMeta name="IsLiberated" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `IsNew`
+
+<LeafMeta name="IsNew" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `WishIdValue`
+
+<LeafMeta name="WishIdValue" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}

@@ -1,0 +1,23 @@
+---
+title: Documentation coverage
+description: Live tracker of how many save fields have been documented.
+---
+
+import Coverage from '../../../components/Coverage.astro';
+
+This page sums up the `state` flag on every leaf across the save-reference field pages. Each leaf is one of:
+
+- **`undocumented`**, no documentation written yet.
+- **`partial`**, the broad meaning is described.
+- **`documented`**, the field is fully explained.
+
+## How to make a hash `documented`
+
+1. Open the page that contains the leaf (each leaf lives in exactly one page).
+2. Document the key.
+3. Edit the `leaves:` array in the frontmatter, change `state: undocumented` to `state: partial` or `state: documented`.
+4. Rebuild, this page will pick up the change automatically.
+
+Numbers below reflect the state of the repo at the moment of the last build.
+
+<Coverage />

@@ -1,0 +1,47 @@
+---
+title: Mii.Mii.Feeling
+sidebar:
+  label: Feeling
+schema: mii
+path: Mii.Feeling
+kind: group
+leafCount: 3
+leaves:
+  - name: FeelingEndGameTime
+    hash: '0x8f8161d5'
+    type: UInt64Array
+    state: undocumented
+  - name: MiiHistoryId
+    hash: '0x523402f6'
+    type: Int64Array
+    state: undocumented
+  - name: Type
+    hash: '0x176c29eb'
+    type: EnumArray
+    options: FEELING
+    state: undocumented
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `FeelingEndGameTime`
+
+<LeafMeta name="FeelingEndGameTime" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `MiiHistoryId`
+
+<LeafMeta name="MiiHistoryId" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `Type`
+
+<LeafMeta name="Type" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}

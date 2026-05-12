@@ -1,0 +1,78 @@
+---
+title: Hash
+description: How Tomodachi Life maps field names to the 32-bit hashes stored in save files.
+---
+
+The save file format never stores field names. Each entry is identified only by a 32-bit hash.
+
+## Algorithm
+
+Field names are hashed with **Murmur3 x86 32-bit** using seed `0` and the UTF-8 encoding of the name.
+
+For reference, the constants the game uses are:
+
+- `c1 = 0xCC9E2D51`
+- `c2 = 0x1B873593`
+- Block rotate `15`, mix rotate `13`, mix multiplier `5`, mix constant `0xE6546B64`
+- Finalizer multipliers `0x85EBCA6B` and `0xC2B2AE35`, shift `16 / 13 / 16`
+
+## TypeScript reference implementation
+
+This is the implementation [ltdsave.app](https://ltdsave.app) uses itself, lifted verbatim from `src/lib/sav/hash.ts`.
+
+```ts
+const C1 = 0xcc9e2d51;
+const C2 = 0x1b873593;
+
+export function murmur3_x86_32(input: string, seed = 0): number {
+  const bytes = new TextEncoder().encode(input);
+  return murmur3_x86_32_bytes(bytes, seed);
+}
+
+export function murmur3_x86_32_bytes(bytes: Uint8Array, seed = 0): number {
+  const len = bytes.length;
+  const nBlocks = (len / 4) | 0;
+  let h1 = seed >>> 0;
+
+  for (let i = 0; i < nBlocks; i++) {
+    const o = i * 4;
+    let k1 = (bytes[o] | (bytes[o + 1] << 8) | (bytes[o + 2] << 16) | (bytes[o + 3] << 24)) >>> 0;
+    k1 = Math.imul(k1, C1);
+    k1 = (k1 << 15) | (k1 >>> 17);
+    k1 = Math.imul(k1, C2);
+
+    h1 ^= k1;
+    h1 = (h1 << 13) | (h1 >>> 19);
+    h1 = (Math.imul(h1, 5) + 0xe6546b64) | 0;
+  }
+
+  let k1 = 0;
+  const tail = nBlocks * 4;
+  switch (len & 3) {
+    case 3:
+      k1 ^= bytes[tail + 2] << 16;
+    // fallthrough
+    case 2:
+      k1 ^= bytes[tail + 1] << 8;
+    // fallthrough
+    case 1:
+      k1 ^= bytes[tail];
+      k1 = Math.imul(k1, C1);
+      k1 = (k1 << 15) | (k1 >>> 17);
+      k1 = Math.imul(k1, C2);
+      h1 ^= k1;
+  }
+
+  h1 ^= len;
+  h1 ^= h1 >>> 16;
+  h1 = Math.imul(h1, 0x85ebca6b);
+  h1 ^= h1 >>> 13;
+  h1 = Math.imul(h1, 0xc2b2ae35);
+  h1 ^= h1 >>> 16;
+  return h1 >>> 0;
+}
+```
+
+## Collisions
+
+Every name in the save schema produces a distinct hash. There are no known collisions.

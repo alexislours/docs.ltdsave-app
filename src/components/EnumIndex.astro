@@ -1,0 +1,109 @@
+---
+import { ENUM_NAMES, enumHref, enumValues } from '../lib/enums.ts';
+
+const entries = ENUM_NAMES.map((name) => {
+  const values = enumValues(name) ?? [];
+  return {
+    name,
+    href: enumHref(name),
+    count: values.length,
+    preview: values.join(', '),
+  };
+});
+---
+
+<ul class="enum-index">
+  {
+    entries.map((e) => (
+      <li>
+        <a href={e.href}>
+          <span class="head">
+            <code class="name">{e.name}</code>
+            <span class="count">{e.count}</span>
+          </span>
+          <span class="preview">{e.preview}</span>
+        </a>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  ul.enum-index {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--sl-color-gray-6);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: var(--sl-color-gray-7);
+  }
+
+  ul.enum-index li + li {
+    border-top: 1px solid var(--sl-color-gray-6);
+  }
+
+  ul.enum-index a {
+    display: grid;
+    grid-template-columns: minmax(11rem, max-content) 1fr;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.55rem 0.9rem;
+    text-decoration: none;
+    color: inherit;
+    transition: background 120ms ease;
+  }
+
+  ul.enum-index a:hover,
+  ul.enum-index a:focus-visible {
+    background: var(--sl-color-gray-6);
+  }
+
+  .head {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  ul.enum-index code.name {
+    font-size: 0.88rem;
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-weight: 600;
+    color: var(--sl-color-text);
+  }
+
+  ul.enum-index .count {
+    font-size: 0.7rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: 0.25rem;
+    background: var(--sl-color-gray-6);
+    color: var(--sl-color-gray-2);
+    font-variant-numeric: tabular-nums;
+  }
+
+  ul.enum-index a:hover .count,
+  ul.enum-index a:focus-visible .count {
+    background: var(--sl-color-gray-5);
+  }
+
+  .preview {
+    font-size: 0.78rem;
+    color: var(--sl-color-gray-3);
+    font-family: var(--__sl-font-mono, ui-monospace, monospace);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
+
+  @media (max-width: 720px) {
+    ul.enum-index a {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
+  }
+</style>

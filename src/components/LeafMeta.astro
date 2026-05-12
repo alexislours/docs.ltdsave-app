@@ -1,0 +1,260 @@
+---
+import TypeChip from './TypeChip.astro';
+import EnumRef from './EnumRef.astro';
+import { enumValues as lookupEnumValues } from '../lib/enums.ts';
+
+type LeafState = 'undocumented' | 'partial' | 'documented';
+
+type Leaf = {
+  name: string;
+  hash?: string;
+  type: string;
+  options?: string;
+  state: LeafState;
+};
+
+interface Props {
+  name: string;
+  leaves: readonly Leaf[];
+}
+
+const { name, leaves } = Astro.props;
+const leaf = leaves.find((l) => l.name === name);
+
+if (!leaf) {
+  throw new Error(`<LeafMeta name="${name}" />: not found in frontmatter leaves array.`);
+}
+
+const enumName = leaf.options;
+const enumValues = enumName ? lookupEnumValues(enumName) : null;
+
+const showHash = Boolean(leaf.hash && leaf.hash !== '-');
+const stateLabel: Record<LeafState, string> = {
+  undocumented: 'Undocumented',
+  partial: 'Partial',
+  documented: 'Documented',
+};
+
+const valuesCount = enumValues?.length ?? 0;
+const showInlineValues = valuesCount > 0 && valuesCount <= 6;
+const showCollapsedValues = valuesCount > 6;
+---
+
+<div class="leaf-meta">
+  <TypeChip type={leaf.type} />
+  {
+    showHash && (
+      <span class="chip chip-hash">
+        <span class="k">hash</span>
+        <code>{leaf.hash}</code>
+      </span>
+    )
+  }
+  {enumName && <EnumRef name={enumName} />}
+  <span class={`chip state state-${leaf.state}`}>
+    <span class="dot"></span>
+    {stateLabel[leaf.state]}
+  </span>
+</div>
+
+{
+  showInlineValues && enumValues && (
+    <p class="enum-inline">
+      <span class="k">values</span>
+      {enumValues.map((v) => (
+        <code class="enum-value">{v}</code>
+      ))}
+    </p>
+  )
+}
+
+{
+  showCollapsedValues && enumValues && (
+    <details class="enum-details">
+      <summary>
+        <span class="k">values</span>
+        <span class="count">{valuesCount}</span>
+      </summary>
+      <ol class="enum-list" start="0">
+        {enumValues.map((v) => (
+          <li>
+            <code>{v}</code>
+          </li>
+        ))}
+      </ol>
+    </details>
+  )
+}
+
+<style>
+  .leaf-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.5rem 0 1rem;
+    align-items: center;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 0.4rem;
+    background: var(--sl-color-gray-7, #1a1a1a);
+    border: 1px solid var(--sl-color-gray-5);
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
+
+  .chip .k {
+    font-size: 0.66rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--sl-color-gray-3);
+  }
+
+  .chip code {
+    font-size: 0.82rem;
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: var(--sl-color-text);
+  }
+
+  .chip-hash code {
+    color: var(--sl-color-accent-high);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .state {
+    padding: 0.18rem 0.55rem 0.18rem 0.45rem;
+    font-weight: 600;
+    font-size: 0.78rem;
+    margin-left: auto;
+  }
+
+  .state .dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    background: currentColor;
+    opacity: 0.85;
+    flex-shrink: 0;
+  }
+
+  .state-undocumented {
+    color: var(--sl-color-gray-2);
+    border-color: var(--sl-color-gray-5);
+  }
+
+  .state-partial {
+    color: #b45309;
+    background: rgba(234, 179, 8, 0.12);
+    border-color: rgba(234, 179, 8, 0.45);
+  }
+
+  :root[data-theme='dark'] .state-partial {
+    color: #fbbf24;
+    background: rgba(234, 179, 8, 0.14);
+  }
+
+  .state-documented {
+    color: #15803d;
+    background: rgba(22, 163, 74, 0.12);
+    border-color: rgba(22, 163, 74, 0.45);
+  }
+
+  :root[data-theme='dark'] .state-documented {
+    color: #4ade80;
+    background: rgba(22, 163, 74, 0.14);
+  }
+
+  .enum-inline {
+    margin: -0.25rem 0 1rem;
+    font-size: 0.85rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.6rem;
+    align-items: center;
+  }
+
+  .enum-inline .k {
+    font-size: 0.66rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--sl-color-gray-3);
+  }
+
+  .enum-inline .enum-value {
+    font-size: 0.78rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: 0.25rem;
+    background: var(--sl-color-gray-6);
+    color: var(--sl-color-text);
+    border: none;
+  }
+
+  details.enum-details {
+    margin: -0.25rem 0 1rem;
+    padding: 0.5rem 0.75rem;
+    background: var(--sl-color-gray-7);
+    border: 1px solid var(--sl-color-gray-6);
+    border-radius: 0.4rem;
+    font-size: 0.88rem;
+  }
+
+  details.enum-details summary {
+    cursor: pointer;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  details.enum-details summary .k {
+    font-weight: 600;
+    color: var(--sl-color-gray-2);
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+  }
+
+  details.enum-details summary .count {
+    color: var(--sl-color-gray-3);
+    font-size: 0.76rem;
+    padding: 0.05rem 0.35rem;
+    background: var(--sl-color-gray-6);
+    border-radius: 0.25rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  details.enum-details ol.enum-list {
+    margin: 0.6rem 0 0;
+    padding-left: 2.25rem;
+    columns: 2;
+    column-gap: 1.5rem;
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 600px) {
+    details.enum-details ol.enum-list {
+      columns: 1;
+    }
+    .state {
+      margin-left: 0;
+    }
+  }
+
+  details.enum-details ol.enum-list li {
+    margin: 0.1rem 0;
+  }
+
+  details.enum-details ol.enum-list code {
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-size: 0.85rem;
+  }
+</style>

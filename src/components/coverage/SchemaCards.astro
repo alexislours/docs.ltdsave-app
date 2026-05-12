@@ -1,0 +1,101 @@
+---
+import Bar from './Bar.astro';
+import {
+  SCHEMA_KEYS,
+  SCHEMA_ACCENTS,
+  SCHEMA_LABELS,
+  weighted,
+  type SchemaKey,
+  type Totals,
+} from '../../lib/coverage';
+
+interface Props {
+  schemaTotals: Record<SchemaKey, Totals>;
+}
+
+const { schemaTotals } = Astro.props;
+---
+
+<div class="cov-cards">
+  {
+    SCHEMA_KEYS.map((key) => {
+      const t = schemaTotals[key];
+      return (
+        <a class="cov-card" href={`#per-page-${key}`} style={`--accent:${SCHEMA_ACCENTS[key]}`}>
+          <div class="cov-card-head">
+            <span class="cov-card-name">{SCHEMA_LABELS[key]}</span>
+            <span class="cov-card-pct">{weighted(t).toFixed(1)}%</span>
+          </div>
+          <Bar documented={t.documented} partial={t.partial} total={t.leafCount} />
+          <div class="cov-card-foot">
+            <span>
+              {t.documented} / {t.leafCount} fully documented
+            </span>
+            <span class="muted">{t.partial} partial</span>
+          </div>
+        </a>
+      );
+    })
+  }
+</div>
+
+<style>
+  .cov-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.85rem;
+    margin: 0 0 2.5rem;
+  }
+
+  .cov-card {
+    display: block;
+    padding: 0.95rem 1.1rem;
+    border-radius: 0.6rem;
+    border: 1px solid var(--sl-color-gray-5);
+    background: var(--sl-color-gray-7);
+    text-decoration: none;
+    color: inherit;
+    transition:
+      border-color 0.15s,
+      transform 0.15s;
+    position: relative;
+    border-left: 3px solid var(--accent);
+  }
+
+  .cov-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  .cov-card-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 0.55rem;
+    gap: 0.5rem;
+  }
+
+  .cov-card-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .cov-card-pct {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cov-card-foot {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.55rem;
+    font-size: 0.78rem;
+    color: var(--sl-color-gray-2);
+  }
+
+  .cov-card-foot .muted {
+    color: var(--sl-color-gray-3);
+  }
+</style>

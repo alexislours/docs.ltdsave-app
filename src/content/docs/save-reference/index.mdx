@@ -1,0 +1,32 @@
+---
+title: Save file reference
+description: Field-level reference for Player.sav, Mii.sav, and Map.sav.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+<Aside>
+  This is a technical documentation of what the save files actually contain. If you are only a user
+  of https://ltdsave.app, you can probably disregard this section.
+</Aside>
+
+Tomodachi Life: Living the Dream stores its save in three files inside the game's save directory:
+
+| File             | What it holds                                                          |
+| ---------------- | ---------------------------------------------------------------------- |
+| **`Player.sav`** | Global island state owned by the player: money, inventory, progress... |
+| **`Mii.sav`**    | Everything related to the Miis on the island.                          |
+| **`Map.sav`**    | Island layout: house placements, ground tiles...                       |
+
+All three use the same [container layout](/save-reference/container/), the same [key hashing scheme](/save-reference/hash/), and the same [data types](/save-reference/data-types/). The split between files is purely organizational, the game writes them together and expects them together.
+
+## Reading these pages
+
+Each field reference page lists every leaf in a group with:
+
+- its source name (the string the game hashes),
+- its `DataType`.
+- the 32-bit hash actually stored in the file,
+- its **documentation state**, one of `undocumented`, `partial`, or `documented`.
+
+[See documentation coverage →](/save-reference/coverage/)

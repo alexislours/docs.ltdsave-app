@@ -1,0 +1,132 @@
+---
+title: Map.House
+sidebar:
+  label: House
+schema: map
+path: House
+kind: group
+leafCount: 10
+leaves:
+  - name: ExteriorNextEmotionBallTime
+    hash: '0x19224fba'
+    type: UInt64Array
+    state: undocumented
+  - name: HowToCallRoommateGroupName
+    hash: '0x47e7179b'
+    type: WString64Array
+    state: undocumented
+  - name: InteriorNextEmotionBallTime
+    hash: '0x1a23ebc9'
+    type: UInt64Array
+    state: undocumented
+  - name: MapId
+    hash: '0x0b5276e9'
+    type: IntArray
+    state: undocumented
+  - name: RegionLanguageID
+    hash: '0xd0a95ebb'
+    type: EnumArray
+    options: LANGUAGE
+    state: undocumented
+  - name: RoommateGroupName
+    hash: '0x0d96409e'
+    type: WString32Array
+    state: undocumented
+  - name: UgcExteriorOwnInfo
+    hash: '0xbc21e34f'
+    type: BoolArray
+    state: undocumented
+  - name: UgcInteriorOwnInfo
+    hash: '0xe880c81c'
+    type: BoolArray
+    state: undocumented
+  - name: WordAttrCount
+    hash: '0x0534fa39'
+    type: EnumArray
+    options: GRAMMAR_NUMBER
+    state: undocumented
+  - name: WordAttrGrammaticality
+    hash: '0xa2f92241'
+    type: EnumArray
+    options: GRAMMAR_GENDER
+    state: undocumented
+subgroups:
+  - name: OuterHouse
+    leafCount: 2
+  - name: RoomSettings
+    leafCount: 5
+  - name: RoomStyleInfo
+    leafCount: 273
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `ExteriorNextEmotionBallTime`
+
+<LeafMeta name="ExteriorNextEmotionBallTime" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `HowToCallRoommateGroupName`
+
+<LeafMeta name="HowToCallRoommateGroupName" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `InteriorNextEmotionBallTime`
+
+<LeafMeta name="InteriorNextEmotionBallTime" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `MapId`
+
+<LeafMeta name="MapId" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `RegionLanguageID`
+
+<LeafMeta name="RegionLanguageID" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `RoommateGroupName`
+
+<LeafMeta name="RoommateGroupName" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `UgcExteriorOwnInfo`
+
+<LeafMeta name="UgcExteriorOwnInfo" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `UgcInteriorOwnInfo`
+
+<LeafMeta name="UgcInteriorOwnInfo" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `WordAttrCount`
+
+<LeafMeta name="WordAttrCount" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `WordAttrGrammaticality`
+
+<LeafMeta name="WordAttrGrammaticality" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+## Subgroups
+
+- [`OuterHouse`](./outer-house/) - 2 leaves
+- [`RoomSettings`](./room-settings/) - 5 leaves
+- [`RoomStyleInfo`](./room-style-info/) - 273 leaves

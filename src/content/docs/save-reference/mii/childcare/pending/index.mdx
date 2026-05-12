@@ -1,0 +1,86 @@
+---
+title: Mii.Childcare.Pending
+sidebar:
+  label: Pending
+schema: mii
+path: Childcare.Pending
+kind: group
+leafCount: 5
+leaves:
+  - name: CharInfoEx
+    hash: '0xe0d319f5'
+    type: Binary
+    state: undocumented
+  - name: Gender
+    hash: '0xefd377b2'
+    type: Enum
+    options: MII_GENDER
+    state: undocumented
+  - name: IsFacePaintFront
+    hash: '0x0478516d'
+    type: Bool
+    state: undocumented
+  - name: NextTime
+    hash: '0xd17c7bb4'
+    type: UInt64
+    state: undocumented
+  - name: ParentMiiIndex
+    hash: '0xe6644dc4'
+    type: IntArray
+    state: undocumented
+subgroups:
+  - name: CharacterParam
+    leafCount: 5
+  - name: HabitOwnInfo
+    leafCount: 222
+  - name: Name
+    leafCount: 8
+  - name: Voice
+    leafCount: 6
+  - name: WordInfo
+    leafCount: 4
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `CharInfoEx`
+
+<LeafMeta name="CharInfoEx" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `Gender`
+
+<LeafMeta name="Gender" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `IsFacePaintFront`
+
+<LeafMeta name="IsFacePaintFront" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `NextTime`
+
+<LeafMeta name="NextTime" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `ParentMiiIndex`
+
+<LeafMeta name="ParentMiiIndex" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+## Subgroups
+
+- [`CharacterParam`](./character-param/) - 5 leaves
+- [`HabitOwnInfo`](./habit-own-info/) - 222 leaves
+- [`Name`](./name/) - 8 leaves
+- [`Voice`](./voice/) - 6 leaves
+- [`WordInfo`](./word-info/) - 4 leaves

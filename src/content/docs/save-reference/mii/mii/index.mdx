@@ -1,0 +1,67 @@
+---
+title: Mii.Mii
+sidebar:
+  label: Mii
+schema: mii
+path: Mii
+kind: group
+leafCount: 2
+leaves:
+  - name: '$self'
+    hash: '0x5917a80c'
+    type: Bool64bitKey
+    state: undocumented
+  - name: CharInfoEx
+    hash: '0x881ca27a'
+    type: BinaryArray
+    state: undocumented
+subgroups:
+  - name: Belongings
+    leafCount: 508
+  - name: CharacterParam
+    leafCount: 5
+  - name: Feeling
+    leafCount: 3
+  - name: HomeLiveTime
+    leafCount: 3
+  - name: Location
+    leafCount: 2
+  - name: MiiMisc
+    leafCount: 86
+  - name: Name
+    leafCount: 8
+  - name: Trouble
+    leafCount: 18
+  - name: Voice
+    leafCount: 6
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `$self`
+
+<LeafMeta name="$self" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `CharInfoEx`
+
+<LeafMeta name="CharInfoEx" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+## Subgroups
+
+- [`Belongings`](./belongings/) - 508 leaves
+- [`CharacterParam`](./character-param/) - 5 leaves
+- [`Feeling`](./feeling/) - 3 leaves
+- [`HomeLiveTime`](./home-live-time/) - 3 leaves
+- [`Location`](./location/) - 2 leaves
+- [`MiiMisc`](./mii-misc/) - 86 leaves
+- [`Name`](./name/) - 8 leaves
+- [`Trouble`](./trouble/) - 18 leaves
+- [`Voice`](./voice/) - 6 leaves

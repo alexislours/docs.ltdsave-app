@@ -1,0 +1,36 @@
+---
+title: Mii.Childcare.Reserve
+sidebar:
+  label: Reserve
+schema: mii
+path: Childcare.Reserve
+kind: group
+leafCount: 2
+leaves:
+  - name: BirthTime
+    hash: '0x0f96c18a'
+    type: UInt64
+    state: undocumented
+  - name: ParentMiiIndex
+    hash: '0xac6f0d0e'
+    type: IntArray
+    state: undocumented
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `BirthTime`
+
+<LeafMeta name="BirthTime" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `ParentMiiIndex`
+
+<LeafMeta name="ParentMiiIndex" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}

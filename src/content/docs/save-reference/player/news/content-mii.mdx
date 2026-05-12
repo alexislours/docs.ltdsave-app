@@ -1,0 +1,37 @@
+---
+title: Player.News.ContentMii
+sidebar:
+  label: ContentMii
+schema: player
+path: News.ContentMii
+kind: group
+leafCount: 2
+leaves:
+  - name: ClothStyle
+    hash: '0xb92825e7'
+    type: EnumArray
+    options: CLOTH_STYLE_GENDER
+    state: undocumented
+  - name: MiiIndex
+    hash: '0xc2e21393'
+    type: IntArray
+    state: undocumented
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `ClothStyle`
+
+<LeafMeta name="ClothStyle" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `MiiIndex`
+
+<LeafMeta name="MiiIndex" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}

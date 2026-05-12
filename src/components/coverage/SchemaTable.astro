@@ -1,0 +1,165 @@
+---
+import Bar from './Bar.astro';
+import {
+  SCHEMA_ACCENTS,
+  SCHEMA_LABELS,
+  fmtPct,
+  type Page,
+  type SchemaKey,
+} from '../../lib/coverage';
+
+interface Props {
+  schema: SchemaKey;
+  pages: Page[];
+}
+
+const { schema, pages } = Astro.props;
+---
+
+<section class="cov-section" style={`--accent:${SCHEMA_ACCENTS[schema]}`}>
+  <h2 id={`per-page-${schema}`}>
+    <span class="cov-section-dot"></span>
+    {SCHEMA_LABELS[schema]}
+  </h2>
+  <table class="cov-table">
+    <thead>
+      <tr>
+        <th>Group</th>
+        <th class="num">Leaves</th>
+        <th class="num">Done</th>
+        <th class="num">Partial</th>
+        <th>Coverage</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        pages.map((p) => (
+          <tr>
+            <td>
+              <a href={`/${p.id.replace(/\/index$/, '')}/`}>{p.title}</a>
+              {p.kind === 'template' && <span class="tpl">template</span>}
+            </td>
+            <td class="num">{p.leafCount}</td>
+            <td class="num">{p.documented || ''}</td>
+            <td class="num">{p.partial || ''}</td>
+            <td class="cov-cell">
+              <Bar documented={p.documented} partial={p.partial} total={p.leafCount} size="sm" />
+              <span class="cov-cell-pct">
+                {fmtPct(p.documented + p.partial * 0.5, p.leafCount)}
+              </span>
+            </td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</section>
+
+<style>
+  .cov-section {
+    margin-top: 2.5rem;
+  }
+
+  .cov-section h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .cov-section-dot {
+    display: inline-block;
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 999px;
+    background: var(--accent);
+  }
+
+  table.cov-table {
+    width: 100%;
+    font-size: 0.9rem;
+    border-collapse: collapse;
+  }
+
+  table.cov-table th,
+  table.cov-table td {
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--sl-color-gray-6);
+  }
+
+  table.cov-table th {
+    font-weight: 600;
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--sl-color-gray-3);
+    border-bottom-color: var(--sl-color-gray-5);
+  }
+
+  table.cov-table tbody tr:hover {
+    background: var(--sl-color-gray-7);
+  }
+
+  table.cov-table td.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    color: var(--sl-color-gray-2);
+    width: 1%;
+    white-space: nowrap;
+  }
+
+  table.cov-table a {
+    color: var(--sl-color-text);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+
+  table.cov-table a:hover {
+    border-bottom-color: var(--accent);
+  }
+
+  .tpl {
+    margin-left: 0.5rem;
+    padding: 0.05rem 0.4rem;
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--sl-color-gray-2);
+    background: var(--sl-color-gray-6);
+    border-radius: 0.25rem;
+    vertical-align: middle;
+  }
+
+  .cov-cell {
+    min-width: 160px;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .cov-cell-pct {
+    font-variant-numeric: tabular-nums;
+    font-size: 0.82rem;
+    color: var(--sl-color-gray-2);
+    min-width: 3.5rem;
+    text-align: right;
+  }
+
+  @media (max-width: 640px) {
+    table.cov-table {
+      font-size: 0.82rem;
+    }
+    table.cov-table th,
+    table.cov-table td {
+      padding: 0.4rem 0.5rem;
+    }
+    .cov-cell {
+      min-width: 100px;
+    }
+    .cov-cell-pct {
+      min-width: 2.8rem;
+    }
+  }
+</style>

@@ -1,0 +1,13 @@
+---
+title: Enums
+description: Enumerated value types referenced by save-file fields.
+sidebar:
+  label: Overview
+  order: 0
+---
+
+import EnumIndex from '@components/EnumIndex.astro';
+
+Many fields store an [`Enum`](/save-reference/data-types/#enum) value: a 32-bit [murmur3 hash](/save-reference/hash/) of the value name. Each page below lists the value names in source order alongside the hash that is actually written to disk for each one.
+
+<EnumIndex />

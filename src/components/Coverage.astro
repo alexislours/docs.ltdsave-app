@@ -1,0 +1,12 @@
+---
+import Hero from './coverage/Hero.astro';
+import SchemaCards from './coverage/SchemaCards.astro';
+import SchemaTable from './coverage/SchemaTable.astro';
+import { loadCoverage, SCHEMA_KEYS } from '../lib/coverage';
+
+const { totals, bySchema, schemaTotals } = await loadCoverage();
+---
+
+<Hero totals={totals} />
+<SchemaCards schemaTotals={schemaTotals} />
+{SCHEMA_KEYS.map((key) => <SchemaTable schema={key} pages={bySchema[key]} />)}

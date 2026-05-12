@@ -1,0 +1,90 @@
+---
+title: Player.UGC.Text.TextData
+sidebar:
+  label: TextData
+schema: player
+path: UGC.Text.TextData
+kind: group
+leafCount: 7
+leaves:
+  - name: AddTime
+    hash: '0x76ce1107'
+    type: UInt64Array
+    state: undocumented
+  - name: Attribute
+    hash: '0x80182ab3'
+    type: EnumArray
+    options: SENTIMENT
+    state: undocumented
+  - name: Genre
+    hash: '0xd28b84dc'
+    type: EnumArray
+    options: TEXT_GENRE
+    state: undocumented
+  - name: HowToCallText
+    hash: '0x7fa0dc2d'
+    type: WString64Array
+    state: undocumented
+  - name: RegionLanguageID
+    hash: '0xa5f59ef0'
+    type: EnumArray
+    options: LANGUAGE
+    state: undocumented
+  - name: Text
+    hash: '0xaa7a1eac'
+    type: WString32Array
+    state: undocumented
+  - name: WordAttrGrammaticality
+    hash: '0x26bbe986'
+    type: EnumArray
+    options: GRAMMAR_GENDER
+    state: undocumented
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `AddTime`
+
+<LeafMeta name="AddTime" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `Attribute`
+
+<LeafMeta name="Attribute" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `Genre`
+
+<LeafMeta name="Genre" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `HowToCallText`
+
+<LeafMeta name="HowToCallText" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `RegionLanguageID`
+
+<LeafMeta name="RegionLanguageID" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `Text`
+
+<LeafMeta name="Text" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `WordAttrGrammaticality`
+
+<LeafMeta name="WordAttrGrammaticality" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}

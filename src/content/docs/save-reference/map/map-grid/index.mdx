@@ -1,0 +1,33 @@
+---
+title: Map.MapGrid
+sidebar:
+  label: MapGrid
+schema: map
+path: MapGrid
+kind: group
+leafCount: 1
+leaves:
+  - name: UnlockAreaGroup
+    hash: '0x6a8060aa'
+    type: UInt64Array
+    state: undocumented
+subgroups:
+  - name: GridX
+    leafCount: 2
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `UnlockAreaGroup`
+
+<LeafMeta name="UnlockAreaGroup" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+## Subgroups
+
+- [`GridX`](./grid-x/) - 2 leaves

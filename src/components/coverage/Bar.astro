@@ -1,0 +1,49 @@
+---
+import { pct } from '../../lib/coverage';
+
+interface Props {
+  documented: number;
+  partial: number;
+  total: number;
+  size?: 'sm' | 'md' | 'lg';
+}
+
+const { documented, partial, total, size = 'md' } = Astro.props;
+---
+
+<div class:list={['cov-bar', `cov-bar-${size}`]}>
+  <span
+    class="seg seg-doc"
+    style={`width:${pct(documented, total)}%`}
+    title={`${documented} documented`}></span>
+  <span class="seg seg-part" style={`width:${pct(partial, total)}%`} title={`${partial} partial`}
+  ></span>
+</div>
+
+<style>
+  .cov-bar {
+    display: flex;
+    height: 0.5rem;
+    border-radius: 999px;
+    overflow: hidden;
+    background: var(--sl-color-gray-6);
+  }
+  .cov-bar-lg {
+    height: 0.65rem;
+  }
+  .cov-bar-sm {
+    height: 0.4rem;
+    flex: 1;
+    min-width: 60px;
+  }
+  .seg {
+    display: block;
+    height: 100%;
+  }
+  .seg-doc {
+    background: #16a34a;
+  }
+  .seg-part {
+    background: #eab308;
+  }
+</style>

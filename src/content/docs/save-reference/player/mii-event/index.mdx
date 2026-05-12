@@ -1,0 +1,36 @@
+---
+title: Player.MiiEvent
+sidebar:
+  label: MiiEvent
+schema: player
+path: MiiEvent
+kind: group
+leafCount: 1
+leaves:
+  - name: EnableGenerateGameTime
+    hash: '0x406c26f5'
+    type: UInt64
+    state: undocumented
+subgroups:
+  - name: GroupInfo
+    leafCount: 1
+  - name: MiiEventInfo
+    leafCount: 2
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `EnableGenerateGameTime`
+
+<LeafMeta name="EnableGenerateGameTime" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+## Subgroups
+
+- [`GroupInfo`](./group-info/) - 1 leaf
+- [`MiiEventInfo`](./mii-event-info/) - 2 leaves

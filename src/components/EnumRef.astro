@@ -1,0 +1,73 @@
+---
+import { enumHref, enumValues } from '../lib/enums.ts';
+
+interface Props {
+  name: string;
+}
+
+const { name } = Astro.props;
+const values = enumValues(name);
+
+if (!values) {
+  throw new Error(`<EnumRef name="${name}" />: enum not found in enumOptions.ts.`);
+}
+
+const href = enumHref(name);
+const count = values.length;
+---
+
+<a class="enum-ref" href={href}>
+  <span class="k">enum</span>
+  <code>{name}</code>
+  <span class="count" aria-label={`${count} values`}>{count}</span>
+</a>
+
+<style>
+  .enum-ref {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 0.4rem;
+    background: var(--sl-color-gray-7, #1a1a1a);
+    border: 1px solid var(--sl-color-gray-5);
+    font-size: 0.82rem;
+    line-height: 1.4;
+    text-decoration: none;
+    color: inherit;
+    transition:
+      border-color 120ms ease,
+      background 120ms ease;
+  }
+
+  .enum-ref:hover,
+  .enum-ref:focus-visible {
+    border-color: var(--sl-color-text-accent, #ea580c);
+    background: var(--sl-color-gray-6);
+  }
+
+  .enum-ref .k {
+    font-size: 0.66rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--sl-color-gray-3);
+  }
+
+  .enum-ref code {
+    font-size: 0.82rem;
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: var(--sl-color-text);
+  }
+
+  .enum-ref .count {
+    font-size: 0.7rem;
+    padding: 0.05rem 0.35rem;
+    border-radius: 0.25rem;
+    background: var(--sl-color-gray-6);
+    color: var(--sl-color-gray-2);
+    font-variant-numeric: tabular-nums;
+  }
+</style>

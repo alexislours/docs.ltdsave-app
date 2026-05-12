@@ -1,0 +1,47 @@
+---
+title: Ryujinx
+description: How to find your Tomodachi Life save in a Ryujinx install.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+## 1. Locate the save through the in-app menu
+
+The easiest way is to let Ryujinx open the folder for you.
+
+1. Launch Ryujinx.
+2. In the games list, **right-click** on _Tomodachi Life: Living the Dream_.
+3. Choose **Open User Save Directory**.
+
+A file manager window opens at the save folder. Inside you'll find:
+
+```
+Player.sav
+Mii.sav
+Map.sav
+Ugc/
+  ├── UgcCloth000.canvas.zs
+  ├── UgcCloth000.ugctex.zs
+  ├── ...
+```
+
+The `Ugc/` folder is only present if you've created a UGC in-game, if you haven't yet, it probably doesn't exist.
+
+## 2. Back up before editing
+
+Copy the entire save folder to somewhere safe before touching it. The editor never writes back to your filesystem directly, it creates a copy, but you'll be the one overwriting the originals, and that's the moment a backup pays off.
+
+A simple convention: copy the folder, append `.bak.YYYY-MM-DD` to the copy's name.
+
+## 3. Drop into the editor
+
+Open [ltdsave.app](https://ltdsave.app) and drag the three `.sav` files (and, optionally, the `Ugc/` folder) onto the page. See [Loading saves](/using/editor/loading/) for what happens next.
+
+## 4. Put the edited save back
+
+When you download the patched save from the editor, you'll get a zip containing the same filenames. Extract it and overwrite the files inside the Ryujinx save folder you opened in step 1.
+
+<Aside type="caution">
+  Always back up your save before overwriting it. If something goes wrong, you'll want the original
+  on hand.
+</Aside>

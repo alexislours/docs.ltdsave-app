@@ -1,0 +1,27 @@
+---
+title: FAQ
+description: Common questions about using ltdsave.app.
+---
+
+## Will this brick my game?
+
+The editor only writes to your downloaded zip. It never touches your original save files. To "apply" an edit you copy the patched files back yourself, that's the moment to be careful. If you keep a backup of the original save before overwriting, the worst case is "restore the backup."
+
+## Does the editor upload my save anywhere?
+
+No. Parsing, editing, and re-encoding all happen in your browser. Everything runs in your browser.
+
+## My UGC tab is empty.
+
+That means the save you loaded has no UGC slots populated, _or_ you didn't load the `Ugc/` folder along with the `.sav` files.
+
+Drag your `Ugc/` folder (or a zip of it) onto the page on top of the already-loaded save.
+
+You must first create a UGC in game (it can be blank) before replacing it with a new one.
+
+## I edited the file but the game ignores my change.
+
+Two common causes:
+
+1. **You forgot to replace the save with the edited copy.** The download is just a download until you put it back in the save folder.
+2. **You didn't put your save back in the right place.** Make sure that you put the save in the correct place. See the [get your save files](/using/overview/) guide.

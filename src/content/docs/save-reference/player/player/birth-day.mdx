@@ -1,0 +1,62 @@
+---
+title: Player.Player.BirthDay
+sidebar:
+  label: BirthDay
+schema: player
+path: Player.BirthDay
+kind: group
+leafCount: 3
+leaves:
+  - name: BirthDay_Day
+    hash: '0xdb7786bb'
+    type: UInt
+    state: documented
+  - name: BirthDay_Month
+    hash: '0xc754bef3'
+    type: UInt
+    state: documented
+  - name: BirthDay_Year
+    hash: '0x11996629'
+    type: UInt
+    state: documented
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+import Bounds from '@components/Bounds.astro';
+
+The player's birthday as entered during the setup flow or in the settings.
+
+## Fields
+
+### `BirthDay_Day`
+
+<LeafMeta name="BirthDay_Day" leaves={frontmatter.leaves} />
+
+Day-of-month, 1-indexed.
+
+<Bounds>
+  <Fragment slot="ingame">`1`-`28`/`29`/`30`/`31` depending on the selected month.</Fragment>
+  <Fragment slot="accepted">any `UInt` value; the UI only displays up to `99`.</Fragment>
+</Bounds>
+
+### `BirthDay_Month`
+
+<LeafMeta name="BirthDay_Month" leaves={frontmatter.leaves} />
+
+Month-of-year, 1-indexed (`1` = January, `12` = December).
+
+<Bounds>
+  <Fragment slot="ingame">`1`-`12`.</Fragment>
+  <Fragment slot="accepted">any `UInt` value; the UI only displays up to `99`.</Fragment>
+</Bounds>
+
+### `BirthDay_Year`
+
+<LeafMeta name="BirthDay_Year" leaves={frontmatter.leaves} />
+
+Four-digit Gregorian year.
+
+<Bounds>
+  <Fragment slot="ingame">`1890`-`2060`.</Fragment>
+  <Fragment slot="accepted">any `UInt` value; the UI only displays up to `9999`.</Fragment>
+</Bounds>

@@ -1,0 +1,52 @@
+---
+title: Using ltdsave.app
+description: A walkthrough for getting your save into the editor and finding what you need.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+[**ltdsave.app**](https://ltdsave.app) is a save editor for _Tomodachi Life: Living the Dream_. It runs entirely in your browser.
+
+There are two things you need to know before you start:
+
+1. **How to get your save files off your console or emulator.** The game stores its save as three files (`Player.sav`, `Mii.sav`, `Map.sav`) and, if you have any user-generated content, a `Ugc/` folder of texture files. The editor needs all of these.
+2. **How to load them in and find the thing you want to change.**
+
+## 1. Get your save files
+
+Pick the source you're playing on:
+
+- [**Ryujinx**](/using/saves/ryujinx/)
+- [**Eden**](/using/saves/eden/)
+- [**Modded Switch**](/using/saves/switch/)
+
+The vanilla, unmodded Switch does not expose save files to the user. There is no supported way to back them up without modifying the console. For modding a console, see [this guide](https://switch.hacks.guide/).
+
+## 2. Load them in the editor
+
+Open [ltdsave.app](https://ltdsave.app) and drag your three `.sav` files (and the `Ugc/` folder, if you have one) onto the page.
+
+See [Loading saves](/using/editor/loading/) for what to do if a file doesn't load.
+
+## 3. Find what you want to change
+
+The editor is organized into tabs that map to what each file contains:
+
+- [**Player**](/using/editor/player/), money, progress, wishes, and your full inventory.
+- [**Mii**](/using/editor/mii/), pick a Mii from the list to edit personality, voice, preferences, relationships, current outfit, belongings, and active troubles.
+- [**Map**](/using/editor/map/), your island layout: house placements, ground tiles.
+- [**UGC**](/using/editor/ugc/), replace user-generated textures (clothes, food, goods, exteriors, interiors, map objects, map floors, facepaint) with your own images.
+- [**ShareMii**](/using/editor/sharemii/), import a Mii or a UGC item using the ShareMii format, or export one.
+
+## 4. Download the edited save
+
+Hit **Export All** at the top of the page. The editor will download everything into a single zip. Put the contents back where you found them, replacing the originals.
+
+<Aside type="caution">
+  Always back up your save before overwriting it. If something goes wrong, you'll want the original
+  on hand.
+</Aside>
+
+## FAQ
+
+See [the FAQ](/using/faq/) for common questions.

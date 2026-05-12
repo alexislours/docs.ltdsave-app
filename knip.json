@@ -1,0 +1,5 @@
+{
+  "entry": ["src/content/**/*.{md,mdx,astro}"],
+  "ignoreExportsUsedInFile": true,
+  "ignore": ["src/components/HexDump.astro"]
+}

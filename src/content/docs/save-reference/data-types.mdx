@@ -1,0 +1,178 @@
+---
+title: Data types
+description: The DataType values used in Tomodachi Life save files.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Every entry in a save file is associated with a `DataType` that determines how its payload is laid out and interpreted. There are 33 types in total, numbered `0` through `32`.
+
+The entry table is a flat sequence of 8-byte `(hash, slot)` pairs. The `hash` field doubles as a discriminator:
+
+- **`hash != 0`** - a data entry. `slot` is either the inline value (for [inline scalars](#inline-scalars)) or a byte offset into the heap region (for everything else), interpreted under the _current_ `DataType`.
+- **`hash == 0`** - a _type sentinel_. `slot` is itself a `DataType` value, and it sets the current type for every data entry that follows, until the next sentinel.
+
+<Aside>
+  The descriptions below cover the data type only. For the range of values a specific field accepts
+  in-game, see the field's own page.
+</Aside>
+
+## Inline scalars
+
+These types fit in the 4-byte inline slot of an entry. No separate payload is allocated.
+
+### Bool
+
+`tag = 0` - single byte interpreted as `false` when zero and `true` otherwise. Stored in the low byte of the inline slot.
+
+### Int
+
+`tag = 2` - signed 32-bit integer, little-endian.
+
+### UInt
+
+`tag = 20` - unsigned 32-bit integer, little-endian.
+
+### Float
+
+`tag = 4` - IEEE-754 binary32, little-endian. The inline slot holds the raw bits.
+
+### Enum
+
+`tag = 6` - unsigned 32-bit murmur3 hash of an enum value name. The set of accepted hashes for each field is listed on the [Enums](/save-reference/enums/) pages.
+
+## 64-bit scalars
+
+These types are too large for the inline slot and live in the payload region.
+
+### Int64
+
+`tag = 22` - signed 64-bit integer, little-endian, 8-byte payload.
+
+### UInt64
+
+`tag = 24` - unsigned 64-bit integer, little-endian, 8-byte payload.
+
+## Vectors
+
+Packed sequences of 32-bit floats, little-endian, in payload.
+
+### Vector2
+
+`tag = 8` - `(x, y)` as two `float32` values. 8-byte payload.
+
+### Vector3
+
+`tag = 10` - `(x, y, z)` as three `float32` values. 12-byte payload.
+
+## Narrow strings
+
+Fixed-capacity UTF-8 byte buffers, NUL-terminated when shorter than the capacity. The number suffix is the buffer length in bytes.
+
+### String16
+
+`tag = 12` - up to 16 bytes of UTF-8.
+
+### String32
+
+`tag = 14` - up to 32 bytes of UTF-8.
+
+### String64
+
+`tag = 16` - up to 64 bytes of UTF-8.
+
+## Wide strings
+
+Fixed-capacity UTF-16LE buffers, NUL-terminated when shorter than the capacity. The number suffix is the buffer length in UTF-16 code units, so each holds twice as many bytes as the suffix suggests.
+
+### WString16
+
+`tag = 26` - up to 16 UTF-16 code units (32 bytes).
+
+### WString32
+
+`tag = 28` - up to 32 UTF-16 code units (64 bytes).
+
+### WString64
+
+`tag = 30` - up to 64 UTF-16 code units (128 bytes).
+
+## Binary
+
+### Binary
+
+`tag = 18` - arbitrary byte buffer of variable length. The container records the byte count; the interpretation is per-field.
+
+## Arrays
+
+Array types share `tag = scalar_tag + 1`. Each is encoded as a 4-byte little-endian count followed by tightly-packed elements in the same layout as the scalar form, with the exception of [`BoolArray`](#boolarray) (see below). Strings inside an array still use their full fixed capacity.
+
+### BoolArray
+
+`tag = 1` - bit-packed array of [`Bool`](#bool). Stored as `⌈count / 8⌉` bytes (minimum 4) after the count, rounded up to a multiple of 4.
+
+### IntArray
+
+`tag = 3` - array of [`Int`](#int).
+
+### UIntArray
+
+`tag = 21` - array of [`UInt`](#uint).
+
+### FloatArray
+
+`tag = 5` - array of [`Float`](#float).
+
+### EnumArray
+
+`tag = 7` - array of [`Enum`](#enum) hashes.
+
+### Int64Array
+
+`tag = 23` - array of [`Int64`](#int64).
+
+### UInt64Array
+
+`tag = 25` - array of [`UInt64`](#uint64).
+
+### Vector2Array
+
+`tag = 9` - array of [`Vector2`](#vector2).
+
+### Vector3Array
+
+`tag = 11` - array of [`Vector3`](#vector3).
+
+### String16Array
+
+`tag = 13` - array of [`String16`](#string16). Each element occupies 16 bytes.
+
+### String32Array
+
+`tag = 15` - array of [`String32`](#string32). Each element occupies 32 bytes.
+
+### String64Array
+
+`tag = 17` - array of [`String64`](#string64). Each element occupies 64 bytes.
+
+### WString16Array
+
+`tag = 27` - array of [`WString16`](#wstring16). Each element occupies 32 bytes.
+
+### WString32Array
+
+`tag = 29` - array of [`WString32`](#wstring32). Each element occupies 64 bytes.
+
+### WString64Array
+
+`tag = 31` - array of [`WString64`](#wstring64). Each element occupies 128 bytes.
+
+### BinaryArray
+
+`tag = 19` - array of [`Binary`](#binary) buffers. Each element is preceded by its own 4-byte length.
+
+## Special
+
+### Bool64bitKey
+
+`tag = 32` - sentinel used by a handful of fields whose presence is itself the boolean. In-game, the payload is always null and the entry is read as `true` when present and `false` when absent. No other payload shape is known to occur in save files written by the game.

@@ -1,0 +1,77 @@
+---
+title: Player.Player.FloorInfo
+sidebar:
+  label: FloorInfo
+schema: player
+path: Player.FloorInfo
+kind: group
+leafCount: 6
+leaves:
+  - name: InformedNewRelease
+    hash: '0xd8f2e3f3'
+    type: BoolArray
+    state: undocumented
+  - name: IsNewlyOwned
+    hash: '0x7fb28d1f'
+    type: BoolArray
+    state: undocumented
+  - name: KeyHash
+    hash: '0x1c2fb3fb'
+    type: UIntArray
+    state: undocumented
+  - name: LastObtainedSec
+    hash: '0xb45a3bcc'
+    type: UInt64Array
+    state: undocumented
+  - name: OwnNum
+    hash: '0xf46dd928'
+    type: IntArray
+    state: undocumented
+  - name: State
+    hash: '0xf0211ab3'
+    type: EnumArray
+    options: OBTAIN_STATE
+    state: undocumented
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `InformedNewRelease`
+
+<LeafMeta name="InformedNewRelease" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `IsNewlyOwned`
+
+<LeafMeta name="IsNewlyOwned" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `KeyHash`
+
+<LeafMeta name="KeyHash" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `LastObtainedSec`
+
+<LeafMeta name="LastObtainedSec" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `OwnNum`
+
+<LeafMeta name="OwnNum" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `State`
+
+<LeafMeta name="State" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}

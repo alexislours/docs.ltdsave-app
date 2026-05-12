@@ -1,0 +1,47 @@
+---
+title: Player.Player.ClothShopDailyItem.DailyClothInfo
+sidebar:
+  label: DailyClothInfo
+schema: player
+path: Player.ClothShopDailyItem.DailyClothInfo
+kind: group
+leafCount: 3
+leaves:
+  - name: ClothStringId
+    hash: '0x7ae865a1'
+    type: UIntArray
+    state: undocumented
+  - name: ClothType
+    hash: '0x5810ce15'
+    type: EnumArray
+    options: CLOTH_AREA
+    state: undocumented
+  - name: Color
+    hash: '0xd39e49bd'
+    type: IntArray
+    state: undocumented
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `ClothStringId`
+
+<LeafMeta name="ClothStringId" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `ClothType`
+
+<LeafMeta name="ClothType" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `Color`
+
+<LeafMeta name="Color" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}

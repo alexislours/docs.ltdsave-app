@@ -1,0 +1,129 @@
+---
+interface HexRow {
+  offset?: string;
+  bytes: string;
+  note?: string;
+}
+
+interface Props {
+  rows: readonly HexRow[];
+  showOffset?: boolean;
+}
+
+const { rows, showOffset = rows.some((r) => r.offset) } = Astro.props;
+---
+
+<div class="hex-dump">
+  <table>
+    <thead>
+      <tr>
+        {showOffset && <th class="offset">Offset</th>}
+        <th class="bytes">Bytes</th>
+        <th class="note">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        rows.map((r) => (
+          <tr>
+            {showOffset && (
+              <td class="offset">
+                <code>{r.offset ?? ''}</code>
+              </td>
+            )}
+            <td class="bytes">
+              <code>{r.bytes}</code>
+            </td>
+            <td class="note">{r.note}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .hex-dump {
+    margin: 1rem 0 1.5rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: var(--sl-color-gray-7);
+  }
+
+  .hex-dump table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin: 0;
+  }
+
+  .hex-dump th,
+  .hex-dump td {
+    padding: 0.45rem 0.9rem;
+    text-align: left;
+    vertical-align: top;
+    border: none;
+  }
+
+  .hex-dump thead th {
+    background: var(--sl-color-gray-6);
+    border-bottom: 1px solid var(--sl-color-gray-5);
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--sl-color-gray-3);
+    font-weight: 600;
+    padding-top: 0.55rem;
+    padding-bottom: 0.55rem;
+  }
+
+  .hex-dump tbody tr + tr td {
+    border-top: 1px solid var(--sl-color-gray-6);
+  }
+
+  .hex-dump td.offset,
+  .hex-dump th.offset {
+    width: 1%;
+    white-space: nowrap;
+    text-align: right;
+    background: var(--sl-color-gray-6);
+    border-right: 1px solid var(--sl-color-gray-5);
+    padding-right: 0.6rem;
+  }
+
+  .hex-dump td.offset code {
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: var(--sl-color-gray-3);
+    font-size: 0.8rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .hex-dump td.bytes,
+  .hex-dump th.bytes {
+    width: 1%;
+    white-space: nowrap;
+    padding-right: 1.25rem;
+  }
+
+  .hex-dump td.bytes code {
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
+    color: var(--sl-color-text-accent, #ea580c);
+    font-size: 0.9rem;
+  }
+
+  .hex-dump td.note {
+    color: var(--sl-color-gray-2);
+    line-height: 1.45;
+  }
+
+  .hex-dump tbody tr:hover td:not(.offset) {
+    background: color-mix(in srgb, var(--sl-color-gray-6) 50%, transparent);
+  }
+</style>

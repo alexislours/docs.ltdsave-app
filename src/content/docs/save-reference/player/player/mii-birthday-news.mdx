@@ -1,0 +1,46 @@
+---
+title: Player.Player.MiiBirthdayNews
+sidebar:
+  label: MiiBirthdayNews
+schema: player
+path: Player.MiiBirthdayNews
+kind: group
+leafCount: 3
+leaves:
+  - name: LastWatchedTime
+    hash: '0x7186b985'
+    type: UInt64
+    state: undocumented
+  - name: WatchedCount
+    hash: '0x58712043'
+    type: Int
+    state: undocumented
+  - name: WatchedMiiIndex
+    hash: '0xfe307559'
+    type: IntArray
+    state: undocumented
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `LastWatchedTime`
+
+<LeafMeta name="LastWatchedTime" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `WatchedCount`
+
+<LeafMeta name="WatchedCount" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `WatchedMiiIndex`
+
+<LeafMeta name="WatchedMiiIndex" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}

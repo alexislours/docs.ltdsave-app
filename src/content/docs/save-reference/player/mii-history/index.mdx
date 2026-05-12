@@ -1,0 +1,33 @@
+---
+title: Player.MiiHistory
+sidebar:
+  label: MiiHistory
+schema: player
+path: MiiHistory
+kind: group
+leafCount: 1
+leaves:
+  - name: NextId
+    hash: '0x559b2778'
+    type: Int64
+    state: undocumented
+subgroups:
+  - name: Info
+    leafCount: 7
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `NextId`
+
+<LeafMeta name="NextId" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+## Subgroups
+
+- [`Info`](./info/) - 7 leaves

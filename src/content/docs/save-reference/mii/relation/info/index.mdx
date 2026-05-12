@@ -1,0 +1,56 @@
+---
+title: Mii.Relation.Info
+sidebar:
+  label: Info
+schema: mii
+path: Relation.Info
+kind: group
+leafCount: 3
+leaves:
+  - name: IsFight
+    hash: '0xc2db3a72'
+    type: BoolArray
+    state: undocumented
+  - name: IsNotifiedBloodTypeCouple
+    hash: '0x6e00ce64'
+    type: BoolArray
+    state: undocumented
+  - name: TypeSetTime
+    hash: '0x1a892e50'
+    type: UInt64Array
+    state: undocumented
+subgroups:
+  - name: DirectionalInfo
+    leafCount: 9
+  - name: RelationId
+    leafCount: 2
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `IsFight`
+
+<LeafMeta name="IsFight" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `IsNotifiedBloodTypeCouple`
+
+<LeafMeta name="IsNotifiedBloodTypeCouple" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `TypeSetTime`
+
+<LeafMeta name="TypeSetTime" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+## Subgroups
+
+- [`DirectionalInfo`](./directional-info/) - 9 leaves
+- [`RelationId`](./relation-id/) - 2 leaves

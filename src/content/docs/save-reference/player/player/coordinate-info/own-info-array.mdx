@@ -1,0 +1,67 @@
+---
+title: Player.Player.CoordinateInfo.OwnInfoArray
+sidebar:
+  label: OwnInfoArray
+schema: player
+path: Player.CoordinateInfo.OwnInfoArray
+kind: group
+leafCount: 5
+leaves:
+  - name: FirstObtainedSec
+    hash: '0xae85309f'
+    type: UInt64Array
+    state: undocumented
+  - name: IsNewlyOwned
+    hash: '0x6795fbaa'
+    type: BoolArray
+    state: undocumented
+  - name: LastObtainedSec
+    hash: '0xdc50b0da'
+    type: UInt64Array
+    state: undocumented
+  - name: OwnNum
+    hash: '0xbf4abc10'
+    type: IntArray
+    state: undocumented
+  - name: State
+    hash: '0x7708017b'
+    type: EnumArray
+    options: OBTAIN_STATE
+    state: undocumented
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `FirstObtainedSec`
+
+<LeafMeta name="FirstObtainedSec" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `IsNewlyOwned`
+
+<LeafMeta name="IsNewlyOwned" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `LastObtainedSec`
+
+<LeafMeta name="LastObtainedSec" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `OwnNum`
+
+<LeafMeta name="OwnNum" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `State`
+
+<LeafMeta name="State" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}

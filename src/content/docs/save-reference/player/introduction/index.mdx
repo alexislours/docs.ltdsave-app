@@ -1,0 +1,46 @@
+---
+title: Player.Introduction
+sidebar:
+  label: Introduction
+schema: player
+path: Introduction
+kind: group
+leafCount: 2
+leaves:
+  - name: EmotionBallAtGraduate
+    hash: '0xe6f98671'
+    type: UInt
+    state: undocumented
+  - name: IsIslandForIntroduction
+    hash: '0xb2a39093'
+    type: Bool
+    state: undocumented
+subgroups:
+  - name: FocusLeadingInfo
+    leafCount: 4
+  - name: LectureInfo
+    leafCount: 4
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `EmotionBallAtGraduate`
+
+<LeafMeta name="EmotionBallAtGraduate" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `IsIslandForIntroduction`
+
+<LeafMeta name="IsIslandForIntroduction" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+## Subgroups
+
+- [`FocusLeadingInfo`](./focus-leading-info/) - 4 leaves
+- [`LectureInfo`](./lecture-info/) - 4 leaves

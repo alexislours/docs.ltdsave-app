@@ -1,0 +1,47 @@
+---
+title: Player.News.ItemInfo
+sidebar:
+  label: ItemInfo
+schema: player
+path: News.ItemInfo
+kind: group
+leafCount: 3
+leaves:
+  - name: PresetItemId
+    hash: '0xd55d5be8'
+    type: UIntArray
+    state: undocumented
+  - name: Type
+    hash: '0x4806ff90'
+    type: EnumArray
+    options: CONTENT_KIND
+    state: undocumented
+  - name: UgcItemIndex
+    hash: '0xda0fe4e6'
+    type: IntArray
+    state: undocumented
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `PresetItemId`
+
+<LeafMeta name="PresetItemId" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `Type`
+
+<LeafMeta name="Type" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `UgcItemIndex`
+
+<LeafMeta name="UgcItemIndex" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}

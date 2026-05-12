@@ -1,0 +1,56 @@
+---
+title: Player.Player.TroubleInfo
+sidebar:
+  label: TroubleInfo
+schema: player
+path: Player.TroubleInfo
+kind: group
+leafCount: 4
+leaves:
+  - name: GenerateCount
+    hash: '0x305f22d1'
+    type: IntArray
+    state: undocumented
+  - name: KeyHash
+    hash: '0xbc85ac23'
+    type: UIntArray
+    state: undocumented
+  - name: LastGenerateTime
+    hash: '0x2521b144'
+    type: UInt64Array
+    state: undocumented
+  - name: ResolveSuccessCount
+    hash: '0x6ccba6d7'
+    type: IntArray
+    state: undocumented
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `GenerateCount`
+
+<LeafMeta name="GenerateCount" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `KeyHash`
+
+<LeafMeta name="KeyHash" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `LastGenerateTime`
+
+<LeafMeta name="LastGenerateTime" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `ResolveSuccessCount`
+
+<LeafMeta name="ResolveSuccessCount" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}

@@ -1,0 +1,125 @@
+---
+import Bar from './Bar.astro';
+import { weighted, type Totals } from '../../lib/coverage';
+
+interface Props {
+  totals: Totals;
+}
+
+const { totals } = Astro.props;
+const overall = weighted(totals);
+---
+
+<section class="cov-hero">
+  <div class="cov-hero-head">
+    <div class="cov-hero-title">Overall coverage</div>
+    <div class="cov-hero-pct">{overall.toFixed(1)}<span>%</span></div>
+  </div>
+
+  <Bar documented={totals.documented} partial={totals.partial} total={totals.leafCount} size="lg" />
+
+  <div class="cov-hero-stats">
+    <span class="stat stat-doc">
+      <span class="sw"></span>
+      <strong>{totals.documented.toLocaleString()}</strong> documented
+    </span>
+    <span class="stat stat-part">
+      <span class="sw"></span>
+      <strong>{totals.partial.toLocaleString()}</strong> partial
+    </span>
+    <span class="stat stat-undoc">
+      <span class="sw"></span>
+      <strong>{totals.undocumented.toLocaleString()}</strong> to do
+    </span>
+    <span class="stat stat-total">
+      out of <strong>{totals.leafCount.toLocaleString()}</strong> leaves
+    </span>
+  </div>
+</section>
+
+<style>
+  .cov-hero {
+    margin: 1.5rem 0 2rem;
+    padding: 1.5rem 1.75rem;
+    border-radius: 0.75rem;
+    background: var(--sl-color-gray-7);
+    border: 1px solid var(--sl-color-gray-5);
+  }
+
+  .cov-hero-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+
+  .cov-hero-title {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--sl-color-gray-3);
+  }
+
+  .cov-hero-pct {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--sl-color-text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cov-hero-pct span {
+    font-size: 1.5rem;
+    color: var(--sl-color-gray-3);
+    margin-left: 0.1rem;
+  }
+
+  .cov-hero-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.25rem;
+    margin-top: 1rem;
+    font-size: 0.88rem;
+    color: var(--sl-color-gray-2);
+  }
+
+  .stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .stat strong {
+    color: var(--sl-color-text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat .sw {
+    display: inline-block;
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 2px;
+  }
+
+  .stat-doc .sw {
+    background: #16a34a;
+  }
+  .stat-part .sw {
+    background: #eab308;
+  }
+  .stat-undoc .sw {
+    background: var(--sl-color-gray-5);
+  }
+
+  @media (max-width: 640px) {
+    .cov-hero {
+      padding: 1.1rem 1.25rem;
+    }
+    .cov-hero-pct {
+      font-size: 2.4rem;
+    }
+  }
+</style>

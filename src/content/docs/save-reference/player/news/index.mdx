@@ -1,0 +1,105 @@
+---
+title: Player.News
+sidebar:
+  label: News
+schema: player
+path: News
+kind: group
+leafCount: 7
+leaves:
+  - name: ASVariation
+    hash: '0xbe3cf749'
+    type: UIntArray
+    state: undocumented
+  - name: BGSetId
+    hash: '0x575b440c'
+    type: UIntArray
+    state: undocumented
+  - name: GeneralNumber
+    hash: '0xaf1248ec'
+    type: IntArray
+    state: undocumented
+  - name: IsLock
+    hash: '0x75ac7b64'
+    type: BoolArray
+    state: undocumented
+  - name: NewsId
+    hash: '0x0ab034b9'
+    type: UIntArray
+    state: undocumented
+  - name: Time
+    hash: '0x59070026'
+    type: UInt64Array
+    state: undocumented
+  - name: UgcTextId
+    hash: '0xe3625749'
+    type: UIntArray
+    state: undocumented
+subgroups:
+  - name: CasterMii
+    leafCount: 2
+  - name: ContentMii
+    leafCount: 2
+  - name: IntervieweeMii
+    leafCount: 3
+  - name: ItemInfo
+    leafCount: 3
+  - name: TextOnlyMii
+    leafCount: 1
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `ASVariation`
+
+<LeafMeta name="ASVariation" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `BGSetId`
+
+<LeafMeta name="BGSetId" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `GeneralNumber`
+
+<LeafMeta name="GeneralNumber" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `IsLock`
+
+<LeafMeta name="IsLock" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `NewsId`
+
+<LeafMeta name="NewsId" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `Time`
+
+<LeafMeta name="Time" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `UgcTextId`
+
+<LeafMeta name="UgcTextId" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+## Subgroups
+
+- [`CasterMii`](./caster-mii/) - 2 leaves
+- [`ContentMii`](./content-mii/) - 2 leaves
+- [`IntervieweeMii`](./interviewee-mii/) - 3 leaves
+- [`ItemInfo`](./item-info/) - 3 leaves
+- [`TextOnlyMii`](./text-only-mii/) - 1 leaf

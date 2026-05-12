@@ -1,0 +1,116 @@
+---
+title: Mii.Mii.MiiMisc.EatInfo
+sidebar:
+  label: EatInfo
+schema: mii
+path: Mii.MiiMisc.EatInfo
+kind: group
+leafCount: 9
+leaves:
+  - name: BestId
+    hash: '0x5409455d'
+    type: UIntArray
+    state: undocumented
+  - name: EatFullness
+    hash: '0xef25b456'
+    type: IntArray
+    state: undocumented
+  - name: GivenFlag
+    hash: '0xfe434951'
+    type: BinaryArray
+    state: undocumented
+  - name: GivenUgcFlag
+    hash: '0xc022c1ae'
+    type: BinaryArray
+    state: undocumented
+  - name: LastFoodGiveTime
+    hash: '0x0fcb2a3d'
+    type: UInt64Array
+    state: undocumented
+  - name: TasteType
+    hash: '0xb69b048c'
+    type: IntArray
+    state: undocumented
+  - name: UltraBestId
+    hash: '0x21eea734'
+    type: UIntArray
+    state: undocumented
+  - name: UltraWorstId
+    hash: '0x5c7cd87a'
+    type: UIntArray
+    state: undocumented
+  - name: WorstId
+    hash: '0x400e8774'
+    type: UIntArray
+    state: undocumented
+subgroups:
+  - name: LastEatId
+    leafCount: 2
+  - name: RankedFoodId
+    leafCount: 2
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `BestId`
+
+<LeafMeta name="BestId" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `EatFullness`
+
+<LeafMeta name="EatFullness" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `GivenFlag`
+
+<LeafMeta name="GivenFlag" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `GivenUgcFlag`
+
+<LeafMeta name="GivenUgcFlag" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `LastFoodGiveTime`
+
+<LeafMeta name="LastFoodGiveTime" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `TasteType`
+
+<LeafMeta name="TasteType" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `UltraBestId`
+
+<LeafMeta name="UltraBestId" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `UltraWorstId`
+
+<LeafMeta name="UltraWorstId" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `WorstId`
+
+<LeafMeta name="WorstId" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+## Subgroups
+
+- [`LastEatId`](./last-eat-id/) - 2 leaves
+- [`RankedFoodId`](./ranked-food-id/) - 2 leaves

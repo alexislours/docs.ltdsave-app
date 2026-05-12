@@ -1,0 +1,108 @@
+---
+title: Mii.Mii.MiiMisc.ClothInfo
+sidebar:
+  label: ClothInfo
+schema: mii
+path: Mii.MiiMisc.ClothInfo
+kind: group
+leafCount: 6
+leaves:
+  - name: BottomsUGCIndex
+    hash: '0xf816f065'
+    type: IntArray
+    state: undocumented
+  - name: ClothStyle
+    hash: '0x660c5247'
+    type: EnumArray
+    options: CLOTH_STYLE_GENDER
+    state: undocumented
+  - name: HeadwearUGCIndex
+    hash: '0x8474b9d7'
+    type: IntArray
+    state: undocumented
+  - name: IsTopsIn
+    hash: '0xd6ad0e0b'
+    type: BoolArray
+    state: undocumented
+  - name: NextClothWantGameTime
+    hash: '0x1c535dac'
+    type: UInt64Array
+    state: undocumented
+  - name: TopsUGCIndex
+    hash: '0xe3802eb9'
+    type: IntArray
+    state: undocumented
+subgroups:
+  - name: Accessory
+    leafCount: 2
+  - name: All
+    leafCount: 2
+  - name: BottomsA
+    leafCount: 2
+  - name: BottomsB
+    leafCount: 2
+  - name: Coordinate
+    leafCount: 2
+  - name: Headwear
+    leafCount: 2
+  - name: Shoes
+    leafCount: 2
+  - name: Tops
+    leafCount: 2
+  - name: Topslong
+    leafCount: 2
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `BottomsUGCIndex`
+
+<LeafMeta name="BottomsUGCIndex" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `ClothStyle`
+
+<LeafMeta name="ClothStyle" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `HeadwearUGCIndex`
+
+<LeafMeta name="HeadwearUGCIndex" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `IsTopsIn`
+
+<LeafMeta name="IsTopsIn" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `NextClothWantGameTime`
+
+<LeafMeta name="NextClothWantGameTime" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `TopsUGCIndex`
+
+<LeafMeta name="TopsUGCIndex" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+## Subgroups
+
+- [`Accessory`](./accessory/) - 2 leaves
+- [`All`](./all/) - 2 leaves
+- [`BottomsA`](./bottoms-a/) - 2 leaves
+- [`BottomsB`](./bottoms-b/) - 2 leaves
+- [`Coordinate`](./coordinate/) - 2 leaves
+- [`Headwear`](./headwear/) - 2 leaves
+- [`Shoes`](./shoes/) - 2 leaves
+- [`Tops`](./tops/) - 2 leaves
+- [`Topslong`](./topslong/) - 2 leaves

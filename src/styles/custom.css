@@ -1,0 +1,15 @@
+/* Brand accent — mirrors ltd-save-editor's orange palette so the docs and
+   the editor read as one project. Only the accent ramp is overridden;
+   Starlight's reading-tuned surfaces and typography are left alone. */
+
+:root {
+  --sl-color-accent-low: #431407; /* orange-950 */
+  --sl-color-accent: #c2410c; /* orange-700 */
+  --sl-color-accent-high: #fdba74; /* orange-300 */
+}
+
+:root[data-theme='light'] {
+  --sl-color-accent-low: #ffedd5; /* orange-100 */
+  --sl-color-accent: #9a3412; /* orange-800 */
+  --sl-color-accent-high: #7c2d12; /* orange-900 */
+}

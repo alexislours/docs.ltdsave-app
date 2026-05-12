@@ -1,0 +1,46 @@
+---
+title: Player.News.IntervieweeMii
+sidebar:
+  label: IntervieweeMii
+schema: player
+path: News.IntervieweeMii
+kind: group
+leafCount: 3
+leaves:
+  - name: ASVariation
+    hash: '0x378668b5'
+    type: UIntArray
+    state: undocumented
+  - name: CommentNumber
+    hash: '0x94c49e55'
+    type: IntArray
+    state: undocumented
+  - name: MiiIndex
+    hash: '0x03a80882'
+    type: IntArray
+    state: undocumented
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `ASVariation`
+
+<LeafMeta name="ASVariation" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `CommentNumber`
+
+<LeafMeta name="CommentNumber" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `MiiIndex`
+
+<LeafMeta name="MiiIndex" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}

@@ -1,0 +1,56 @@
+---
+interface Props {
+  type: string;
+}
+
+const { type } = Astro.props;
+const anchor = type.toLowerCase();
+const href = `/save-reference/data-types/#${anchor}`;
+---
+
+<a class="type-chip" href={href}>
+  <span class="k">type</span>
+  <code>{type}</code>
+</a>
+
+<style>
+  .type-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 0.4rem;
+    background: var(--sl-color-gray-7, #1a1a1a);
+    border: 1px solid var(--sl-color-gray-5);
+    font-size: 0.82rem;
+    line-height: 1.4;
+    text-decoration: none;
+    color: inherit;
+    transition:
+      border-color 120ms ease,
+      background 120ms ease;
+  }
+
+  .type-chip:hover,
+  .type-chip:focus-visible {
+    border-color: var(--sl-color-text-accent, #ea580c);
+    background: var(--sl-color-gray-6);
+  }
+
+  .type-chip .k {
+    font-size: 0.66rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--sl-color-gray-3);
+  }
+
+  .type-chip code {
+    font-size: 0.82rem;
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: var(--sl-color-text-accent, #ea580c);
+    font-weight: 500;
+  }
+</style>

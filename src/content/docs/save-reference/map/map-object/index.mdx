@@ -1,0 +1,42 @@
+---
+title: Map.MapObject
+sidebar:
+  label: MapObject
+schema: map
+path: MapObject
+kind: group
+leafCount: 1
+leaves:
+  - name: ActorKey
+    hash: '0x724d5b50'
+    type: UIntArray
+    state: undocumented
+subgroups:
+  - name: Location
+    leafCount: 2
+  - name: MapLink
+    leafCount: 1
+  - name: MapObjectMisc
+    leafCount: 2
+  - name: UgcObje
+    leafCount: 2
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `ActorKey`
+
+<LeafMeta name="ActorKey" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+## Subgroups
+
+- [`Location`](./location/) - 2 leaves
+- [`MapLink`](./map-link/) - 1 leaf
+- [`MapObjectMisc`](./map-object-misc/) - 2 leaves
+- [`UgcObje`](./ugc-obje/) - 2 leaves

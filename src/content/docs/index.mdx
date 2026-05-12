@@ -1,0 +1,38 @@
+---
+title: ltdsave.app documentation
+description: Guides for using the editor and a reference for the Tomodachi Life save file format.
+template: splash
+hero:
+  tagline: A browser-based save editor for Tomodachi Life&nbsp;- Living the Dream. These docs explain how to use it and how its save files are laid out.
+  actions:
+    - text: Open the editor
+      link: https://ltdsave.app
+      icon: external
+      variant: primary
+    - text: Get your save files
+      link: /using/saves/ryujinx/
+      icon: right-arrow
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<CardGrid>
+  <Card title="Using ltdsave.app" icon="laptop">
+    A walkthrough for non-technical users: how to retrieve your save files from Ryujinx, Eden, or a modded Switch, and how each editor tab works.
+
+    [Start here →](/using/overview/)
+
+  </Card>
+  <Card title="Save file reference" icon="document">
+    The binary layout of `Player.sav`, `Mii.sav`, and `Map.sav`, the key-hashing scheme, and a field-by-field reference for every known entry.
+
+    [Browse the reference →](/save-reference/)
+
+  </Card>
+  <Card title="Documentation coverage" icon="approve-check">
+    A live tracker of how much of the save file format has been documented so far.
+
+    [See progress →](/save-reference/coverage/)
+
+  </Card>
+</CardGrid>

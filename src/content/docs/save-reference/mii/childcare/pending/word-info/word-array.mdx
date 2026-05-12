@@ -1,0 +1,58 @@
+---
+title: Mii.Childcare.Pending.WordInfo.WordArray
+sidebar:
+  label: WordArray
+schema: mii
+path: Childcare.Pending.WordInfo.WordArray
+kind: group
+leafCount: 4
+leaves:
+  - name: WordHowToCall
+    hash: '0xa2eacb08'
+    type: WString64Array
+    state: undocumented
+  - name: WordKind
+    hash: '0x04ceb0b4'
+    type: EnumArray
+    options: WORD_KIND
+    state: undocumented
+  - name: WordRegionLanguageID
+    hash: '0xc0994b9f'
+    type: EnumArray
+    options: LANGUAGE
+    state: undocumented
+  - name: WordText
+    hash: '0xb98a5545'
+    type: WString64Array
+    state: undocumented
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `WordHowToCall`
+
+<LeafMeta name="WordHowToCall" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `WordKind`
+
+<LeafMeta name="WordKind" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `WordRegionLanguageID`
+
+<LeafMeta name="WordRegionLanguageID" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `WordText`
+
+<LeafMeta name="WordText" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}

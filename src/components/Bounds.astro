@@ -1,0 +1,71 @@
+---
+const hasInGame = Astro.slots.has('ingame');
+const hasAccepted = Astro.slots.has('accepted');
+---
+
+<dl class="bounds">
+  {
+    hasInGame && (
+      <>
+        <dt>In-game</dt>
+        <dd>
+          <slot name="ingame" />
+        </dd>
+      </>
+    )
+  }
+  {
+    hasAccepted && (
+      <>
+        <dt>Accepted</dt>
+        <dd>
+          <slot name="accepted" />
+        </dd>
+      </>
+    )
+  }
+</dl>
+
+<style>
+  dl.bounds {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0.35rem 1rem;
+    margin: 0.5rem 0 1rem;
+    padding: 0.6rem 0.85rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    background: var(--sl-color-gray-7);
+    font-size: 0.9rem;
+  }
+
+  dl.bounds dt {
+    margin: 0;
+    font-size: 0.66rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--sl-color-gray-3);
+    align-self: center;
+  }
+
+  dl.bounds dd {
+    margin: 0;
+    align-self: center;
+    color: var(--sl-color-text);
+  }
+
+  dl.bounds dd :global(p) {
+    margin: 0;
+  }
+
+  dl.bounds dd :global(code) {
+    font-size: 0.85rem;
+    padding: 0.05rem 0.35rem;
+    border-radius: 0.25rem;
+    background: var(--sl-color-gray-6);
+    border: 1px solid var(--sl-color-gray-5);
+    color: var(--sl-color-text);
+    font-variant-numeric: tabular-nums;
+  }
+</style>

@@ -1,0 +1,36 @@
+---
+title: Player.Player.CommonDailyItem
+sidebar:
+  label: CommonDailyItem
+schema: player
+path: Player.CommonDailyItem
+kind: group
+leafCount: 2
+leaves:
+  - name: LastUpdateTime
+    hash: '0x34eaa2b5'
+    type: UInt64
+    state: undocumented
+  - name: NextUpdateRandomSeed
+    hash: '0xb7b42df5'
+    type: UInt
+    state: undocumented
+---
+
+import LeafMeta from '@components/LeafMeta.astro';
+
+{/* Replace this comment with a description for this group. */}
+
+## Fields
+
+### `LastUpdateTime`
+
+<LeafMeta name="LastUpdateTime" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
+
+### `NextUpdateRandomSeed`
+
+<LeafMeta name="NextUpdateRandomSeed" leaves={frontmatter.leaves} />
+
+{/* Describe what the game uses this field for. */}
