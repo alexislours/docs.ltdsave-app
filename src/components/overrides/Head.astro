@@ -13,6 +13,7 @@ const ogUrl = new URL(`/open-graph/${slug}.png`, Astro.site);
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content={ogUrl.href} />
 <script
+  is:inline
   defer
   src="https://stats.alexislours.com/script.js"
   data-performance="true"
