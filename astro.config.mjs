@@ -20,7 +20,11 @@ export default defineConfig({
         Head: './src/components/overrides/Head.astro',
       },
       social: [
-        { icon: 'github', label: 'GitHub', href: 'https://github.com/alexislours/ltd-save-editor' },
+        {
+          icon: 'github',
+          label: 'GitHub',
+          href: 'https://github.com/alexislours/docs.ltdsave-app',
+        },
       ],
       plugins: [
         starlightSidebarTopics(
