@@ -15,7 +15,7 @@ leaves:
   - name: BootNum
     hash: '0x2f19f777'
     type: UInt
-    state: undocumented
+    state: documented
   - name: BreakingNewsFlag
     hash: '0x07832ff0'
     type: UInt64
@@ -288,7 +288,7 @@ Sound volume of the game music.
 
 <LeafMeta name="BootNum" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+How many times the game has been started. On game start, this variable is incremented by `1`. Acts as a counter.
 
 ### `BreakingNewsFlag`
 
