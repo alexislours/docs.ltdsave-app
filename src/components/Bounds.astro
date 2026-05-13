@@ -1,65 +1,73 @@
 ---
 const hasInGame = Astro.slots.has('ingame');
 const hasAccepted = Astro.slots.has('accepted');
+
+const ingameHtml = hasInGame ? await Astro.slots.render('ingame') : null;
+const acceptedHtml = hasAccepted ? await Astro.slots.render('accepted') : null;
 ---
 
-<dl class="bounds">
-  {
-    hasInGame && (
-      <>
-        <dt>In-game</dt>
-        <dd>
-          <slot name="ingame" />
-        </dd>
-      </>
-    )
-  }
-  {
-    hasAccepted && (
-      <>
-        <dt>Accepted</dt>
-        <dd>
-          <slot name="accepted" />
-        </dd>
-      </>
-    )
-  }
-</dl>
+<table class="bounds">
+  <tbody>
+    {
+      ingameHtml !== null && (
+        <tr>
+          <th scope="row">In-game</th>
+          <td set:html={ingameHtml} />
+        </tr>
+      )
+    }
+    {
+      acceptedHtml !== null && (
+        <tr>
+          <th scope="row">Accepted</th>
+          <td set:html={acceptedHtml} />
+        </tr>
+      )
+    }
+  </tbody>
+</table>
 
 <style>
-  dl.bounds {
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    gap: 0.35rem 1rem;
-    margin: 0.5rem 0 1rem;
-    padding: 0.6rem 0.85rem;
-    border: 1px solid var(--sl-color-gray-5);
-    border-radius: 0.5rem;
-    background: var(--sl-color-gray-7);
-    font-size: 0.9rem;
+  table.bounds {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.5rem 0 1.5rem;
   }
 
-  dl.bounds dt {
-    margin: 0;
-    font-size: 0.66rem;
-    font-weight: 600;
+  table.bounds th,
+  table.bounds td {
+    text-align: left;
+    padding: 0.45rem 0.85rem;
+    border-bottom: 1px solid var(--sl-color-gray-6);
+    font-size: 0.9rem;
+    vertical-align: top;
+  }
+
+  table.bounds tr:first-child th,
+  table.bounds tr:first-child td {
+    border-top: 1px solid var(--sl-color-gray-5);
+  }
+
+  table.bounds th {
+    font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--sl-color-gray-3);
-    align-self: center;
+    font-weight: 600;
+    width: 1%;
+    white-space: nowrap;
+    padding-left: 0;
   }
 
-  dl.bounds dd {
-    margin: 0;
-    align-self: center;
-    color: var(--sl-color-text);
-  }
-
-  dl.bounds dd :global(p) {
+  table.bounds td :global(p) {
     margin: 0;
   }
 
-  dl.bounds dd :global(code) {
+  table.bounds td :global(p + p) {
+    margin-top: 0.4rem;
+  }
+
+  table.bounds td :global(code) {
     font-size: 0.85rem;
     padding: 0.05rem 0.35rem;
     border-radius: 0.25rem;

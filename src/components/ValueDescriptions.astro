@@ -1,0 +1,158 @@
+---
+import { enumValues as lookupEnumValues } from '../lib/enums.ts';
+
+type Leaf = {
+  name: string;
+  type: string;
+  options?: string;
+};
+
+interface Props {
+  name: string;
+  leaves: readonly Leaf[];
+}
+
+const { name, leaves } = Astro.props;
+const leaf = leaves.find((l) => l.name === name);
+
+if (!leaf) {
+  throw new Error(`<ValueDescriptions name="${name}" />: not found in frontmatter leaves array.`);
+}
+
+let values: readonly string[];
+if (leaf.type === 'Bool') {
+  values = ['false', 'true'];
+} else if (leaf.options) {
+  const enumVals = lookupEnumValues(leaf.options);
+  if (!enumVals) {
+    throw new Error(
+      `<ValueDescriptions name="${name}" />: enum "${leaf.options}" not found in enumOptions.ts.`,
+    );
+  }
+  values = enumVals;
+} else {
+  throw new Error(
+    `<ValueDescriptions name="${name}" />: leaf is "${leaf.type}", not Bool or Enum.`,
+  );
+}
+
+const rows = await Promise.all(
+  values
+    .map((v, i) => ({ value: v, index: i }))
+    .filter((r) => Astro.slots.has(r.value))
+    .map(async (r) => ({ ...r, html: await Astro.slots.render(r.value) })),
+);
+
+if (rows.length === 0) {
+  throw new Error(
+    `<ValueDescriptions name="${name}" />: no value slots provided. Pass <Fragment slot="${values[0]}">…</Fragment> children.`,
+  );
+}
+---
+
+<table class="value-descriptions">
+  <thead>
+    <tr>
+      <th class="idx">#</th>
+      <th class="value">Value</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      rows.map((r) => (
+        <tr>
+          <td class="idx">
+            <code>{r.index}</code>
+          </td>
+          <td class="value">
+            <code>{r.value}</code>
+          </td>
+          <td set:html={r.html} />
+        </tr>
+      ))
+    }
+  </tbody>
+</table>
+
+<style>
+  table.value-descriptions {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.5rem 0 1.5rem;
+  }
+
+  table.value-descriptions th,
+  table.value-descriptions td {
+    text-align: left;
+    padding: 0.45rem 0.85rem;
+    border-bottom: 1px solid var(--sl-color-gray-6);
+    font-size: 0.9rem;
+    vertical-align: top;
+  }
+
+  table.value-descriptions th {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--sl-color-gray-3);
+    border-bottom-color: var(--sl-color-gray-5);
+    font-weight: 600;
+  }
+
+  table.value-descriptions td.idx,
+  table.value-descriptions th.idx {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    color: var(--sl-color-gray-3);
+    width: 1%;
+    white-space: nowrap;
+    padding-left: 0;
+  }
+
+  table.value-descriptions td.idx code {
+    color: var(--sl-color-gray-3);
+  }
+
+  table.value-descriptions td.value,
+  table.value-descriptions th.value {
+    width: 1%;
+    white-space: nowrap;
+  }
+
+  table.value-descriptions td.value code {
+    color: var(--sl-color-text-accent);
+    font-weight: 500;
+  }
+
+  table.value-descriptions code {
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-size: 0.88rem;
+  }
+
+  table.value-descriptions td :global(p) {
+    margin: 0;
+  }
+
+  table.value-descriptions td :global(p + p) {
+    margin-top: 0.4rem;
+  }
+
+  table.value-descriptions td :global(code) {
+    font-size: 0.85rem;
+    padding: 0.05rem 0.35rem;
+    border-radius: 0.25rem;
+    background: var(--sl-color-gray-6);
+    border: 1px solid var(--sl-color-gray-5);
+    color: var(--sl-color-text);
+  }
+
+  table.value-descriptions td.idx :global(code),
+  table.value-descriptions td.value :global(code) {
+    background: transparent;
+    border: none;
+    padding: 0;
+  }
+</style>
