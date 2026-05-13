@@ -11,20 +11,20 @@ leaves:
   - name: IsNewlyOwned
     hash: '-'
     type: Bool
-    state: undocumented
+    state: documented
   - name: LastObtainedSec
     hash: '-'
     type: UInt64
-    state: undocumented
+    state: documented
   - name: OwnNum
     hash: '-'
     type: Int
-    state: undocumented
+    state: documented
   - name: State
     hash: '-'
     type: Enum
     options: OBTAIN_STATE
-    state: undocumented
+    state: documented
 instances:
   - name: '9VDryBattery'
     hashes:
@@ -1607,8 +1607,14 @@ instances:
 ---
 
 import LeafMeta from '@components/LeafMeta.astro';
+import ValueDescriptions from '@components/ValueDescriptions.astro';
+import Bounds from '@components/Bounds.astro';
 
-{/* Replace this comment with a description for this template group as a whole. */}
+These leaves control the state of goods owned by the player. Goods are split into two types: `Treasure` and `Levelup`.
+
+The type is not stored in the save file. It is read at runtime from `GoodsParam.Product.100.rstbl.byml`, where each good has a `Type` field.
+
+`Levelup` are the objects you can give Miis when they level up. `Treasure` are regular treasures in the game.
 
 ## Shape
 
@@ -1618,25 +1624,75 @@ Every entry under `Player.GoodsInfo2` has the same shape. The fields are documen
 
 <LeafMeta name="IsNewlyOwned" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+This boolean controls whether the good has recently been acquired by the player. This is what drives the "NEW!" badge in the Encyclopedia.
+
+Opening the Encyclopedia clears this boolean once it has been acquired.
+
+<ValueDescriptions name="IsNewlyOwned" leaves={frontmatter.leaves}>
+  <Fragment slot="false">
+    The good hasn't been acquired, or it has been acquired and the player has opened the
+    Encyclopedia since.
+  </Fragment>
+  <Fragment slot="true">
+    The player hasn't opened the Encyclopedia since obtaining the good.
+  </Fragment>
+</ValueDescriptions>
 
 ### `LastObtainedSec`
 
 <LeafMeta name="LastObtainedSec" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+POSIX timestamp in seconds (`nn::time::PosixTime`) recorded when:
+
+- The `State` goes from `Lock` → `Obtained` when the Type = `Treasure`.
+- The `State` goes from `Lock` → `New` or `New` → `Opened` when the Type = `Levelup`.
+- The good is obtained again when the Type = `Treasure`.
+
+Written in the main executable using `nn::time::StandardUserSystemClock::GetCurrentTime(PosixTime*)`. `0` if the good has never been acquired.
+
+<Bounds>
+  <Fragment slot="ingame">
+    `0` if the good has never been acquired, otherwise a POSIX timestamp at or after the game's
+    release.
+  </Fragment>
+  <Fragment slot="accepted">any `UInt64` value.</Fragment>
+</Bounds>
 
 ### `OwnNum`
 
 <LeafMeta name="OwnNum" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+The number of copies of the good the player owns.
+
+<Bounds>
+  <Fragment slot="ingame">`0`-`999` will be displayed in the inventory UI.</Fragment>
+  <Fragment slot="accepted">
+    Any `Int` value, the UI only displays up to `999`, negative values will be displayed like `0`
+    (good greyed out).
+  </Fragment>
+</Bounds>
 
 ### `State`
 
 <LeafMeta name="State" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+The possible states a good can have.
+
+<ValueDescriptions name="State" leaves={frontmatter.leaves}>
+  <Fragment slot="Lock">
+    If the good hasn't been unlocked yet, hides it from the encyclopedia.
+  </Fragment>
+  <Fragment slot="New">
+    Only used by `Levelup` type. Set when the good has been unlocked with a wish.
+  </Fragment>
+  <Fragment slot="Arrived">Unused by the game but a valid value.</Fragment>
+  <Fragment slot="Opened">
+    Only used by `Levelup` type. Set when the good has been given to a Mii.
+  </Fragment>
+  <Fragment slot="Obtained">
+    Only used by `Treasure` type. Set when the player has obtained the treasure at least once.
+  </Fragment>
+</ValueDescriptions>
 
 ## Instances (263)
 
