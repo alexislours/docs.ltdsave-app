@@ -23,7 +23,8 @@
   "dependencies": {
     "@astrojs/starlight": "^0.39.2",
     "astro": "^6.2.2",
-    "astro-og-canvas": "^0.11.1",
+    "canvaskit-wasm": "^0.41.1",
+    "entities": "^8.0.0",
     "sharp": "^0.34.5",
     "starlight-image-zoom": "^0.14.1",
     "starlight-links-validator": "^0.24.0",
