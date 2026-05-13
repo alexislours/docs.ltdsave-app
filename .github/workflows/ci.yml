@@ -32,6 +32,13 @@ jobs:
       - run: npm run knip
       - run: npm run build
 
+      - uses: actions/upload-artifact@v7
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        with:
+          name: dist
+          path: dist
+          retention-days: 1
+
   deploy:
     name: Deploy
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -53,7 +60,12 @@ jobs:
 
       - run: npm ci
 
-      - run: npm run deploy
+      - uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist
+
+      - run: npx wrangler pages deploy dist --project-name=docs-ltdsave-app --branch=main
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
