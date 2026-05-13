@@ -11,7 +11,7 @@ leaves:
   - name: BGMVolume
     hash: '0xe98abf3d'
     type: UInt
-    state: undocumented
+    state: documented
   - name: BootNum
     hash: '0x2f19f777'
     type: UInt
@@ -174,7 +174,7 @@ leaves:
   - name: SEVolume
     hash: '0x9dc950d2'
     type: UInt
-    state: undocumented
+    state: documented
   - name: SaveDataCreateFromProduct
     hash: '0xf16a6b96'
     type: Bool
@@ -214,7 +214,7 @@ leaves:
   - name: VoiceVolume
     hash: '0x38468a2a'
     type: UInt
-    state: undocumented
+    state: documented
   - name: WeeklyInteriorShopFurnitureIdx
     hash: '0xd9276e3a'
     type: Int
@@ -263,6 +263,7 @@ subgroups:
 ---
 
 import LeafMeta from '@components/LeafMeta.astro';
+import Bounds from '@components/Bounds.astro';
 
 {/* Replace this comment with a description for this group. */}
 
@@ -272,7 +273,16 @@ import LeafMeta from '@components/LeafMeta.astro';
 
 <LeafMeta name="BGMVolume" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Sound volume of the game music.
+
+<Bounds>
+  <Fragment slot="ingame">
+    `0`-`10`, through a slider, with `0` being muted and `10` being 100% volume.
+  </Fragment>
+  <Fragment slot="accepted">
+    any `UInt` value. Values above `10` will make the sound muted.
+  </Fragment>
+</Bounds>
 
 ### `BootNum`
 
@@ -506,7 +516,16 @@ import LeafMeta from '@components/LeafMeta.astro';
 
 <LeafMeta name="SEVolume" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Sound volume of the game sound effects.
+
+<Bounds>
+  <Fragment slot="ingame">
+    `0`-`10`, through a slider, with `0` being muted and `10` being 100% volume.
+  </Fragment>
+  <Fragment slot="accepted">
+    any `UInt` value. Values above `10` will make the sound muted.
+  </Fragment>
+</Bounds>
 
 ### `SaveDataCreateFromProduct`
 
@@ -566,7 +585,16 @@ import LeafMeta from '@components/LeafMeta.astro';
 
 <LeafMeta name="VoiceVolume" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Sound volume of the game voices.
+
+<Bounds>
+  <Fragment slot="ingame">
+    `0`-`10`, through a slider, with `0` being muted and `10` being 100% volume.
+  </Fragment>
+  <Fragment slot="accepted">
+    any `UInt` value. Values above `10` will make the sound muted.
+  </Fragment>
+</Bounds>
 
 ### `WeeklyInteriorShopFurnitureIdx`
 
