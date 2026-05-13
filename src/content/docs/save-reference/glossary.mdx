@@ -1,8 +1,18 @@
 ---
 title: Glossary
-description: A list of uncommon terms found in the save files.
+description: Definitions for the uncommon terms used across the save reference.
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+Terms are listed alphabetically. Where a concept has its own page, the definition is a one-liner that points to it.
 
-<Aside>This page is under construction.</Aside>
+## Hash
+
+The 32-bit murmur3 value used in place of a field name. The naming convention is `<ParentGroup>.<LeafName>`. See [Hash](/save-reference/hash/) for the algorithm and a reference implementation.
+
+## Type sentinel
+
+An entry with `hash == 0` whose `slot` is a [`DataType`](/save-reference/data-types/) value. It sets the type for every entry that follows until the next sentinel.
+
+## UGC
+
+User-generated content, the in-game term for assets shared between consoles. Stored under `Ugc/` alongside the three top-level save files.

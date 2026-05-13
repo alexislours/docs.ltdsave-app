@@ -785,10 +785,6 @@ const sidebar: SidebarItem[] = [
           },
         ],
       },
-      {
-        label: 'Unknown',
-        slug: 'save-reference/map/unknown',
-      },
     ],
   },
 ];

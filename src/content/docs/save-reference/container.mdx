@@ -3,6 +3,214 @@ title: Container layout
 description: The binary layout shared by Player.sav, Mii.sav, and Map.sav.
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+`Player.sav`, `Mii.sav`, and `Map.sav` all share the same binary layout. Each file is little-endian and made of three regions: a fixed header, a flat entry table grouped by [`DataType`](/save-reference/data-types/), and a heap that holds every payload too large to fit inline.
 
-<Aside>This page is under construction.</Aside>
+## Header
+
+The first 12 bytes carry three `u32` fields, followed by zero padding up to the next 32-byte boundary.
+
+| Offset | Field              | Notes                                                                                                                  |
+| ------ | ------------------ | ---------------------------------------------------------------------------------------------------------------------- |
+| `0x00` | `magic`            | Always `0x01020304`.                                                                                                   |
+| `0x04` | `format_version`   | The save format revision. Matches the `FormatVersion` field inside `romfs/GameData/GameDataList.Product.[ver].byml`.   |
+| `0x08` | `save_data_offset` | Byte offset where the heap region begins. Everything between the end of the header and this offset is the entry table. |
+| `0x0C` | _padding_          | Zero bytes up to `0x20`.                                                                                               |
+
+## Entry table
+
+Between `0x20` and `save_data_offset`, the file is a tightly packed sequence of 8-byte entries. Each entry is a `(hash, slot)` pair, exactly as described on the [data types](/save-reference/data-types/#inline-scalars) page.
+
+Entries are grouped by `DataType`, and every group is introduced by a [type sentinel](/save-reference/glossary/#type-sentinel) (`hash == 0`, `slot == DataType`). The sentinel sets the type for every entry that follows until the next sentinel.
+
+The groups appear in a fixed order, with one sentinel per type even when the group is empty:
+
+```
+Bool, BoolArray,
+Int, IntArray,
+Float, FloatArray,
+Enum, EnumArray,
+Vector2, Vector2Array,
+Vector3, Vector3Array,
+String16, String16Array,
+String32, String32Array,
+String64, String64Array,
+Binary, BinaryArray,
+UInt, UIntArray,
+Int64, Int64Array,
+UInt64, UInt64Array,
+WString16, WString16Array,
+WString32, WString32Array,
+WString64, WString64Array,
+Bool64bitKey
+```
+
+## Heap
+
+The region from `save_data_offset` to the end of the file holds every payload that doesn't fit in a 4-byte slot. For those entries, the inline slot is a byte offset into the file (not into the heap), and the payload at that offset is laid out per its `DataType`:
+
+- **Variable-length payloads** start with a 4-byte little-endian length, followed by the elements: a byte size for `Binary`, an element count for arrays. `BinaryArray` is an element count, and each element is itself a length-prefixed `Binary`.
+- **Fixed-size payloads** (`Int64`, `UInt64`, `Vector2`, `Vector3`, all string types) sit directly at the offset with no length prefix.
+
+Heap payloads are not aligned, they sit back-to-back.
+
+[`Bool64bitKey`](/save-reference/data-types/#bool64bitkey) is the sole exception: its slot is always `0` and it has no heap allocation.
+
+## Hex pattern
+
+The following ImHex pattern was written by SuperSpazzy, and updated by dt12345 and Alexis.
+
+```cpp
+#pragma pattern_limit 1000000
+#include <std/mem.pat>
+
+enum StructType : u32 {
+    Bool = 0x00,
+    BoolArray = 0x01,
+    Int = 0x02,
+    IntArray = 0x03,
+    Float = 0x04,
+    FloatArray = 0x05,
+    Enum = 0x06,
+    EnumArray = 0x07,
+    Vector2 = 0x08,
+    Vector2Array = 0x09,
+    Vector3 = 0x0A,
+    Vector3Array = 0x0B,
+    String16 = 0x0C,
+    String16Array = 0x0D,
+    String32 = 0x0E,
+    String32Array = 0x0F,
+    String64 = 0x10,
+    String64Array = 0x11,
+    Binary = 0x12,
+    BinaryArray = 0x13,
+    UInt = 0x14,
+    UIntArray = 0x15,
+    Int64 = 0x16,
+    Int64Array = 0x17,
+    UInt64 = 0x18,
+    UInt64Array = 0x19,
+    WString16 = 0x1A,
+    WString16Array = 0x1B,
+    WString32 = 0x1C,
+    WString32Array = 0x1D,
+    WString64 = 0x1E,
+    WString64Array = 0x1F,
+    Bool64bitKey = 0x20,
+};
+
+StructType mCurrentStruct = StructType::Bool;
+
+struct Vector2 {
+    float x;
+    float y;
+};
+
+struct Vector3 : Vector2 {
+    float z;
+};
+
+struct String<auto size> {
+    char string[];
+    padding[size - sizeof(string)];
+};
+
+struct Binary {
+    u32 size;
+    u8 data[size];
+};
+
+struct WString<auto size> {
+    char16 string[];
+    padding[size * 2 - sizeof(string)];
+};
+
+struct SaveEntry {
+    u32 mHash;
+
+    match(mHash) {
+        (u32(0)):{ StructType mStructType; mCurrentStruct = mStructType; }
+        (_): {
+            match(mCurrentStruct) {
+                (StructType::Bool): { bool mData; padding[3]; }
+                (StructType::BoolArray): { u32 mOffset; u32 mCount @ mOffset; u8 mBitFlags[((mCount + 31) / 32) * 4 < 4 ? 4 : ((mCount + 31) / 32) * 4] @ mOffset + 4;  }
+                (StructType::Int): { s32 mValue; }
+                (StructType::IntArray): { u32 mOffset; u32 mCount @ mOffset; s32 mValue[mCount] @ mOffset + 4; }
+                (StructType::Float): { float mFloat; }
+                (StructType::FloatArray): { u32 mOffset; u32 mCount @ mOffset; float mFloat[mCount] @ mOffset + 4; }
+                (StructType::Enum): { u32 mEnumHash; }
+                (StructType::EnumArray): { u32 mOffset; u32 mCount @ mOffset; u32 mEnumHash[mCount] @ mOffset + 4; }
+                (StructType::Vector2): { u32 mOffset; Vector2 mVector2 @ mOffset; }
+                (StructType::Vector2Array): { u32 mOffset; u32 mCount @ mOffset; Vector2 mVector2[mCount] @ mOffset + 4;}
+                (StructType::Vector3): {  u32 mOffset; Vector3 mVector3 @ mOffset; }
+                (StructType::Vector3Array): { u32 mOffset; u32 mCount @ mOffset; Vector3 mVector3[mCount] @ mOffset + 4; }
+                (StructType::String16): { u32 mOffset; String<16> sString16 @ mOffset; }
+                (StructType::String16Array): { u32 mOffset; u32 mCount @ mOffset; String<16> sString16[mCount] @ mOffset + 4; }
+                (StructType::String32): { u32 mOffset; String<32> sString32 @ mOffset; }
+                (StructType::String32Array): { u32 mOffset; u32 mCount @ mOffset; String<32> sString32[mCount] @ mOffset + 4; }
+                (StructType::String64): { u32 mOffset; String<64> sString64 @ mOffset; }
+                (StructType::String64Array): { u32 mOffset; u32 mCount @ mOffset; String<64> sString64[mCount] @ mOffset + 4; }
+                (StructType::Binary): { u32 mOffset; Binary mData @ mOffset; }
+                (StructType::BinaryArray): { u32 mOffset; u32 mCount @ mOffset; Binary mData[mCount] @ mOffset + 4;  }
+                (StructType::UInt): { u32 mValue; }
+                (StructType::UIntArray): { u32 mOffset; u32 mCount @ mOffset; u32 mValue[mCount] @ mOffset + 4; }
+                (StructType::Int64): { u32 mOffset; s64 mValue @ mOffset; }
+                (StructType::Int64Array): { u32 mOffset; u32 mCount @ mOffset; s64 mValue[mCount] @ mOffset + 4; }
+                (StructType::UInt64): { u32 mOffset; u64 mValue @ mOffset; }
+                (StructType::UInt64Array): { u32 mOffset; u32 mCount @ mOffset; u64 mValue[mCount] @ mOffset + 4; }
+                (StructType::WString16): { u32 mOffset; WString<16> sWString16 @ mOffset; }
+                (StructType::WString16Array): { u32 mOffset; u32 mCount @ mOffset; WString<16> sWString16[mCount] @ mOffset + 4; }
+                (StructType::WString32): { u32 mOffset; WString<32> sWString32 @ mOffset; }
+                (StructType::WString32Array): { u32 mOffset; u32 mCount @ mOffset; WString<32> sWString32[mCount] @ mOffset + 4; }
+                (StructType::WString64): { u32 mOffset; WString<64> sWString64 @ mOffset; }
+                (StructType::WString64Array): { u32 mOffset; u32 mCount @ mOffset; WString<64> sWString64[mCount] @ mOffset + 4; }
+                (StructType::Bool64bitKey): { u32 mOffset; }
+                (_): padding[4];
+            }
+          }
+        }
+};
+
+struct Header {
+    u32 magic;
+    u32 format_version;
+    u32 save_data_offset;
+    std::mem::AlignTo<0x20>;
+
+    SaveEntry BoolEntries[while(mCurrentStruct == StructType::Bool)];
+    SaveEntry BoolArrayEntries[while(mCurrentStruct == StructType::BoolArray)];
+    SaveEntry IntEntries[while(mCurrentStruct == StructType::Int)];
+    SaveEntry IntArrayEntries[while(mCurrentStruct == StructType::IntArray)];
+    SaveEntry FloatEntries[while(mCurrentStruct == StructType::Float)];
+    SaveEntry FloatArrayEntries[while(mCurrentStruct == StructType::FloatArray)];
+    SaveEntry EnumEntries[while(mCurrentStruct == StructType::Enum)];
+    SaveEntry EnumArrayEntries[while(mCurrentStruct == StructType::EnumArray)];
+    SaveEntry Vector2Entries[while(mCurrentStruct == StructType::Vector2)];
+    SaveEntry Vector2ArrayEntries[while(mCurrentStruct == StructType::Vector2Array)];
+    SaveEntry Vector3Entries[while(mCurrentStruct == StructType::Vector3)];
+    SaveEntry Vector3ArrayEntries[while(mCurrentStruct == StructType::Vector3Array)];
+    SaveEntry String16Entries[while(mCurrentStruct == StructType::String16)];
+    SaveEntry String16ArrayEntries[while(mCurrentStruct == StructType::String16Array)];
+    SaveEntry String32Entries[while(mCurrentStruct == StructType::String32)];
+    SaveEntry String32ArrayEntries[while(mCurrentStruct == StructType::String32Array)];
+    SaveEntry String64Entries[while(mCurrentStruct == StructType::String64)];
+    SaveEntry String64ArrayEntries[while(mCurrentStruct == StructType::String64Array)];
+    SaveEntry BinaryEntries[while(mCurrentStruct == StructType::Binary)];
+    SaveEntry BinaryArrayEntries[while(mCurrentStruct == StructType::BinaryArray)];
+    SaveEntry UIntEntries[while(mCurrentStruct == StructType::UInt)];
+    SaveEntry UIntArrayEntries[while(mCurrentStruct == StructType::UIntArray)];
+    SaveEntry Int64Entries[while(mCurrentStruct == StructType::Int64)];
+    SaveEntry Int64ArrayEntries[while(mCurrentStruct == StructType::Int64Array)];
+    SaveEntry UInt64Entries[while(mCurrentStruct == StructType::UInt64)];
+    SaveEntry UInt64ArrayEntries[while(mCurrentStruct == StructType::UInt64Array)];
+    SaveEntry WString16Entries[while(mCurrentStruct == StructType::WString16)];
+    SaveEntry WString16ArrayEntries[while(mCurrentStruct == StructType::WString16Array)];
+    SaveEntry WString32Entries[while(mCurrentStruct == StructType::WString32)];
+    SaveEntry WString32ArrayEntries[while(mCurrentStruct == StructType::WString32Array)];
+    SaveEntry WString64Entries[while(mCurrentStruct == StructType::WString64)];
+    SaveEntry WString64ArrayEntries[while(mCurrentStruct == StructType::WString64Array)];
+    SaveEntry Bool64bitKeyEntries[while($ < save_data_offset)];
+};
+
+Header save_file @ 0x00;
+```

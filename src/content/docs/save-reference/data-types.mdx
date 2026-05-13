@@ -175,4 +175,4 @@ Array types share `tag = scalar_tag + 1`. Each is encoded as a 4-byte little-end
 
 ### Bool64bitKey
 
-`tag = 32` - sentinel used by a handful of fields whose presence is itself the boolean. In-game, the payload is always null and the entry is read as `true` when present and `false` when absent. No other payload shape is known to occur in save files written by the game.
+`tag = 32` - a type carried over from the underlying save framework, not used as a schema field type by Tomodachi Life. `GameDataList.Product.100.byml` declares zero `Bool64bitKey` fields. The only entries the game writes in this section are one per save file, whose `hash` is `murmur3(file_name)` (`Player` -> `0x08b37691`, `Mii` -> `0x5917a80c`, `Map` -> `0x441c30df`), with `slot = 0` and no heap payload.
