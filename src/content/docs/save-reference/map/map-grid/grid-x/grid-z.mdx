@@ -11,7 +11,7 @@ leaves:
   - name: FloorKeyHash
     hash: '0x78e32e1c'
     type: UIntArray
-    state: undocumented
+    state: documented
   - name: UgcIndex
     hash: '0x6b552914'
     type: IntArray
@@ -19,6 +19,7 @@ leaves:
 ---
 
 import LeafMeta from '@components/LeafMeta.astro';
+import Bounds from '@components/Bounds.astro';
 
 {/* Replace this comment with a description for this group. */}
 
@@ -28,7 +29,31 @@ import LeafMeta from '@components/LeafMeta.astro';
 
 <LeafMeta name="FloorKeyHash" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Per-cell terrain map of the player's island, stored as a flat row-major `UInt32` array of `GridX × GridZ` cells (9600 entries, 120 × 80). Each value is the `murmur3_x86_32` hash of a type of floor.
+
+#### Common floor keys
+
+| Hash         | `FloorDefine` row |
+| ------------ | ----------------- |
+| `0xFF4AE68A` | `Grass`           |
+| `0xD21B65B6` | `Water`           |
+| `0xB6D76A62` | `Beach`           |
+| `0xB53F5F3D` | `Seaside`         |
+| `0xA27341ED` | `Clover`          |
+| `0xCF83CF1F` | `Concrete`        |
+| `0x318904D8` | `Concrete_Road`   |
+| `0x9999D173` | `Soil`            |
+
+The full vocabulary is enumerated by `romfs/RSDB/FloorDefine.Product.[ver].rstbl.byml`. Cells whose key is `UGC` (`0x69FFF2F1`) pair with a matching entry in the [`UgcIndex`](#ugcindex) array, which holds the UGC slot index for that cell, non-UGC cells leave `UgcIndex` as `-1`.
+
+<Bounds>
+  <Fragment slot="ingame">
+    `murmur3_x86_32` of any `FloorDefine` row name (e.g. `Grass`, `Water`, `Asphalt_Road`, `UGC`).
+  </Fragment>
+  <Fragment slot="accepted">
+    any `UInt32`, values that aren't in `FloorDefine` fallback to `Soil` in game.
+  </Fragment>
+</Bounds>
 
 ### `UgcIndex`
 
