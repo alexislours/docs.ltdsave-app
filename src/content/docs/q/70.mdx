@@ -1,0 +1,31 @@
+---
+title: 'When will there be a mod to have more than 70 Miis?'
+description: Not soon, most likely never. Read this page to know why.
+---
+
+Short answer: probably never. Not because nobody wants it, plenty of people do, but because it isn't the kind of thing a mod can change with a single tweak. The 70 limit is wired into multiple parts of the game, and all have to be modified or it won't work: the game will crash, saves will get corrupted.
+
+## Why it isn't "just change a number"
+
+Imagine someone hands you the entire Harry Potter series and says "replace every form of the verb _to be_ with something else." You can't just search for `be` and replace, you'd hit `become`, `behind`, `before`, half the names. You have to read each instance, decide whether it's the verb you're rewriting or a look-alike, and rewrite it correctly in context.
+
+Patching the Mii cap is the same problem, with two extra twists:
+
+1. **The "word" doesn't always look the same.** The limit shows up in the binary as `70`, as `0x46`, sometimes as `69` (cap minus one), as `71`... Some occurrences aren't even the literal `70`, for example, the Mii relationships are stored in a list of `4830` elements (70×69).
+2. **You have to read every candidate site anyway**, because you can't tell from the outside whether a given `70` is "the Mii limit" or "an unrelated value that happens to also be 70.".
+
+## The two layers
+
+**1. The romfs data.** The file `GameDataList.Product.100.byml` needs to be updated to account for this new limit on top of some other config files.
+
+**2. The executable.** This is the hard part. The 70 is a compile-time constant baked into the binary, propagated and inlined across hundreds of sites as bounds checks, loop limits, allocator sizes, and struct sizes. This isn't code you can just read as if you had the original source code.
+
+## Performance
+
+Even setting all the patching aside, performance is a real problem. Increasing the number of Miis makes the memory use grow non-linearly. On Switch 1, the constraint isn't memory size, it's memory bandwidth.
+
+One caveat: if a Switch 1 emulator ever lets Nintendo Switch titles run in Nintendo Switch 2 mode, performance would likely stop being a problem.
+
+If you truly want more than 70 Miis today, your only option is to have a second save file.
+
+So, as a conclusion, it's technically possible but very unlikely for someone to be willing to put weeks if not months towards such a project.

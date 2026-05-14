@@ -70,8 +70,9 @@ async function getBgBuffer() {
   return bgBufferPromise;
 }
 
-function eyebrowFor(slug: string): 'Reference' | 'Guide' {
+function eyebrowFor(slug: string): 'Reference' | 'Guide' | 'Q&A' {
   if (slug === 'save-reference' || slug.startsWith('save-reference/')) return 'Reference';
+  if (slug.startsWith('q/')) return 'Q&A';
   return 'Guide';
 }
 

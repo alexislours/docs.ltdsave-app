@@ -75,6 +75,17 @@ export default defineConfig({
                 ...savReferenceSidebar,
               ],
             },
+            {
+              label: 'Misc',
+              link: '/q/70/',
+              icon: 'open-book',
+              items: [
+                {
+                  label: 'Misc',
+                  items: [{ label: 'Why no >70 Mii mod?', slug: 'q/70' }],
+                },
+              ],
+            },
           ],
           {
             exclude: ['/'],
