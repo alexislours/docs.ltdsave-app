@@ -61,19 +61,19 @@ leaves:
   - name: IsLocalNetworkExplained
     hash: '0x95a68688'
     type: Bool
-    state: undocumented
+    state: documented
   - name: IsLocalNetworkFirstReceivedItem
     hash: '0x8e79031d'
     type: Bool
-    state: undocumented
+    state: documented
   - name: IsLocalNetworkFirstReceivedMii
     hash: '0x306439c2'
     type: Bool
-    state: undocumented
+    state: documented
   - name: IsLocalNetworkFirstReceivedUgc
     hash: '0xb679f9d3'
     type: Bool
-    state: undocumented
+    state: documented
   - name: IslandName
     hash: '0xd46df986'
     type: WString32
@@ -416,25 +416,25 @@ Whether the camera's horizontal control is inverted.
 
 <LeafMeta name="IsLocalNetworkExplained" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Whether the player has already been shown the Community Guidelines explanation that precedes the Local Network entry flow. Flipped to `true` once the player confirms the warning dialog, after which subsequent Local Network entries skip the explanation.
 
 ### `IsLocalNetworkFirstReceivedItem`
 
 <LeafMeta name="IsLocalNetworkFirstReceivedItem" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Whether the player has already received an item over Local Network at least once. The first time it happens, the game shows a one-shot notice explaining that received items become available for purchase in the relevant island shop, then flips this flag to `true` so the notice never plays again.
 
 ### `IsLocalNetworkFirstReceivedMii`
 
 <LeafMeta name="IsLocalNetworkFirstReceivedMii" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Whether the player has already received a Mii over Local Network at least once. The first time it happens, the game shows a one-shot notice explaining that Miis received via local play cannot be shared with other people, then flips this flag to `true` so the notice never plays again.
 
 ### `IsLocalNetworkFirstReceivedUgc`
 
 <LeafMeta name="IsLocalNetworkFirstReceivedUgc" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Whether the player has already received an UGC over Local Network at least once. The first time it happens, the game shows a one-shot notice explaining that UGC received via local play cannot be shared with other people, then flips this flag to `true` so the notice never plays again.
 
 ### `IslandName`
 
