@@ -35,3 +35,5 @@ node_modules
 .wrangler/
 
 CLAUDE.md
+
+public/d2/

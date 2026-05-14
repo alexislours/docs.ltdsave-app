@@ -23,6 +23,7 @@
   "dependencies": {
     "@astrojs/starlight": "^0.39.2",
     "astro": "^6.2.2",
+    "astro-d2": "^0.10.0",
     "canvaskit-wasm": "^0.41.1",
     "entities": "^8.0.0",
     "sharp": "^0.34.5",

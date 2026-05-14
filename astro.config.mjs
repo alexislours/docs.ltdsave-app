@@ -4,11 +4,13 @@ import starlight from '@astrojs/starlight';
 import starlightSidebarTopics from 'starlight-sidebar-topics';
 import starlightLinksValidator from 'starlight-links-validator';
 import starlightImageZoom from 'starlight-image-zoom';
+import astroD2 from 'astro-d2';
 import savReferenceSidebar from './src/data/sidebar-save-reference.ts';
 
 export default defineConfig({
   site: 'https://docs.ltdsave.app',
   integrations: [
+    astroD2(),
     starlight({
       title: 'ltdsave.app docs',
       description:

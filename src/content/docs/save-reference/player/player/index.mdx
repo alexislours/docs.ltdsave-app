@@ -24,7 +24,7 @@ leaves:
     hash: '0xdc88f139'
     type: Enum
     options: CURRENCY
-    state: undocumented
+    state: documented
   - name: EmotionBall
     hash: '0x65f482a4'
     type: UInt
@@ -264,8 +264,9 @@ subgroups:
 
 import LeafMeta from '@components/LeafMeta.astro';
 import Bounds from '@components/Bounds.astro';
+import ValueDescriptions from '@components/ValueDescriptions.astro';
 
-{/* Replace this comment with a description for this group. */}
+Top-level keys of Player.sav.
 
 ## Fields
 
@@ -300,7 +301,62 @@ How many times the game has been started. On game start, this variable is increm
 
 <LeafMeta name="Currency" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+The currency displayed in the game. In normal gameplay, directly tied to the [Region](#region) selected at the start of the game.
+
+| `Player.Region` | Available `Player.Currency` values                           |
+| --------------- | ------------------------------------------------------------ |
+| `Japan`         | `Yen`, forced                                                |
+| `Europe`        | `Euro` **or** `Pound`                                        |
+| `NorthAmerica`  | `Dollar` **or** `Peso`                                       |
+| `SouthAmericaN` | `Dollar` **or** `Peso`                                       |
+| `SouthAmericaS` | `Dollar` **or** `Peso`                                       |
+| `Australia`     | `Dollar`, forced                                             |
+| `Asia`          | `AsiaDollar` **or** `Won`                                    |
+| `OthersN`       | one of `Yen`, `AsiaDollar`, `Euro`, `Dollar`, no user choice |
+| `OthersS`       | one of `Yen`, `AsiaDollar`, `Euro`, `Dollar`, no user choice |
+
+For the `OthersN` and `OthersS` regions, the game automatically picks the currency based on the following logic:
+
+```d2 title="OthersN/OthersS currency flowchart" width=300
+
+start: "Region = OthersN or OthersS"
+call: "nn::time::GetDeviceLocationName()"
+
+a: "region == Asia\nAND city == Tokyo" {shape: diamond}
+b: "region == Asia" {shape: diamond}
+c: "region == Europe" {shape: diamond}
+d: "region == Australia" {shape: diamond}
+
+yen: "Yen"
+asiaDollar: "AsiaDollar"
+euro: "Euro"
+dollar: "Dollar"
+
+start -> call
+call -> a
+a -> yen: "yes"
+a -> b: "no"
+b -> asiaDollar: "yes"
+b -> c: "no"
+c -> euro: "yes"
+c -> d: "no"
+d -> dollar: "yes"
+d -> dollar: "no"
+```
+
+<ValueDescriptions name="Currency" leaves={frontmatter.leaves}>
+  <Fragment slot="Invalid">Currency set before the user picks one.</Fragment>
+  <Fragment slot="Yen">Represented by `¥` in game.</Fragment>
+  <Fragment slot="Dollar">Represented by `$` in game.</Fragment>
+  <Fragment slot="Euro">Represented by `€` in game.</Fragment>
+  <Fragment slot="Pound">Represented by `£` in game.</Fragment>
+  <Fragment slot="AsiaDollar">Represented by `$` in game.</Fragment>
+  <Fragment slot="Won">Represented by `₩` in game.</Fragment>
+  <Fragment slot="Yuan">Unused by the game, no localization.</Fragment>
+  <Fragment slot="Rouble">Unused by the game, no localization.</Fragment>
+  <Fragment slot="Peso">Represented by `$` in game.</Fragment>
+  <Fragment slot="GeneralUse">Unused by the game, no localization.</Fragment>
+</ValueDescriptions>
 
 ### `EmotionBall`
 
