@@ -14,51 +14,66 @@ interface Props {
 }
 
 const { schemaTotals } = Astro.props;
+
+function buildViews(t: Totals) {
+  return [
+    {
+      label: 'Unique leaves',
+      leafCount: t.uniqueLeafCount,
+      documented: t.uniqueDocumented,
+      partial: t.uniquePartial,
+      undocumented: t.uniqueUndocumented,
+    },
+    {
+      label: 'Per instance',
+      leafCount: t.leafCount,
+      documented: t.documented,
+      partial: t.partial,
+      undocumented: t.undocumented,
+    },
+  ];
+}
 ---
 
 <div class="cov-cards">
   {
     SCHEMA_KEYS.map((key) => {
       const t = schemaTotals[key];
-      const docPct = pct(t.uniqueDocumented, t.uniqueLeafCount);
-      const partPct = pct(t.uniquePartial, t.uniqueLeafCount);
-      const undocPct = pct(t.uniqueUndocumented, t.uniqueLeafCount);
-      const instDocPct = pct(t.documented, t.leafCount);
+      const views = buildViews(t);
       return (
         <a class="cov-card" href={`#per-page-${key}`} style={`--accent:${SCHEMA_ACCENTS[key]}`}>
           <div class="cov-card-head">
             <span class="cov-card-name">{SCHEMA_LABELS[key]}</span>
-            <span class="cov-card-inst" title="Per-instance documented %">
-              {instDocPct.toFixed(1)}% inst.
-            </span>
           </div>
 
-          <div class="cov-card-splits">
-            <div class="mini mini-doc">
-              <div class="mini-label">Done</div>
-              <div class="mini-pct">{docPct.toFixed(1)}%</div>
-            </div>
-            <div class="mini mini-part">
-              <div class="mini-label">Part.</div>
-              <div class="mini-pct">{partPct.toFixed(1)}%</div>
-            </div>
-            <div class="mini mini-undoc">
-              <div class="mini-label">To do</div>
-              <div class="mini-pct">{undocPct.toFixed(1)}%</div>
-            </div>
-          </div>
+          {views.map((v) => (
+            <div class="cov-card-view">
+              <div class="cov-card-view-label">{v.label}</div>
 
-          <Bar
-            documented={t.uniqueDocumented}
-            partial={t.uniquePartial}
-            total={t.uniqueLeafCount}
-          />
+              <div class="cov-card-splits">
+                <div class="mini mini-doc">
+                  <div class="mini-label">Done</div>
+                  <div class="mini-pct">{pct(v.documented, v.leafCount).toFixed(1)}%</div>
+                </div>
+                <div class="mini mini-part">
+                  <div class="mini-label">Part.</div>
+                  <div class="mini-pct">{pct(v.partial, v.leafCount).toFixed(1)}%</div>
+                </div>
+                <div class="mini mini-undoc">
+                  <div class="mini-label">To do</div>
+                  <div class="mini-pct">{pct(v.undocumented, v.leafCount).toFixed(1)}%</div>
+                </div>
+              </div>
 
-          <div class="cov-card-foot">
-            <span>
-              {t.uniqueDocumented} / {t.uniqueLeafCount} unique leaves
-            </span>
-          </div>
+              <Bar documented={v.documented} partial={v.partial} total={v.leafCount} />
+
+              <div class="cov-card-foot">
+                <span>
+                  {v.documented.toLocaleString()} / {v.leafCount.toLocaleString()} leaves
+                </span>
+              </div>
+            </div>
+          ))}
         </a>
       );
     })
@@ -97,7 +112,7 @@ const { schemaTotals } = Astro.props;
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    margin-bottom: 0.55rem;
+    margin-bottom: 0.7rem;
     gap: 0.5rem;
   }
 
@@ -106,10 +121,19 @@ const { schemaTotals } = Astro.props;
     font-size: 0.95rem;
   }
 
-  .cov-card-inst {
-    font-size: 0.72rem;
-    font-variant-numeric: tabular-nums;
+  .cov-card-view + .cov-card-view {
+    margin-top: 0.9rem;
+    padding-top: 0.8rem;
+    border-top: 1px dashed var(--sl-color-gray-5);
+  }
+
+  .cov-card-view-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
     color: var(--sl-color-gray-3);
+    margin-bottom: 0.45rem;
   }
 
   .cov-card-splits {
@@ -156,9 +180,7 @@ const { schemaTotals } = Astro.props;
   }
 
   .cov-card-foot {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 0.55rem;
+    margin-top: 0.5rem;
     font-size: 0.78rem;
     color: var(--sl-color-gray-2);
   }
