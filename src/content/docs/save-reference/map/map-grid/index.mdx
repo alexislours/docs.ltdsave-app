@@ -11,7 +11,7 @@ leaves:
   - name: UnlockAreaGroup
     hash: '0x6a8060aa'
     type: UInt64Array
-    state: undocumented
+    state: documented
 subgroups:
   - name: GridX
     leafCount: 2
@@ -27,7 +27,8 @@ import LeafMeta from '@components/LeafMeta.astro';
 
 <LeafMeta name="UnlockAreaGroup" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Declared in the map schema as a fixed-size `UInt64Array` of 4 elements, but never read or written by the game. Always `[0, 0, 0, 0]` in normal gameplay.
+Likely a leftover from an earlier per-level area-group system that was replaced by [`Player.UnlockMapLevel`](../../player/player/#unlockmaplevel).
 
 ## Subgroups
 
