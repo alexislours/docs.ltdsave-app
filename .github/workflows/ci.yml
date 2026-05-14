@@ -27,6 +27,9 @@ jobs:
 
       - run: npm ci
 
+      - name: Install D2
+        run: curl -fsSL https://d2lang.com/install.sh | sh -s --
+
       - run: npm run lint
       - run: npm run check
       - run: npm run knip
