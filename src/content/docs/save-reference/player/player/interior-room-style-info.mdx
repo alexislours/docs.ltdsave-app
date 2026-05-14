@@ -12,32 +12,32 @@ leaves:
   - name: FirstObtainedSec
     hash: '-'
     type: UInt64
-    state: undocumented
+    state: documented
   - name: InformedNewRelease
     hash: '-'
     type: Bool
-    state: undocumented
+    state: documented
   - name: IsNewlyOwned
     hash: '-'
     type: Bool
-    state: undocumented
+    state: documented
   - name: KeyHash
     hash: '-'
     type: UInt
-    state: undocumented
+    state: documented
   - name: LastObtainedSec
     hash: '-'
     type: UInt64
-    state: undocumented
+    state: documented
   - name: OwnNum
     hash: '-'
     type: Int
-    state: undocumented
+    state: documented
   - name: State
     hash: '-'
     type: Enum
     options: OBTAIN_STATE
-    state: undocumented
+    state: documented
 instances:
   - name: Abduction00
     hashes:
@@ -2499,8 +2499,10 @@ instances:
 ---
 
 import LeafMeta from '@components/LeafMeta.astro';
+import Bounds from '@components/Bounds.astro';
+import ValueDescriptions from '@components/ValueDescriptions.astro';
 
-{/* Replace this comment with a description for this template group as a whole. */}
+These leaves control the state of interior styles owned by the player.
 
 ## Shape
 
@@ -2510,43 +2512,107 @@ Every entry under `Player.InteriorRoomStyleInfo` has the same shape. The fields 
 
 <LeafMeta name="FirstObtainedSec" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+POSIX timestamp in seconds (`nn::time::PosixTime`) recorded the very first time the player ever acquires this room style.
+
+<Bounds>
+  <Fragment slot="ingame">
+    `0` if the room style has never been acquired, otherwise a POSIX timestamp at or after the
+    game's release.
+  </Fragment>
+  <Fragment slot="accepted">any `UInt64` value.</Fragment>
+</Bounds>
 
 ### `InformedNewRelease`
 
 <LeafMeta name="InformedNewRelease" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Whether the shop has already shown the "new arrival" weekly announcement for this specific room-style variant.
+
+Only styles flagged `IsWeeklyItem` in `romfs/RSDB/RoomStyleInteriorShopSetting.Product.[ver].rstbl.byml.yml` can ever become `true` in normal gameplay.
 
 ### `IsNewlyOwned`
 
 <LeafMeta name="IsNewlyOwned" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+This boolean controls whether the room style has recently been acquired by the player. This is what drives the "NEW!" badge on each variant tile in the reform / room-style picker.
+
+Opening the room-style picker on that variant clears this boolean.
+
+<ValueDescriptions name="IsNewlyOwned" leaves={frontmatter.leaves}>
+  <Fragment slot="false">
+    The room style hasn't been acquired, or it has been acquired and the player has opened the
+    room-style picker on it since.
+  </Fragment>
+  <Fragment slot="true">
+    The player hasn't opened the room-style picker on it since obtaining the room style.
+  </Fragment>
+</ValueDescriptions>
 
 ### `KeyHash`
 
 <LeafMeta name="KeyHash" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Inline counterpart of the array-form [`Player.BuildingInfo2.KeyHash`](../building-info2/#keyhash) and [`Player.FloorInfo.KeyHash`](../floor-info/#keyhash). The field is unused for room-styles.
+
+<Bounds>
+  <Fragment slot="ingame">always `0`.</Fragment>
+  <Fragment slot="accepted">any `UInt32` value.</Fragment>
+</Bounds>
 
 ### `LastObtainedSec`
 
 <LeafMeta name="LastObtainedSec" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+POSIX timestamp in seconds (`nn::time::PosixTime`) recorded when:
+
+- The `State` goes from `Lock` → `Obtained`.
+- The room style is obtained again.
+
+`0` if the room style isn't currently held as `Obtained`.
+
+<Bounds>
+  <Fragment slot="ingame">
+    `0` if the room style isn't currently held as `Obtained`, otherwise a POSIX timestamp at or
+    after the game's release.
+  </Fragment>
+  <Fragment slot="accepted">any `UInt64` value.</Fragment>
+</Bounds>
 
 ### `OwnNum`
 
 <LeafMeta name="OwnNum" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+The number of copies of this room-style variant the player currently holds. Decremented by 1 each time the variant is applied to a Mii's room.
+
+While the variant has never been obtained by the player it stays at the schema default `-2`, paired with `State = Lock`. Changed to a non-negative count once the variant becomes obtainable.
+
+<Bounds>
+  <Fragment slot="ingame">
+    `-2` while the variant is `Locked`, otherwise a non-negative count of held copies.
+  </Fragment>
+  <Fragment slot="accepted">any `Int` value.</Fragment>
+</Bounds>
 
 ### `State`
 
 <LeafMeta name="State" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+The lifecycle state of the room-style variant.
+
+<ValueDescriptions name="State" leaves={frontmatter.leaves}>
+  <Fragment slot="Lock">
+    The room-style variant isn't unlocked or in the shop yet. Paired with `OwnNum = -2`.
+  </Fragment>
+  <Fragment slot="New">Unused by room-styles but a valid value.</Fragment>
+  <Fragment slot="Arrived">Unused by room-styles but a valid value.</Fragment>
+  <Fragment slot="Opened">
+    The shop has revealed the variant to the player but not purchased yet. Paired with `OwnNum = 0`.
+  </Fragment>
+  <Fragment slot="Obtained">
+    The player has obtained this variant at least once. Sticky: even if `OwnNum` goes back to `0`,
+    does not demote it back to `Opened`.
+  </Fragment>
+</ValueDescriptions>
 
 ## Instances (273)
 
