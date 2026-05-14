@@ -77,12 +77,12 @@ leaves:
   - name: IslandName
     hash: '0xd46df986'
     type: WString32
-    state: undocumented
+    state: documented
   - name: IslandNameRegionLanguageID
     hash: '0x7bbff932'
     type: Enum
     options: LANGUAGE
-    state: undocumented
+    state: documented
   - name: LastBazaarPurchasedTime
     hash: '0xa829da1d'
     type: UInt64
@@ -440,13 +440,32 @@ Whether the player has already received an UGC over Local Network at least once.
 
 <LeafMeta name="IslandName" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+The display name of the player's island. Picked once during the new-game tutorial and re-editable from the in-game settings.
 
 ### `IslandNameRegionLanguageID`
 
 <LeafMeta name="IslandNameRegionLanguageID" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Region+language combo in use when the player typed [IslandName](#islandname).
+
+<ValueDescriptions name="IslandNameRegionLanguageID" leaves={frontmatter.leaves}>
+  <Fragment slot="JPja">Japan, Japanese. Default value.</Fragment>
+  <Fragment slot="USen">Americas, English.</Fragment>
+  <Fragment slot="USes">Americas, Spanish.</Fragment>
+  <Fragment slot="USfr">Americas, French.</Fragment>
+  <Fragment slot="USpt">Americas, Portuguese.</Fragment>
+  <Fragment slot="EUen">Europe, English.</Fragment>
+  <Fragment slot="EUes">Europe, Spanish.</Fragment>
+  <Fragment slot="EUfr">Europe, French.</Fragment>
+  <Fragment slot="EUde">Europe, German.</Fragment>
+  <Fragment slot="EUit">Europe, Italian.</Fragment>
+  <Fragment slot="EUpt">Europe, Portuguese.</Fragment>
+  <Fragment slot="EUnl">Europe, Dutch.</Fragment>
+  <Fragment slot="EUru">Europe, Russian.</Fragment>
+  <Fragment slot="KRko">Korea, Korean.</Fragment>
+  <Fragment slot="CNzh">China, Simplified Chinese.</Fragment>
+  <Fragment slot="TWzh">Taiwan, Traditional Chinese.</Fragment>
+</ValueDescriptions>
 
 ### `LastBazaarPurchasedTime`
 
