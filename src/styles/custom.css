@@ -14,11 +14,6 @@
   --sl-color-accent-high: #7c2d12; /* orange-900 */
 }
 
-.sl-markdown-content table {
-  display: table !important;
-  width: 100% !important;
-}
-
 .sl-markdown-content img[src*='/d2/'] {
   display: block;
   margin-inline: auto;
