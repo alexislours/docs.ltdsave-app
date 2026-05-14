@@ -15,13 +15,13 @@ leaves:
   - name: UgcIndex
     hash: '0x6b552914'
     type: IntArray
-    state: undocumented
+    state: documented
 ---
 
 import LeafMeta from '@components/LeafMeta.astro';
 import Bounds from '@components/Bounds.astro';
 
-{/* Replace this comment with a description for this group. */}
+These leaves define the ground of the map.
 
 ## Fields
 
@@ -59,4 +59,13 @@ The full vocabulary is enumerated by `romfs/RSDB/FloorDefine.Product.[ver].rstbl
 
 <LeafMeta name="UgcIndex" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Companion to [`FloorKeyHash`](#floorkeyhash): same shape (flat row-major `Int32`, 9600 entries for `GridX × GridZ`), one slot per island cell. Whenever a cell's `FloorKeyHash` is `UGC` (`0x69FFF2F1`), `UgcIndex` holds the index of the `Ugc/UgcMapFloor%03d.{canvas,ugctex}.zs` slot to use. Every other cell have the value `-1`.
+
+<Bounds>
+  <Fragment slot="ingame">
+    `-1` for cells with no UGC floor, otherwise `0`..`99`, matching the UGC index.
+  </Fragment>
+  <Fragment slot="accepted">
+    any signed `Int32`. If there is no match, it will fallback to `Soil` in game.
+  </Fragment>
+</Bounds>
