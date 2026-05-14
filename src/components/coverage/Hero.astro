@@ -1,40 +1,81 @@
 ---
 import Bar from './Bar.astro';
-import { weighted, type Totals } from '../../lib/coverage';
+import { pct, type Totals } from '../../lib/coverage';
 
 interface Props {
   totals: Totals;
 }
 
 const { totals } = Astro.props;
-const overall = weighted(totals);
+
+const views = [
+  {
+    label: 'Unique leaves',
+    hint: 'one entry per template, reflects authoring effort',
+    leafCount: totals.uniqueLeafCount,
+    documented: totals.uniqueDocumented,
+    partial: totals.uniquePartial,
+    undocumented: totals.uniqueUndocumented,
+  },
+  {
+    label: 'Per instance',
+    hint: 'templates expanded by instance count',
+    leafCount: totals.leafCount,
+    documented: totals.documented,
+    partial: totals.partial,
+    undocumented: totals.undocumented,
+  },
+];
 ---
 
 <section class="cov-hero">
-  <div class="cov-hero-head">
-    <div class="cov-hero-title">Overall coverage</div>
-    <div class="cov-hero-pct">{overall.toFixed(1)}<span>%</span></div>
-  </div>
+  <div class="cov-hero-title">Overall coverage</div>
 
-  <Bar documented={totals.documented} partial={totals.partial} total={totals.leafCount} size="lg" />
+  {
+    views.map((v) => (
+      <div class="cov-view">
+        <div class="cov-view-head">
+          <span class="cov-view-label">{v.label}</span>
+          <span class="cov-view-hint">{v.hint}</span>
+        </div>
 
-  <div class="cov-hero-stats">
-    <span class="stat stat-doc">
-      <span class="sw"></span>
-      <strong>{totals.documented.toLocaleString()}</strong> documented
-    </span>
-    <span class="stat stat-part">
-      <span class="sw"></span>
-      <strong>{totals.partial.toLocaleString()}</strong> partial
-    </span>
-    <span class="stat stat-undoc">
-      <span class="sw"></span>
-      <strong>{totals.undocumented.toLocaleString()}</strong> to do
-    </span>
-    <span class="stat stat-total">
-      out of <strong>{totals.leafCount.toLocaleString()}</strong> leaves
-    </span>
-  </div>
+        <div class="cov-hero-splits">
+          <div class="split split-doc">
+            <div class="split-label">Documented</div>
+            <div class="split-pct">{pct(v.documented, v.leafCount).toFixed(1)}%</div>
+          </div>
+          <div class="split split-part">
+            <div class="split-label">Partial</div>
+            <div class="split-pct">{pct(v.partial, v.leafCount).toFixed(1)}%</div>
+          </div>
+          <div class="split split-undoc">
+            <div class="split-label">To do</div>
+            <div class="split-pct">{pct(v.undocumented, v.leafCount).toFixed(1)}%</div>
+          </div>
+        </div>
+
+        <Bar documented={v.documented} partial={v.partial} total={v.leafCount} size="lg" />
+
+        <div class="cov-hero-stats">
+          <span class="stat stat-doc">
+            <span class="sw" />
+            <strong>{v.documented.toLocaleString()}</strong> documented
+          </span>
+          <span class="stat stat-part">
+            <span class="sw" />
+            <strong>{v.partial.toLocaleString()}</strong> partial
+          </span>
+          <span class="stat stat-undoc">
+            <span class="sw" />
+            <strong>{v.undocumented.toLocaleString()}</strong> to do
+          </span>
+          <span class="stat stat-total">
+            out of <strong>{v.leafCount.toLocaleString()}</strong> leaves
+          </span>
+        </div>
+      </div>
+    ))
+  }
 </section>
 
 <style>
@@ -46,35 +87,81 @@ const overall = weighted(totals);
     border: 1px solid var(--sl-color-gray-5);
   }
 
-  .cov-hero-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-  }
-
   .cov-hero-title {
     font-size: 0.78rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--sl-color-gray-3);
+    margin-bottom: 1rem;
   }
 
-  .cov-hero-pct {
-    font-size: 3rem;
+  .cov-view + .cov-view {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px dashed var(--sl-color-gray-5);
+  }
+
+  .cov-view-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.6rem;
+  }
+
+  .cov-view-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--sl-color-text);
+  }
+
+  .cov-view-hint {
+    font-size: 0.75rem;
+    color: var(--sl-color-gray-3);
+  }
+
+  .cov-hero-splits {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .split {
+    background: var(--sl-color-gray-6);
+    border-radius: 0.5rem;
+    padding: 0.75rem 0.5rem;
+    text-align: center;
+    margin-top: 0;
+  }
+
+  .split-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--sl-color-gray-3);
+    line-height: 1;
+    margin-bottom: 0.55rem;
+    white-space: nowrap;
+  }
+
+  .split-pct {
+    font-size: 1.75rem;
     font-weight: 700;
     line-height: 1;
-    color: var(--sl-color-text);
     font-variant-numeric: tabular-nums;
   }
 
-  .cov-hero-pct span {
-    font-size: 1.5rem;
-    color: var(--sl-color-gray-3);
-    margin-left: 0.1rem;
+  .split-doc .split-pct {
+    color: #16a34a;
+  }
+  .split-part .split-pct {
+    color: #eab308;
+  }
+  .split-undoc .split-pct {
+    color: var(--sl-color-text);
   }
 
   .cov-hero-stats {
@@ -118,8 +205,8 @@ const overall = weighted(totals);
     .cov-hero {
       padding: 1.1rem 1.25rem;
     }
-    .cov-hero-pct {
-      font-size: 2.4rem;
+    .split-pct {
+      font-size: 1.3rem;
     }
   }
 </style>

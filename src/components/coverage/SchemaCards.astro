@@ -1,10 +1,10 @@
 ---
 import Bar from './Bar.astro';
 import {
+  pct,
   SCHEMA_KEYS,
   SCHEMA_ACCENTS,
   SCHEMA_LABELS,
-  weighted,
   type SchemaKey,
   type Totals,
 } from '../../lib/coverage';
@@ -20,18 +20,44 @@ const { schemaTotals } = Astro.props;
   {
     SCHEMA_KEYS.map((key) => {
       const t = schemaTotals[key];
+      const docPct = pct(t.uniqueDocumented, t.uniqueLeafCount);
+      const partPct = pct(t.uniquePartial, t.uniqueLeafCount);
+      const undocPct = pct(t.uniqueUndocumented, t.uniqueLeafCount);
+      const instDocPct = pct(t.documented, t.leafCount);
       return (
         <a class="cov-card" href={`#per-page-${key}`} style={`--accent:${SCHEMA_ACCENTS[key]}`}>
           <div class="cov-card-head">
             <span class="cov-card-name">{SCHEMA_LABELS[key]}</span>
-            <span class="cov-card-pct">{weighted(t).toFixed(1)}%</span>
+            <span class="cov-card-inst" title="Per-instance documented %">
+              {instDocPct.toFixed(1)}% inst.
+            </span>
           </div>
-          <Bar documented={t.documented} partial={t.partial} total={t.leafCount} />
+
+          <div class="cov-card-splits">
+            <div class="mini mini-doc">
+              <div class="mini-label">Done</div>
+              <div class="mini-pct">{docPct.toFixed(1)}%</div>
+            </div>
+            <div class="mini mini-part">
+              <div class="mini-label">Part.</div>
+              <div class="mini-pct">{partPct.toFixed(1)}%</div>
+            </div>
+            <div class="mini mini-undoc">
+              <div class="mini-label">To do</div>
+              <div class="mini-pct">{undocPct.toFixed(1)}%</div>
+            </div>
+          </div>
+
+          <Bar
+            documented={t.uniqueDocumented}
+            partial={t.uniquePartial}
+            total={t.uniqueLeafCount}
+          />
+
           <div class="cov-card-foot">
             <span>
-              {t.documented} / {t.leafCount} fully documented
+              {t.uniqueDocumented} / {t.uniqueLeafCount} unique leaves
             </span>
-            <span class="muted">{t.partial} partial</span>
           </div>
         </a>
       );
@@ -42,7 +68,7 @@ const { schemaTotals } = Astro.props;
 <style>
   .cov-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: 1fr;
     gap: 0.85rem;
     margin: 0 0 2.5rem;
   }
@@ -80,11 +106,53 @@ const { schemaTotals } = Astro.props;
     font-size: 0.95rem;
   }
 
-  .cov-card-pct {
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: var(--accent);
+  .cov-card-inst {
+    font-size: 0.72rem;
     font-variant-numeric: tabular-nums;
+    color: var(--sl-color-gray-3);
+  }
+
+  .cov-card-splits {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.35rem;
+    margin-bottom: 0.55rem;
+  }
+
+  .mini {
+    background: var(--sl-color-gray-6);
+    border-radius: 0.35rem;
+    padding: 0.35rem 0.25rem;
+    text-align: center;
+    margin-top: 0;
+  }
+
+  .mini-label {
+    font-size: 0.62rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--sl-color-gray-3);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+    white-space: nowrap;
+  }
+
+  .mini-pct {
+    font-size: 0.95rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+
+  .mini-doc .mini-pct {
+    color: #16a34a;
+  }
+  .mini-part .mini-pct {
+    color: #eab308;
+  }
+  .mini-undoc .mini-pct {
+    color: var(--sl-color-text);
   }
 
   .cov-card-foot {
@@ -93,9 +161,5 @@ const { schemaTotals } = Astro.props;
     margin-top: 0.55rem;
     font-size: 0.78rem;
     color: var(--sl-color-gray-2);
-  }
-
-  .cov-card-foot .muted {
-    color: var(--sl-color-gray-3);
   }
 </style>

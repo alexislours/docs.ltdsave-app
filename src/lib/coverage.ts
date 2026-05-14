@@ -14,6 +14,10 @@ export type Page = {
   documented: number;
   partial: number;
   undocumented: number;
+  uniqueLeafCount: number;
+  uniqueDocumented: number;
+  uniquePartial: number;
+  uniqueUndocumented: number;
 };
 
 export type Totals = {
@@ -21,6 +25,10 @@ export type Totals = {
   documented: number;
   partial: number;
   undocumented: number;
+  uniqueLeafCount: number;
+  uniqueDocumented: number;
+  uniquePartial: number;
+  uniqueUndocumented: number;
 };
 
 export const SCHEMA_KEYS: readonly SchemaKey[] = ['player', 'mii', 'map'] as const;
@@ -45,12 +53,17 @@ export function fmtPct(n: number, d: number): string {
   return d === 0 ? '-' : pct(n, d).toFixed(1) + '%';
 }
 
-export function weighted(t: Totals): number {
-  return pct(t.documented + t.partial * 0.5, t.leafCount);
-}
-
 function emptyTotals(): Totals {
-  return { leafCount: 0, documented: 0, partial: 0, undocumented: 0 };
+  return {
+    leafCount: 0,
+    documented: 0,
+    partial: 0,
+    undocumented: 0,
+    uniqueLeafCount: 0,
+    uniqueDocumented: 0,
+    uniquePartial: 0,
+    uniqueUndocumented: 0,
+  };
 }
 
 function addTotals(target: Totals, page: Page): void {
@@ -58,6 +71,10 @@ function addTotals(target: Totals, page: Page): void {
   target.documented += page.documented;
   target.partial += page.partial;
   target.undocumented += page.undocumented;
+  target.uniqueLeafCount += page.uniqueLeafCount;
+  target.uniqueDocumented += page.uniqueDocumented;
+  target.uniquePartial += page.uniquePartial;
+  target.uniqueUndocumented += page.uniqueUndocumented;
 }
 
 export async function loadCoverage(): Promise<{
@@ -100,6 +117,10 @@ export async function loadCoverage(): Promise<{
       documented: documented * multiplier,
       partial: partial * multiplier,
       undocumented: undocumented * multiplier,
+      uniqueLeafCount: leaves.length,
+      uniqueDocumented: documented,
+      uniquePartial: partial,
+      uniqueUndocumented: undocumented,
     };
   });
 
