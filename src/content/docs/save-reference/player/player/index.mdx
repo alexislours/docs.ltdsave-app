@@ -45,11 +45,11 @@ leaves:
   - name: HowToCallIslandName
     hash: '0xc6482c14'
     type: WString64
-    state: undocumented
+    state: documented
   - name: HowToCallName
     hash: '0xbd8c4da1'
     type: WString64
-    state: undocumented
+    state: documented
   - name: IsCameraReverseRotateY
     hash: '0x49dd6d07'
     type: Bool
@@ -392,13 +392,13 @@ The hemisphere the player's island is in. Picked once during the initial-setup w
 
 <LeafMeta name="HowToCallIslandName" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Phonetic spelling of the island name, used by the text-to-speech to pronounce the island name aloud.
 
 ### `HowToCallName`
 
 <LeafMeta name="HowToCallName" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Phonetic spelling of the player [Name](#name), used by the text-to-speech to pronounce the player's name aloud.
 
 ### `IsCameraReverseRotateY`
 
