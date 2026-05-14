@@ -41,7 +41,7 @@ leaves:
     hash: '0xc479eba0'
     type: Enum
     options: HEMISPHERE
-    state: undocumented
+    state: documented
   - name: HowToCallIslandName
     hash: '0xc6482c14'
     type: WString64
@@ -380,7 +380,13 @@ POSIX timestamp in seconds of when the game was first started.
 
 <LeafMeta name="Hemisphere" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+The hemisphere the player's island is in. Picked once during the initial-setup wizard or derived from [Region](#region), and used afterwards to drive some dialogs and when the seasons change.
+
+<ValueDescriptions name="Hemisphere" leaves={frontmatter.leaves}>
+  <Fragment slot="Invalid">Hemisphere set before the user picks one or selects a region.</Fragment>
+  <Fragment slot="North">Northern hemisphere.</Fragment>
+  <Fragment slot="South">Southern hemisphere.</Fragment>
+</ValueDescriptions>
 
 ### `HowToCallIslandName`
 
