@@ -53,15 +53,15 @@ function buildViews(t: Totals) {
               <div class="cov-card-splits">
                 <div class="mini mini-doc">
                   <div class="mini-label">Done</div>
-                  <div class="mini-pct">{pct(v.documented, v.leafCount).toFixed(1)}%</div>
+                  <div class="mini-pct">{pct(v.documented, v.leafCount).toFixed(2)}%</div>
                 </div>
                 <div class="mini mini-part">
                   <div class="mini-label">Part.</div>
-                  <div class="mini-pct">{pct(v.partial, v.leafCount).toFixed(1)}%</div>
+                  <div class="mini-pct">{pct(v.partial, v.leafCount).toFixed(2)}%</div>
                 </div>
                 <div class="mini mini-undoc">
                   <div class="mini-label">To do</div>
-                  <div class="mini-pct">{pct(v.undocumented, v.leafCount).toFixed(1)}%</div>
+                  <div class="mini-pct">{pct(v.undocumented, v.leafCount).toFixed(2)}%</div>
                 </div>
               </div>
 

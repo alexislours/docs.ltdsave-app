@@ -50,7 +50,7 @@ export function pct(n: number, d: number): number {
 }
 
 export function fmtPct(n: number, d: number): string {
-  return d === 0 ? '-' : pct(n, d).toFixed(1) + '%';
+  return d === 0 ? '-' : pct(n, d) + '%';
 }
 
 function emptyTotals(): Totals {

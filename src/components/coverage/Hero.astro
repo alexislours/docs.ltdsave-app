@@ -42,15 +42,15 @@ const views = [
         <div class="cov-hero-splits">
           <div class="split split-doc">
             <div class="split-label">Documented</div>
-            <div class="split-pct">{pct(v.documented, v.leafCount).toFixed(1)}%</div>
+            <div class="split-pct">{pct(v.documented, v.leafCount).toFixed(2)}%</div>
           </div>
           <div class="split split-part">
             <div class="split-label">Partial</div>
-            <div class="split-pct">{pct(v.partial, v.leafCount).toFixed(1)}%</div>
+            <div class="split-pct">{pct(v.partial, v.leafCount).toFixed(2)}%</div>
           </div>
           <div class="split split-undoc">
             <div class="split-label">To do</div>
-            <div class="split-pct">{pct(v.undocumented, v.leafCount).toFixed(1)}%</div>
+            <div class="split-pct">{pct(v.undocumented, v.leafCount).toFixed(2)}%</div>
           </div>
         </div>
 
