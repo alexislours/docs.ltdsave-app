@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+
+const GROUPS = [
+  { prefix: 'mechanics/', heading: 'Game mechanics' },
+  { prefix: 'q/', heading: 'Questions' },
+] as const;
+
+const pages = await getCollection('docs');
+
+const groups = GROUPS.map(({ prefix, heading }) => ({
+  heading,
+  entries: pages
+    .filter((entry) => entry.id.startsWith(prefix))
+    .sort((a, b) => a.data.title.localeCompare(b.data.title))
+    .map((entry) => ({
+      title: entry.data.title,
+      description: entry.data.description,
+      href: `/${entry.id}/`,
+    })),
+})).filter((group) => group.entries.length > 0);
+---
+
+{
+  groups.map((group) => (
+    <>
+      <h2>{group.heading}</h2>
+      <ul>
+        {group.entries.map((entry) => (
+          <li>
+            <a href={entry.href}>
+              <strong>{entry.title}</strong>
+            </a>
+            {entry.description && <>, {entry.description}</>}
+          </li>
+        ))}
+      </ul>
+    </>
+  ))
+}

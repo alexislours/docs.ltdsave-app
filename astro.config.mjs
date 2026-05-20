@@ -77,9 +77,10 @@ export default defineConfig({
             },
             {
               label: 'Misc',
-              link: '/q/70/',
+              link: '/misc/',
               icon: 'open-book',
               items: [
+                { label: 'Overview', slug: 'misc' },
                 {
                   label: 'Game mechanics',
                   items: [
