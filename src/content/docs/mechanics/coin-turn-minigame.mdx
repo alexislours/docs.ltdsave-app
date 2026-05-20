@@ -1,0 +1,79 @@
+---
+title: 'How the Coin Spin minigame works'
+description: The Coin Spin (internally "CoinTurn") minigame and its odds.
+---
+
+**Coin Spin** (internal name `CoinTurn`) is a one-on-one minigame: a Mii spins a coin, you call **Heads or Tails** before it settles, and a correct call wins a prize.
+
+## The odds
+
+Each spin, the game does a weighted roll to decide how to bias the coin, then applies that as a center-of-mass offset and physically spins it.
+
+| Roll              | Coin behaviour                                   | Rate                |
+| ----------------- | ------------------------------------------------ | ------------------- |
+| `PlusOffsetRate`  | Center of mass shifted one way → lands **Heads** | **47.5%** (`0.475`) |
+| `MinusOffsetRate` | Shifted the other way → lands **Tails**          | **47.5%** (`0.475`) |
+| `ZeroOffsetRate`  | Balanced coin → stops on its **edge**            | **5%** (`0.05`)     |
+
+This roll is independent of your call. The **edge landing counts as an automatic win**, so whichever side you pick your effective win chance is:
+
+> 47.5% (your side) + 5% (edge) = **52.5%**
+
+So, the game is very slightly in your favor.
+
+## Outcomes
+
+| Result                          | Effect        |
+| ------------------------------- | ------------- |
+| Your call matches               | Win.          |
+| Your call is wrong              | No prize.     |
+| Coin lands on its **edge** (5%) | Automatic win |
+
+## Flowchart
+
+```d2 title="A round of Coin Spin" width=600
+direction: down
+
+call: "You call Heads or Tails" {
+  shape: oval
+  style.fill: "#dbeafe"
+  style.stroke: "#3b82f6"
+}
+
+roll: "Weighted coin roll" {
+  shape: hexagon
+  style.fill: "#fef9c3"
+  style.stroke: "#ca8a04"
+}
+
+edge: "Lands on edge" {
+  style.fill: "#eef2ff"
+  style.stroke: "#3b82f6"
+}
+
+face: "Matches your call?" {
+  shape: diamond
+  style.fill: "#fce7f3"
+  style.stroke: "#db2777"
+}
+
+win: "Win" {
+  shape: oval
+  style.fill: "#dcfce7"
+  style.stroke: "#16a34a"
+}
+
+lose: "Lose" {
+  shape: oval
+  style.fill: "#fde2e2"
+  style.stroke: "#db2777"
+}
+
+call -> roll
+roll -> face: "Heads (47.5%)"
+roll -> face: "Tails (47.5%)"
+roll -> edge: "Edge (5%)"
+edge -> win: "auto-win"
+face -> win: "yes"
+face -> lose: "no"
+```

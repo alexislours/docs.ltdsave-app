@@ -81,6 +81,16 @@ export default defineConfig({
               icon: 'open-book',
               items: [
                 {
+                  label: 'Game mechanics',
+                  items: [
+                    { label: 'Proposal system', slug: 'mechanics/proposal' },
+                    {
+                      label: 'Coin Spin minigame',
+                      slug: 'mechanics/coin-turn-minigame',
+                    },
+                  ],
+                },
+                {
                   label: 'Misc',
                   items: [{ label: 'Why no >70 Mii mod?', slug: 'q/70' }],
                 },

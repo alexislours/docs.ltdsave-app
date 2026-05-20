@@ -1,0 +1,135 @@
+---
+title: 'How the proposal system works'
+description: When and how a Mii proposes to its Lover, the preconditions, the per-roll odds, and how to maximise your chances.
+---
+
+When two Miis are a couple, marriage doesn't happen on a fixed timer. The proposal is one of the [troubles](/save-reference/mii/mii/trouble/) a Mii can roll, so it is re-evaluated every time the game tries to generate a new trouble for that Mii. If the right conditions line up, the proposal is _eligible_ to be the trouble that gets picked, but it still has to win a random roll against everything else.
+
+## Hard preconditions
+
+A proposal can only be selected when **all** of these are true at the moment a trouble is rolled:
+
+- **The tutorial is finished** - `GraduateEarlyStage` has been cleared, which in practice means you have 6 or more Miis.
+- **The pair is in the Lover state** - the two Miis are officially a couple.
+- **Friendship meter is high enough** - the proposing Mii's meter toward its partner is at least **140** (the "wants to marry" status). During the post-falling-in-love boost window this threshold drops to **100**.
+
+If any of these fail, the proposal is simply not a candidate for that roll.
+
+## The odds
+
+Once the preconditions pass, the proposal competes as a Relation-category trouble. There is a freshly-in-love bonus: in the **36 hours** after the two became Lovers, the per-roll chance of the proposal being the selected trouble is higher.
+
+| Time as Lovers | Not living together | Living together |
+| -------------- | ------------------- | --------------- |
+| Less than 36 h | ~22%                | ~27%            |
+| 36 h or more   | ~13.5%              | ~17%            |
+
+These are _per-roll_ chances, evaluated each time a trouble is generated for the Mii, not a one-time check.
+
+## The 19-day guarantee
+
+If the pair has been eligible for **19 days** without a proposal ever spawning, the proposal becomes a **priority trouble**. The next time a trouble check runs and the preconditions match, it should be forced to show up. So while the system is random in the short term, it will not leave an eligible couple waiting forever.
+
+If a proposal does spawn and then **fails**, there is a **12-hour cooldown** before the proposal can be generated again for that Mii.
+
+## What can get in the way
+
+- **Depression and fights take priority.** If the Mii enters a depressed state or gets into a fight with another Mii, that trouble outranks the proposal and will be chosen instead, blocking the proposal for that roll.
+- **Spending too much time together can backfire.** Trouble bubbles don't appear while two Miis are doing an activity together. If you force an eligible couple to constantly hanging out, the game gets fewer chances to roll the proposal, so it can take longer.
+
+## Flowchart
+
+```d2 title="Proposal trouble selection" width=700
+direction: down
+
+start: "Trouble slot opens for Mii A" {
+  shape: oval
+  style.fill: "#dbeafe"
+  style.stroke: "#3b82f6"
+}
+
+pre: "Hard preconditions" {
+  style.fill: "#fef9c3"
+  style.stroke: "#ca8a04"
+  grad: "GraduateEarlyStage cleared (6+ Miis)" {style.fill: "#eef2ff"; style.stroke: "#3b82f6"}
+  lover: "Pair is in Lover state" {style.fill: "#eef2ff"; style.stroke: "#3b82f6"}
+  meter: "Mii A's meter to partner >= 140\n(>= 100 in Lover-boost)" {style.fill: "#eef2ff"; style.stroke: "#3b82f6"}
+}
+
+prio: "Higher-priority trouble on Mii A?" {
+  style.fill: "#fce7f3"
+  style.stroke: "#db2777"
+  depress: "In a Depress state" {style.fill: "#eef2ff"; style.stroke: "#3b82f6"}
+  fight: "In a Fight (with anyone)" {style.fill: "#eef2ff"; style.stroke: "#3b82f6"}
+}
+
+catroll: "Trouble category roll" {
+  shape: hexagon
+  style.fill: "#fef9c3"
+  style.stroke: "#ca8a04"
+}
+
+relroll: "Proposal vs other Relation troubles" {
+  shape: hexagon
+  style.fill: "#fef9c3"
+  style.stroke: "#ca8a04"
+}
+
+odds: "Proposal's win chance this roll" {
+  style.fill: "#fef9c3"
+  style.stroke: "#ca8a04"
+  a: "Lover < 36 h, not living together - ~22%" {style.fill: "#eef2ff"; style.stroke: "#3b82f6"}
+  b: "Lover < 36 h, living together - ~27%" {style.fill: "#eef2ff"; style.stroke: "#3b82f6"}
+  c: "Lover >= 36 h, not living together - ~13.5%" {style.fill: "#eef2ff"; style.stroke: "#3b82f6"}
+  d: "Lover >= 36 h, living together - ~17%" {style.fill: "#eef2ff"; style.stroke: "#3b82f6"}
+}
+
+spawn: "Proposal trouble spawns" {
+  shape: oval
+  style.fill: "#dcfce7"
+  style.stroke: "#16a34a"
+}
+
+result: "Proposal fail/success" {
+  style.fill: "#eef2ff"
+  style.stroke: "#3b82f6"
+}
+
+cooldown: "12 h cooldown for Mii A" {
+  shape: cylinder
+  style.fill: "#dbeafe"
+  style.stroke: "#3b82f6"
+}
+
+blocked: "Blocked" {
+  shape: oval
+  style.fill: "#fde2e2"
+  style.stroke: "#db2777"
+}
+
+start -> pre
+pre -> prio: "all checks pass"
+pre -> blocked: "any check fails"
+pre -> spawn: "19+ days eligible without spawn"
+prio -> catroll: "no"
+prio -> blocked: "yes"
+catroll -> relroll: "Relation wins (~65.5%)"
+catroll -> blocked: "other category wins"
+relroll -> odds
+odds -> spawn: "Proposal wins"
+odds -> blocked: "other Relation trouble wins"
+spawn -> result
+result -> cooldown
+```
+
+## How to maximise your chances
+
+To make a proposal happen as quickly as possible:
+
+1. Make the two Miis **roommates before they fall in love**, so the "move in together" trouble doesn't compete with the proposal trouble.
+2. **Solve their troubles** as soon as they appear so that the game re-rolls the next one sooner.
+3. **Leave them alone** - keeping them talking with other Miis or their partner will prevent the trouble from spawning.
+4. **Keep them happy** - If they enter a fight or a depression state, solve it, otherwise the proposal can't fire.
+5. **Solve other troubles** - The game limits how many troubles can exist at the same time.
+
+It's still random, but even if you are unlucky, the game will force the proposal once the pair has been eligible for 19 days.
