@@ -19,15 +19,15 @@ leaves:
   - name: BuyMarketMorning
     hash: '0x995f5fbf'
     type: UInt
-    state: undocumented
+    state: documented
   - name: BuyMarketNight
     hash: '0x8554266f'
     type: UInt
-    state: undocumented
+    state: documented
   - name: BuyMarketNoon
     hash: '0x5c3c8077'
     type: UInt
-    state: undocumented
+    state: documented
   - name: BuyMarketSale
     hash: '0x4cca73c9'
     type: UInt
@@ -216,19 +216,19 @@ import LeafMeta from '@components/LeafMeta.astro';
 
 <LeafMeta name="BuyMarketMorning" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Counts purchases the player made at the market facility during its **Morning** session of the current day.
 
 ### `BuyMarketNight`
 
 <LeafMeta name="BuyMarketNight" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Counts purchases the player made at the market facility during its **Night** session of the current day.
 
 ### `BuyMarketNoon`
 
 <LeafMeta name="BuyMarketNoon" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Counts purchases the player made at the market facility during its **Noon** session of the current day.
 
 ### `BuyMarketSale`
 
