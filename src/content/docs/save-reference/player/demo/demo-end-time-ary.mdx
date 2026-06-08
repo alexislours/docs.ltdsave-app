@@ -11,16 +11,16 @@ leaves:
   - name: DemoEndTime
     hash: '0x6a995ac5'
     type: UInt64Array
-    state: undocumented
+    state: documented
   - name: DemoStringIdHash
     hash: '0x45ac1b7c'
     type: UIntArray
-    state: undocumented
+    state: documented
 ---
 
 import LeafMeta from '@components/LeafMeta.astro';
 
-{/* Replace this comment with a description for this group. */}
+A 20-slot log of watched **demos** (scripted cut-scenes / event sequences, defined in `RSDB/DemoParam`). `DemoStringIdHash` records which demo played and `DemoEndTime` when it ended.
 
 ## Fields
 
@@ -28,10 +28,10 @@ import LeafMeta from '@components/LeafMeta.astro';
 
 <LeafMeta name="DemoEndTime" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+A Unix epoch timestamp (seconds, UTC) per slot, recording when each demo ended. Unused slots are `0`.
 
 ### `DemoStringIdHash`
 
 <LeafMeta name="DemoStringIdHash" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+The "which demo" column of the 20-slot `Demo.DemoEndTimeAry` log: each used slot holds the `murmur3_x86_32` hash of a `RSDB/DemoParam` row's base name (e.g. `DemoPR000002`, `DemoChatCoupleGood`, `DemoDM104017`), the same hash the game uses as a `DemoParamId` cross-reference. Slots fill oldest→newest alongside the sibling `DemoEndTime` timestamps. Unused slots are `0`.
