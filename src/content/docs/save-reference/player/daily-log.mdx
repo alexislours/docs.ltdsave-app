@@ -75,11 +75,11 @@ leaves:
   - name: EmotionBallGet
     hash: '0x602ee35d'
     type: UInt
-    state: undocumented
+    state: documented
   - name: EmotionBallSpent
     hash: '0xe515229c'
     type: UInt
-    state: undocumented
+    state: documented
   - name: EnterAtelierCount
     hash: '0x0ad95b4a'
     type: UInt
@@ -123,7 +123,7 @@ leaves:
   - name: FountainWishComeTrueCount
     hash: '0x50b090e3'
     type: UInt
-    state: undocumented
+    state: documented
   - name: InnerRoomChangeCount
     hash: '0xbf3432e6'
     type: UInt
@@ -159,11 +159,11 @@ leaves:
   - name: MoneyGet
     hash: '0x93bb9006'
     type: UInt
-    state: undocumented
+    state: documented
   - name: MoneySpent
     hash: '0x640e7706'
     type: UInt
-    state: undocumented
+    state: documented
   - name: NoInputPlayTimeCameraDistanceLevel
     hash: '0xa8979ada'
     type: UInt64Array
@@ -187,11 +187,11 @@ leaves:
   - name: ResolvedAccidentCount
     hash: '0x01d5e547'
     type: UInt
-    state: undocumented
+    state: documented
   - name: ResolvedTroubleCount
     hash: '0xec83ba91'
     type: UInt
-    state: undocumented
+    state: documented
 ---
 
 import LeafMeta from '@components/LeafMeta.astro';
@@ -265,7 +265,7 @@ Counts the **silver coins** goods the player acquired during the current day. A 
 
 <LeafMeta name="CurrentPlayDay" leaves={frontmatter.leaves} />
 
-The day-of-month component of the calendar date the DailyLog block currently belongs to. When the daily counters are rolled over, the game stamps the date from the console clock into the triplet `CurrentPlayYear` / `CurrentPlayMonth` / `CurrentPlayDay`. The game compares it against the current date to detect a day change and reset the daily counters.
+The day-of-month component of the calendar date the `DailyLog` block currently belongs to. When the daily counters are rolled over, the game stamps the date from the console clock into the triplet `CurrentPlayYear` / `CurrentPlayMonth` / `CurrentPlayDay`. The game compares it against the current date to detect a day change and reset the daily counters.
 
 <Bounds>
   <Fragment slot="ingame">`1`..`31`, the day of the month.</Fragment>
@@ -276,7 +276,7 @@ The day-of-month component of the calendar date the DailyLog block currently bel
 
 <LeafMeta name="CurrentPlayMonth" leaves={frontmatter.leaves} />
 
-The calendar-month component of the date the DailyLog block currently belongs to. When the daily counters roll over, the game stamps the console clock's date into the triplet `CurrentPlayYear` / `CurrentPlayMonth` / `CurrentPlayDay`, and compares it against the current date to detect a day change and reset the daily counters.
+The calendar-month component of the date the `DailyLog` block currently belongs to. When the daily counters roll over, the game stamps the console clock's date into the triplet `CurrentPlayYear` / `CurrentPlayMonth` / `CurrentPlayDay`, and compares it against the current date to detect a day change and reset the daily counters.
 
 <Bounds>
   <Fragment slot="ingame">
@@ -289,7 +289,7 @@ The calendar-month component of the date the DailyLog block currently belongs to
 
 <LeafMeta name="CurrentPlayYear" leaves={frontmatter.leaves} />
 
-The calendar year of the date the DailyLog block currently belongs to. When the daily counters roll over, the game stamps the console clock's date into the triplet `CurrentPlayYear` / `CurrentPlayMonth` / `CurrentPlayDay`, and compares it against the current date to detect a day change and reset the daily counters.
+The calendar year of the date the `DailyLog` block currently belongs to. When the daily counters roll over, the game stamps the console clock's date into the triplet `CurrentPlayYear` / `CurrentPlayMonth` / `CurrentPlayDay`, and compares it against the current date to detect a day change and reset the daily counters.
 
 <Bounds>
   <Fragment slot="ingame">the four-digit system year at the time of play (e.g. `2026`)</Fragment>
@@ -300,7 +300,7 @@ The calendar year of the date the DailyLog block currently belongs to. When the 
 
 <LeafMeta name="CurrentSumDay" leaves={frontmatter.leaves} />
 
-The DailyLog's date as a single day number: days since `1970-01-01` for the same date as the `CurrentPlayYear` / `CurrentPlayMonth` / `CurrentPlayDay` triplet (e.g. `20581` = `2026-05-08`).
+The `DailyLog`'s date as a single day number: days since `1970-01-01` for the same date as the `CurrentPlayYear` / `CurrentPlayMonth` / `CurrentPlayDay` triplet (e.g. `20581` = `2026-05-08`).
 
 ### `DailyLastNoInputPlayTime`
 
@@ -318,61 +318,61 @@ The DailyLog's date as a single day number: days since `1970-01-01` for the same
 
 <LeafMeta name="EmotionBallGet" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Number of ([`Player.EmotionBall`](../player/#emotionball)) acquired on current `DailyLog`.
 
 ### `EmotionBallSpent`
 
 <LeafMeta name="EmotionBallSpent" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Number of ([`Player.EmotionBall`](../player/#emotionball)) spent on current `DailyLog`.
 
 ### `EnterAtelierCount`
 
 <LeafMeta name="EnterAtelierCount" leaves={frontmatter.leaves} />
 
-Count of how many times the player has entered the Atelier on current DailyLog.
+Count of how many times the player has entered the Atelier on current `DailyLog`.
 
 ### `EnterEncyclopedia`
 
 <LeafMeta name="EnterEncyclopedia" leaves={frontmatter.leaves} />
 
-Count of how many times the player has entered the Encyclopedia on current DailyLog.
+Count of how many times the player has entered the Encyclopedia on current `DailyLog`.
 
 ### `EnterFacilityMarketMorning`
 
 <LeafMeta name="EnterFacilityMarketMorning" leaves={frontmatter.leaves} />
 
-Count of how many times the player has entered the marketplace in the morning on current DailyLog.
+Count of how many times the player has entered the marketplace in the morning on current `DailyLog`.
 
 ### `EnterFacilityMarketNight`
 
 <LeafMeta name="EnterFacilityMarketNight" leaves={frontmatter.leaves} />
 
-Count of how many times the player has entered the marketplace at night on current DailyLog.
+Count of how many times the player has entered the marketplace at night on current `DailyLog`.
 
 ### `EnterFacilityMarketNoon`
 
 <LeafMeta name="EnterFacilityMarketNoon" leaves={frontmatter.leaves} />
 
-Count of how many times the player has entered the marketplace at noon on current DailyLog.
+Count of how many times the player has entered the marketplace at noon on current `DailyLog`.
 
 ### `EnterFacilityMarketSale`
 
 <LeafMeta name="EnterFacilityMarketSale" leaves={frontmatter.leaves} />
 
-Count of how many times the player has entered the marketplace during a sale on current DailyLog.
+Count of how many times the player has entered the marketplace during a sale on current `DailyLog`.
 
 ### `EnterFacilityTower`
 
 <LeafMeta name="EnterFacilityTower" leaves={frontmatter.leaves} />
 
-Count of how many times the player has entered the Tower on current DailyLog.
+Count of how many times the player has entered the Tower on current `DailyLog`.
 
 ### `EnterPhotoStudioCount`
 
 <LeafMeta name="EnterPhotoStudioCount" leaves={frontmatter.leaves} />
 
-Count of how many times the player has entered the Photo Studio on current DailyLog.
+Count of how many times the player has entered the Photo Studio on current `DailyLog`.
 
 ### `FocusLeadingToMiiByPickUpCount`
 
@@ -390,7 +390,7 @@ Count of how many times the player has entered the Photo Studio on current Daily
 
 <LeafMeta name="FountainWishComeTrueCount" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Count of Wish used on current `DailyLog`.
 
 ### `InnerRoomChangeCount`
 
@@ -444,13 +444,13 @@ Count of how many times the player has entered the Photo Studio on current Daily
 
 <LeafMeta name="MoneyGet" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Amount of ([`Player.Money`](../player/#money)) the player acquired on current `DailyLog`.
 
 ### `MoneySpent`
 
 <LeafMeta name="MoneySpent" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Amount of ([`Player.Money`](../player/#money)) the player spent on current `DailyLog`.
 
 ### `NoInputPlayTimeCameraDistanceLevel`
 
@@ -486,10 +486,10 @@ Count of how many times the player has entered the Photo Studio on current Daily
 
 <LeafMeta name="ResolvedAccidentCount" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Number of accidents resolved on current `DailyLog`.
 
 ### `ResolvedTroubleCount`
 
 <LeafMeta name="ResolvedTroubleCount" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Number of troubles resolved on current `DailyLog`.
