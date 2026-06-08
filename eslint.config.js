@@ -6,7 +6,7 @@ import globals from 'globals';
 import prettier from 'eslint-config-prettier';
 
 export default defineConfig(
-  globalIgnores(['dist/', 'node_modules/', '.astro/', '.wrangler/']),
+  globalIgnores(['dist/', 'node_modules/', '.astro/', '.wrangler/', 'tomo-extract/']),
   js.configs.recommended,
   ts.configs.recommended,
   astro.configs.recommended,
