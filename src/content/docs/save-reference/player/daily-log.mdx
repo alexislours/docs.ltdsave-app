@@ -51,15 +51,15 @@ leaves:
   - name: CurrentPlayDay
     hash: '0x90d48669'
     type: UInt
-    state: undocumented
+    state: documented
   - name: CurrentPlayMonth
     hash: '0x9c426820'
     type: UInt
-    state: undocumented
+    state: documented
   - name: CurrentPlayYear
     hash: '0x1f736dbd'
     type: UInt
-    state: undocumented
+    state: documented
   - name: CurrentSumDay
     hash: '0x9d3c40d2'
     type: UInt64
@@ -195,6 +195,7 @@ leaves:
 ---
 
 import LeafMeta from '@components/LeafMeta.astro';
+import Bounds from '@components/Bounds.astro';
 
 {/* Replace this comment with a description for this group. */}
 
@@ -264,19 +265,36 @@ Counts the **silver coins** goods the player acquired during the current day. A 
 
 <LeafMeta name="CurrentPlayDay" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+The day-of-month component of the calendar date the DailyLog block currently belongs to. When the daily counters are rolled over, the game stamps the date from the console clock into the triplet `CurrentPlayYear` / `CurrentPlayMonth` / `CurrentPlayDay`. The game compares it against the current date to detect a day change and reset the daily counters.
+
+<Bounds>
+  <Fragment slot="ingame">`1`..`31`, the day of the month.</Fragment>
+  <Fragment slot="accepted">any `UInt32`</Fragment>
+</Bounds>
 
 ### `CurrentPlayMonth`
 
 <LeafMeta name="CurrentPlayMonth" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+The calendar-month component of the date the DailyLog block currently belongs to. When the daily counters roll over, the game stamps the console clock's date into the triplet `CurrentPlayYear` / `CurrentPlayMonth` / `CurrentPlayDay`, and compares it against the current date to detect a day change and reset the daily counters.
+
+<Bounds>
+  <Fragment slot="ingame">
+    `1`..`12`, the month (`1` = January … `12` = December). and `CurrentPlayYear`.
+  </Fragment>
+  <Fragment slot="accepted">any `UInt32`</Fragment>
+</Bounds>
 
 ### `CurrentPlayYear`
 
 <LeafMeta name="CurrentPlayYear" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+The calendar year of the date the DailyLog block currently belongs to. When the daily counters roll over, the game stamps the console clock's date into the triplet `CurrentPlayYear` / `CurrentPlayMonth` / `CurrentPlayDay`, and compares it against the current date to detect a day change and reset the daily counters.
+
+<Bounds>
+  <Fragment slot="ingame">the four-digit system year at the time of play (e.g. `2026`)</Fragment>
+  <Fragment slot="accepted">any `UInt32`</Fragment>
+</Bounds>
 
 ### `CurrentSumDay`
 
