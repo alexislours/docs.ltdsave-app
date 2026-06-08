@@ -63,7 +63,7 @@ leaves:
   - name: CurrentSumDay
     hash: '0x9d3c40d2'
     type: UInt64
-    state: undocumented
+    state: documented
   - name: DailyLastNoInputPlayTime
     hash: '0xaa0a03b3'
     type: UInt64
@@ -300,7 +300,7 @@ The calendar year of the date the DailyLog block currently belongs to. When the 
 
 <LeafMeta name="CurrentSumDay" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+The DailyLog's date as a single day number: days since `1970-01-01` for the same date as the `CurrentPlayYear` / `CurrentPlayMonth` / `CurrentPlayDay` triplet (e.g. `20581` = `2026-05-08`).
 
 ### `DailyLastNoInputPlayTime`
 
