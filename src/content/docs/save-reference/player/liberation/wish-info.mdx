@@ -11,20 +11,20 @@ leaves:
   - name: IsLiberated
     hash: '0xe38c7611'
     type: BoolArray
-    state: undocumented
+    state: documented
   - name: IsNew
     hash: '0xc6c0f54a'
     type: BoolArray
-    state: undocumented
+    state: documented
   - name: WishIdValue
     hash: '0xf91e67be'
     type: UIntArray
-    state: undocumented
+    state: documented
 ---
 
 import LeafMeta from '@components/LeafMeta.astro';
 
-{/* Replace this comment with a description for this group. */}
+The profile's **fountain wish** list, stored as three parallel arrays keyed by slot: [`WishIdValue`](#wishidvalue) names the wish in each slot, while [`IsLiberated`](#isliberated) and [`IsNew`](#isnew) flag whether that wish has been unlocked and whether it is newly added and unseen.
 
 ## Fields
 
@@ -32,16 +32,16 @@ import LeafMeta from '@components/LeafMeta.astro';
 
 <LeafMeta name="IsLiberated" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Parallel boolean array marking which registered fountain wishes have been **liberated** (unlocked). Each slot lines up with [`WishIdValue`](#wishidvalue) (which wish) and [`IsNew`](#isnew).
 
 ### `IsNew`
 
 <LeafMeta name="IsNew" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Parallel boolean array marking which registered fountain wishes are **new**: recently added to the list and not yet viewed by the player (it backs the "NEW!" indicator).
 
 ### `WishIdValue`
 
 <LeafMeta name="WishIdValue" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+The list of fountain wishes the profile has registered: each entry identifies one wish, stored as the `murmur3_x86_32` hash of a `FountainWishListData` row (the game's wish catalog). Entries are sorted ascending with any unused tail zero-padded (`0` marks an empty slot), and slot `i` is the join key naming the wish that slot `i` of the parallel [`IsLiberated`](#isliberated) and [`IsNew`](#isnew) arrays describes.

@@ -11,11 +11,11 @@ leaves:
   - name: EmotionBallAtGraduate
     hash: '0xe6f98671'
     type: UInt
-    state: partial
+    state: documented
   - name: IsIslandForIntroduction
     hash: '0xb2a39093'
     type: Bool
-    state: undocumented
+    state: documented
 subgroups:
   - name: FocusLeadingInfo
     leafCount: 4
@@ -56,7 +56,7 @@ It then calculates how many emotion balls have been spent leveling up the founta
 
 <LeafMeta name="IsIslandForIntroduction" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+A one-shot onboarding flag: `false` on a fresh island (the registered default) and `true` once the game's opening **introduction** has run.
 
 ## Subgroups
 
