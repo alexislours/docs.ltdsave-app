@@ -1,0 +1,156 @@
+---
+title: 'How food likings are determined'
+description: How a Mii's reaction to a food is computed from the food's flavor profile, the Mii's hidden taste type, its personal favourites, and a per-Mii variation.
+---
+
+When you feed a Mii a food, its reaction isn't a fixed property of the food. The same dish can be a treat for one Mii and merely "normal" for another. The reaction is built from four parameters:
+
+1. The **food's flavor profile**, a fixed rating the food carries for each of four palate types.
+2. The **Mii's hidden taste type** (`TasteType`), which of those four columns applies to this Mii.
+3. The **Mii's personal favourites and hated foods**, four per-Mii overrides that force the extreme reactions.
+4. A small **per-Mii jitter**, a wobble so two Miis of the same palate type don't react identically.
+
+The result is a single **reaction value** from 0 to 19, which the game then buckets into reactions from "All-time worst" up to "All-time favourite".
+
+## The short version
+
+If you don't care about the numbers:
+
+- Every food has a built-in rating, but it isn't one rating, it's **four**, one for each kind of taste profiles.
+- Each Mii secretly falls in one of those four categories, so they read off that food's rating from their own column. That's why one Mii can love a dish another hates.
+- On top of that, every Mii has a tiny built-in variation that changes the rating of each food a little up or down, so even two Miis in the same category won't have exactly the same results.
+- Finally, each Mii has up to two **all-time favourites** and two **most-hated foods**. Those always get the strongest reaction no matter what, ignoring everything above.
+
+## The food's flavor profile
+
+Every food in the game's `FoodParam` table carries four taste columns: `TasteA`, `TasteB`, `TasteC`, `TasteD`. Each column holds one of sixteen flavor grades, organised into five outcomes. Internally each grade is a hashed name like `Normal00`, mapped to the value, they line up like this:
+
+| Band          | Grades                    | Value |
+| ------------- | ------------------------- | ----- |
+| **Very bad**  | `VeryBad00`-`VeryBad02`   | 0-2   |
+| **Bad**       | `Bad00`-`Bad02`           | 3-5   |
+| **Normal**    | `Normal00`-`Normal03`     | 6-9   |
+| **Good**      | `Good00`-`Good02`         | 10-12 |
+| **Very good** | `VeryGood00`-`VeryGood02` | 13-15 |
+
+Some examples straight from `FoodParam`:
+
+- **Apple pie** is `[13, 14, 12, 10]`, "very good" to palates A and B, "good" to C and D. Nearly everyone likes it.
+- **Avocado** is `[7, 5, 5, 12]`, `Normal01` / `Bad02` / `Bad02` / `Good02`.
+
+The columns have no in-game names, they're just A, B, C, D. The same `FoodParam` row also carries descriptive flavor tags (`TasteSweet`, `TasteSour`, `TasteSpicy`, `TasteSalty`, `TasteOily`, `TasteAwful`), a `Smell`, a `Temperature`, and food-group flags (fruit, meat, drink, …), but the like/dislike reaction is computed only from the four `Taste*` columns.
+
+## The Mii's taste type
+
+Each Mii stores a hidden taste type in [`Mii.MiiMisc.EatInfo.TasteType`](/save-reference/mii/mii/mii-misc/eat-info/), a value of **0, 1, 2, or 3** that picks which of the food's four columns applies to that Mii. Type 0 reads `TasteA`, type 1 reads `TasteB`, and so on. (Anything outside 0-3 falls back to column 0.)
+
+This is why feeding the same dish to two Miis can give different results.
+
+## The per-Mii jitter
+
+To stop every Mii of the same palate type from reacting identically, the game adds a small wobble derived from each Mii and the specific food:
+
+```text
+seed   = (CharInfoEx[2] << 8) | CharInfoEx[3]      // part of the UUID of the Mii
+jitter = ((seed + foodHash) % 7) - 3               // an integer in the range -3 … +3
+```
+
+The seed is two bytes lifted from the Mii's `CharInfoEx`, so it never changes for a given Mii. Combined with the food's hash it produces a fixed result between **-3 and +3** for each Mii/food pair.
+
+## Putting it together
+
+The reaction value is:
+
+```text
+value = ordinal + 2 + jitter        (then clamped to the range 2 … 17)
+```
+
+The `+ 2` shifts the bands so they map cleanly onto the visible tiers. With no jitter, a food's flavor band lands exactly on the matching tier - a "good" food (ordinal 10-12) produces value 12-14, which displays as **Good**. The jitter then nudges the result up or down by up to three, so a borderline food can tip into the neighbouring tier for some Miis.
+
+Because the value is clamped to **2-17**, ordinary foods can only ever range from "Very bad" to "Very good". The four extreme tiers are reserved for the per-Mii overrides below.
+
+## Personal favourites and hated foods
+
+`EatInfo` stores four per-Mii food IDs that short-circuit the whole calculation. If the food being fed matches one of these, its reaction value is forced and the taste profile is ignored entirely:
+
+| Field          | Forced value | Tier               |
+| -------------- | ------------ | ------------------ |
+| `UltraBestId`  | 19           | All-time favourite |
+| `BestId`       | 18           | Favourite          |
+| `WorstId`      | 1            | Hated              |
+| `UltraWorstId` | 0            | All-time worst     |
+
+These are the **only** way to reach values 0, 1, 18, and 19, other foods can never reach them.
+
+## From value to tier
+
+The final 0-19 value is bucketed into one of nine tiers:
+
+| Reaction value | Tier                                 |
+| -------------- | ------------------------------------ |
+| 0              | All-time worst _(override only)_     |
+| 1              | Hated _(override only)_              |
+| 2-4            | Very bad                             |
+| 5-7            | Bad                                  |
+| 8-11           | Normal                               |
+| 12-14          | Good                                 |
+| 15-17          | Very good                            |
+| 18             | Favourite _(override only)_          |
+| 19             | All-time favourite _(override only)_ |
+
+## Flowchart
+
+```d2 title="Determining a Mii's reaction to a food" width=700
+direction: down
+
+start: "Feed food X to Mii M" {
+  shape: oval
+  style.fill: "#dbeafe"
+  style.stroke: "#3b82f6"
+}
+
+override: "Is X one of M's special foods?" {
+  shape: diamond
+  style.fill: "#fce7f3"
+  style.stroke: "#db2777"
+}
+
+forced: "Forced reaction value" {
+  style.fill: "#fef9c3"
+  style.stroke: "#ca8a04"
+  ub: "UltraBest -> 19 (All-time fav)" {style.fill: "#eef2ff"; style.stroke: "#3b82f6"}
+  b: "Best -> 18 (Favourite)" {style.fill: "#eef2ff"; style.stroke: "#3b82f6"}
+  w: "Worst -> 1 (Hated)" {style.fill: "#eef2ff"; style.stroke: "#3b82f6"}
+  uw: "UltraWorst -> 0 (All-time worst)" {style.fill: "#eef2ff"; style.stroke: "#3b82f6"}
+}
+
+column: "Pick column by M's TasteType (0-3)\n-> flavor ordinal (0-15)" {
+  shape: hexagon
+  style.fill: "#fef9c3"
+  style.stroke: "#ca8a04"
+}
+
+calc: "value = ordinal + 2 + jitter\njitter = ((seed + hash) % 7) - 3\nclamp to 2 … 17" {
+  style.fill: "#fef9c3"
+  style.stroke: "#ca8a04"
+}
+
+tier: "Bucket value (0-19) into tier" {
+  shape: oval
+  style.fill: "#dcfce7"
+  style.stroke: "#16a34a"
+}
+
+start -> override
+override -> forced: "yes"
+override -> column: "no"
+forced -> tier
+column -> calc
+calc -> tier
+```
+
+## Where this lives in the save
+
+- [`Mii.MiiMisc.EatInfo.TasteType`](/save-reference/mii/mii/mii-misc/eat-info/), the hidden palate type (0-3).
+- [`Mii.MiiMisc.EatInfo`](/save-reference/mii/mii/mii-misc/eat-info/) `UltraBestId` / `BestId` / `WorstId` / `UltraWorstId`, the per-Mii overrides.
+- `Mii.CharInfoEx`, the source of the per-Mii jitter seed.

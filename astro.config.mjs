@@ -89,6 +89,7 @@ export default defineConfig({
                       label: 'Coin Spin minigame',
                       slug: 'mechanics/coin-turn-minigame',
                     },
+                    { label: 'Food taste', slug: 'mechanics/food-taste' },
                   ],
                 },
                 {
