@@ -11,7 +11,7 @@ leaves:
   - name: AiCountByFocusLeading
     hash: '0x6d445df7'
     type: UInt
-    state: undocumented
+    state: documented
   - name: AiCountByPickUp
     hash: '0x0bf422a5'
     type: UInt
@@ -205,7 +205,7 @@ import Bounds from '@components/Bounds.astro';
 
 <LeafMeta name="AiCountByFocusLeading" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Counts how many times an encounter started by guiding a Mii to a nearby target (the Mii approaching on its own, not a grab-and-drop) resolved into a plain **AI reaction** instead of a scripted scene.
 
 ### `AiCountByPickUp`
 
