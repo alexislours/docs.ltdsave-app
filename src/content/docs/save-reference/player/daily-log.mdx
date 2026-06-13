@@ -15,7 +15,7 @@ leaves:
   - name: AiCountByPickUp
     hash: '0x0bf422a5'
     type: UInt
-    state: undocumented
+    state: documented
   - name: BuyMarketMorning
     hash: '0x995f5fbf'
     type: UInt
@@ -43,11 +43,11 @@ leaves:
   - name: ContentsCountByFocusLeading
     hash: '0xa88537bf'
     type: UInt
-    state: undocumented
+    state: documented
   - name: ContentsCountByPickUp
     hash: '0x315da155'
     type: UInt
-    state: undocumented
+    state: documented
   - name: CurrentPlayDay
     hash: '0x90d48669'
     type: UInt
@@ -205,13 +205,13 @@ import Bounds from '@components/Bounds.astro';
 
 <LeafMeta name="AiCountByFocusLeading" leaves={frontmatter.leaves} />
 
-Counts how many times an encounter started by guiding a Mii to a nearby target (the Mii approaching on its own, not a grab-and-drop) resolved into a plain **AI reaction** instead of a scripted scene.
+Counts how many times an encounter started by guiding a Mii to a nearby target (the Mii approaching on its own, not a grab-and-drop) resolved into a plain **AI reaction** instead of a cutscene.
 
 ### `AiCountByPickUp`
 
 <LeafMeta name="AiCountByPickUp" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Counts how many times an encounter started by **picking a Mii up and dropping it** on a target (a grab-and-drop, not the Mii approaching on its own) resolved into a plain **AI reaction** instead of a cutscene.
 
 ### `BuyMarketMorning`
 
@@ -253,13 +253,13 @@ Counts the **silver coins** goods the player acquired during the current day. A 
 
 <LeafMeta name="ContentsCountByFocusLeading" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Counts how many times an encounter started by guiding a Mii to a nearby target (the Mii approaching on its own, not a grab-and-drop) resolved into a **cutscene** instead of a plain AI reaction.
 
 ### `ContentsCountByPickUp`
 
 <LeafMeta name="ContentsCountByPickUp" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Counts how many times an encounter started by **picking a Mii up and dropping it** on a target (a grab-and-drop, not the Mii approaching on its own) resolved into a **cutscene** instead of a plain AI reaction.
 
 ### `CurrentPlayDay`
 
