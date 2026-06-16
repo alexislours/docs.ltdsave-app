@@ -155,7 +155,7 @@ leaves:
   - name: Minigame
     hash: '0xbd65ba7a'
     type: UInt
-    state: undocumented
+    state: documented
   - name: MoneyGet
     hash: '0x93bb9006'
     type: UInt
@@ -167,7 +167,7 @@ leaves:
   - name: NoInputPlayTimeCameraDistanceLevel
     hash: '0xa8979ada'
     type: UInt64Array
-    state: undocumented
+    state: documented
   - name: OuterHouseChangeCount
     hash: '0x096493a2'
     type: UInt
@@ -175,7 +175,7 @@ leaves:
   - name: PlayTimeCameraDistanceLevel
     hash: '0xeed6d279'
     type: UInt64Array
-    state: undocumented
+    state: documented
   - name: PresentClothCount
     hash: '0xea4d306f'
     type: UInt
@@ -438,7 +438,7 @@ Counts the Mii events that played out today, triggered while one Mii was followi
 
 <LeafMeta name="Minigame" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Counts the **minigames** played during the current day.
 
 ### `MoneyGet`
 
@@ -456,7 +456,7 @@ Amount of ([`Player.Money`](../player/#money)) the player spent on current `Dail
 
 <LeafMeta name="NoInputPlayTimeCameraDistanceLevel" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+A fixed three-element array of cumulative seconds the player held the room/island **camera** at each of its three distance levels this day **while giving no input**, one count per slot from `0` (closest) to `2` (farthest).
 
 ### `OuterHouseChangeCount`
 
@@ -468,7 +468,7 @@ Amount of ([`Player.Money`](../player/#money)) the player spent on current `Dail
 
 <LeafMeta name="PlayTimeCameraDistanceLevel" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+A fixed three-element array of cumulative seconds the player held the room/island **camera** at each of its three distance levels this day, one count per slot from `0` (closest) to `2` (farthest).
 
 ### `PresentClothCount`
 
