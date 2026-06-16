@@ -171,7 +171,7 @@ leaves:
   - name: OuterHouseChangeCount
     hash: '0x096493a2'
     type: UInt
-    state: undocumented
+    state: documented
   - name: PlayTimeCameraDistanceLevel
     hash: '0xeed6d279'
     type: UInt64Array
@@ -179,11 +179,11 @@ leaves:
   - name: PresentClothCount
     hash: '0xea4d306f'
     type: UInt
-    state: undocumented
+    state: documented
   - name: PresentFoodCount
     hash: '0xd13e486c'
     type: UInt
-    state: undocumented
+    state: documented
   - name: ResolvedAccidentCount
     hash: '0x01d5e547'
     type: UInt
@@ -462,7 +462,7 @@ A fixed three-element array of cumulative seconds the player held the room/islan
 
 <LeafMeta name="OuterHouseChangeCount" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Counts how many times the player **changed the exterior** of a Mii's home this day.
 
 ### `PlayTimeCameraDistanceLevel`
 
@@ -474,13 +474,13 @@ A fixed three-element array of cumulative seconds the player held the room/islan
 
 <LeafMeta name="PresentClothCount" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Counts the **clothing items** the player gave to Miis as presents during the current day.
 
 ### `PresentFoodCount`
 
 <LeafMeta name="PresentFoodCount" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Counts the **food items** the player gave to Miis as presents during the current day.
 
 ### `ResolvedAccidentCount`
 
