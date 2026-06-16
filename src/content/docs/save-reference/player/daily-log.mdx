@@ -139,19 +139,19 @@ leaves:
   - name: LastUpdateTime
     hash: '0x82747a38'
     type: UInt64
-    state: undocumented
+    state: documented
   - name: MiiEventOnFocusLeadingMiiCount
     hash: '0xa2da5ee9'
     type: UInt
-    state: undocumented
+    state: documented
   - name: MiiEventOnFocusLeadingObjectCount
     hash: '0x26795746'
     type: UInt
-    state: undocumented
+    state: documented
   - name: MiiEventOnFollowingMiiCount
     hash: '0x7b26f300'
     type: UInt
-    state: undocumented
+    state: documented
   - name: Minigame
     hash: '0xbd65ba7a'
     type: UInt
@@ -197,7 +197,7 @@ leaves:
 import LeafMeta from '@components/LeafMeta.astro';
 import Bounds from '@components/Bounds.astro';
 
-{/* Replace this comment with a description for this group. */}
+The `DailyLog` group records per-day statistics: counters for what happened during the current in-game day, plus the calendar fields that date the block. Every counter starts at `0` and is cleared when the in-game date rolls over, so each value reflects only the current play day, not a lifetime total.
 
 ## Fields
 
@@ -205,13 +205,13 @@ import Bounds from '@components/Bounds.astro';
 
 <LeafMeta name="AiCountByFocusLeading" leaves={frontmatter.leaves} />
 
-Counts how many times an encounter started by guiding a Mii to a nearby target (the Mii approaching on its own, not a grab-and-drop) resolved into a plain **AI reaction** instead of a cutscene.
+Counts how many times today an encounter that began by a Mii approaching a target on its own resolved into a plain AI reaction.
 
 ### `AiCountByPickUp`
 
 <LeafMeta name="AiCountByPickUp" leaves={frontmatter.leaves} />
 
-Counts how many times an encounter started by **picking a Mii up and dropping it** on a target (a grab-and-drop, not the Mii approaching on its own) resolved into a plain **AI reaction** instead of a cutscene.
+Counts how many times today an encounter that began by picking a Mii up and dropping it on a target resolved into a plain AI reaction.
 
 ### `BuyMarketMorning`
 
@@ -253,13 +253,13 @@ Counts the **silver coins** goods the player acquired during the current day. A 
 
 <LeafMeta name="ContentsCountByFocusLeading" leaves={frontmatter.leaves} />
 
-Counts how many times an encounter started by guiding a Mii to a nearby target (the Mii approaching on its own, not a grab-and-drop) resolved into a **cutscene** instead of a plain AI reaction.
+Counts how many times today an encounter that began by a Mii approaching a target on its own resolved into a short scripted content scene.
 
 ### `ContentsCountByPickUp`
 
 <LeafMeta name="ContentsCountByPickUp" leaves={frontmatter.leaves} />
 
-Counts how many times an encounter started by **picking a Mii up and dropping it** on a target (a grab-and-drop, not the Mii approaching on its own) resolved into a **cutscene** instead of a plain AI reaction.
+Counts how many times today an encounter that began by picking a Mii up and dropping it on a target resolved into a short scripted content scene.
 
 ### `CurrentPlayDay`
 
@@ -414,25 +414,25 @@ Counts how many times the player **redecorated** a Mii's **bedroom** this day.
 
 <LeafMeta name="LastUpdateTime" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+The UNIX timestamp of the last daily-log rollover.
 
 ### `MiiEventOnFocusLeadingMiiCount`
 
 <LeafMeta name="MiiEventOnFocusLeadingMiiCount" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Counts the Mii events that played out today after the player led a Mii toward another Mii.
 
 ### `MiiEventOnFocusLeadingObjectCount`
 
 <LeafMeta name="MiiEventOnFocusLeadingObjectCount" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Counts the Mii events that played out today after the player led a Mii toward an object or facility.
 
 ### `MiiEventOnFollowingMiiCount`
 
 <LeafMeta name="MiiEventOnFollowingMiiCount" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Counts the Mii events that played out today, triggered while one Mii was following another on its own.
 
 ### `Minigame`
 
