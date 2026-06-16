@@ -67,11 +67,11 @@ leaves:
   - name: DailyLastNoInputPlayTime
     hash: '0xaa0a03b3'
     type: UInt64
-    state: undocumented
+    state: documented
   - name: DailyLastPlayTime
     hash: '0xfb9051f2'
     type: UInt64
-    state: undocumented
+    state: documented
   - name: EmotionBallGet
     hash: '0x602ee35d'
     type: UInt
@@ -306,13 +306,13 @@ The `DailyLog`'s date as a single day number: days since `1970-01-01` for the sa
 
 <LeafMeta name="DailyLastNoInputPlayTime" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Snapshot of the lifetime idle-play counter [`Player.NoInputPlayTime`](../player/#noinputplaytime) (cumulative seconds of play with no player input) taken at the start of the current daily-log day.
 
 ### `DailyLastPlayTime`
 
 <LeafMeta name="DailyLastPlayTime" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Snapshot of the lifetime play-time counter [`Player.PlayTime`](../player/#playtime) (cumulative seconds of play) taken at the start of the current daily-log day.
 
 ### `EmotionBallGet`
 
