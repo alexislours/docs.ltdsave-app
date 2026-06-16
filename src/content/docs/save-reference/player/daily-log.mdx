@@ -127,15 +127,15 @@ leaves:
   - name: InnerRoomChangeCount
     hash: '0xbf3432e6'
     type: UInt
-    state: undocumented
+    state: documented
   - name: InnerRoomLivingRoomChangeCount
     hash: '0xa2f27969'
     type: UInt
-    state: undocumented
+    state: documented
   - name: InnerRoomPrivateRoomChangeCount
     hash: '0xe6ba5127'
     type: UInt
-    state: undocumented
+    state: documented
   - name: LastUpdateTime
     hash: '0x82747a38'
     type: UInt64
@@ -396,19 +396,19 @@ Count of Wish used on current `DailyLog`.
 
 <LeafMeta name="InnerRoomChangeCount" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Counts how many times the player **redecorated the interior** of a Mii's home this day. This is the sum of [`InnerRoomLivingRoomChangeCount`](#innerroomlivingroomchangecount) and [`InnerRoomPrivateRoomChangeCount`](#innerroomprivateroomchangecount).
 
 ### `InnerRoomLivingRoomChangeCount`
 
 <LeafMeta name="InnerRoomLivingRoomChangeCount" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Counts how many times the player **redecorated the living room** of a Mii's home this day.
 
 ### `InnerRoomPrivateRoomChangeCount`
 
 <LeafMeta name="InnerRoomPrivateRoomChangeCount" leaves={frontmatter.leaves} />
 
-{/* Describe what the game uses this field for. */}
+Counts how many times the player **redecorated** a Mii's **bedroom** this day.
 
 ### `LastUpdateTime`
 
