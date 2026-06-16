@@ -1,0 +1,73 @@
+---
+title: 'How the island vibe is determined'
+description: How the Resident personalities screen turns every resident's hidden personality sliders into one of 17 island "vibe" labels.
+---
+
+import IslandVibePlayground from '../../../components/island-vibe/IslandVibePlayground.svelte';
+
+The **island vibe** shown on the **Resident personalities** screen and on the island info panel is **not stored in the save**. The game recomputes it on the fly from the personality sliders of every current resident.
+
+Each resident is reduced to a single point on the 2-axis personality chart, every point nudges an island-wide arrow one way or another, and the direction and length of the resulting arrow pick one of **17 labels**: one `balanced island`, eight "strong" vibes, and eight "weak" vibes.
+
+## Try it
+
+Build an island below and watch the vibe update live. Each click drops a resident onto the personality chart, the arrow is the island's overall lean.
+
+<IslandVibePlayground client:visible />
+
+## The short version
+
+If you don't care about the numbers:
+
+- Every resident sits in one of **16 personality types** (the 4x4 chart). Where they sit depends only on four of their personality sliders.
+- Each resident leans the island a little in their direction. The more residents pulling the same way, the longer the island's arrow gets.
+- The **direction** of that arrow picks the flavour of the vibe (pushy, lively, chill, artistic...). Its **length relative to your population** decides whether it shows as a **strong** version or a softer **weak** one.
+- If everyone cancels out perfectly, you get the neutral `balanced island`.
+
+## The four sliders that matter
+
+Every Mii carries five hidden personality sliders in [`Mii.CharacterParam`](/save-reference/mii/mii/). Only **four** of them feed the vibe, the fifth (`Commonsense`, the "Overall" slider) is ignored.
+
+| Save field      | In-game slider | Axis it feeds |
+| --------------- | -------------- | ------------- |
+| `Gaiety`        | Movement       | X             |
+| `Activeness`    | Speech         | X             |
+| `Audaciousness` | Energy         | Y             |
+| `Sociability`   | Thinking       | Y             |
+
+The internal English names don't line up with the UI labels (the "Movement" slider is stored as `Gaiety`).
+
+## From sliders to a point on the chart
+
+Each slider value (1-8 in game, 0 = unset) is looked up in one of two score tables, and the two sliders on an axis are added together:
+
+```text
+X = T1[Gaiety]        + T2[Activeness]
+Y = T1[Audaciousness] + T2[Sociability]
+
+T1 = [50, 10, 20, 30, 40, 60, 70, 80, 90] (index 0 = unset → 50)
+T2 = [50,  5, 15, 25, 35, 65, 75, 85, 95]
+```
+
+Each axis value is then bucketed into a small **push** of -2, -1, +1 or +2, lower values lean negative, higher ones positive. That gives each resident a tiny 2D vector `(X push, Y push)`: their pull on the island.
+
+## Summing the island
+
+The game adds up all those vectors, X pushes into a single `SX` and Y pushes into `SY`. That `(SX, SY)` pair is the island's arrow shown in the visualisation. The label comes from two questions about it:
+
+**Which direction?** The angle of the arrow is split into eight 45° sectors (octants), centred on the eight compass directions. Each octant has a name:
+
+| Direction | Strong vibe        | Weak vibe           |
+| --------- | ------------------ | ------------------- |
+| →         | pushy island       | ambitious island    |
+| ↗         | reckless island    | enthusiastic island |
+| ↑         | emotional island   | lively island       |
+| ↖         | eccentric island   | gentle island       |
+| ←         | considerate island | reserved island     |
+| ↙         | thoughtful island  | chill island        |
+| ↓         | focused island     | cautious island     |
+| ↘         | survivalist island | artistic island     |
+
+**Strong or weak?** This compares the arrow's length to your population. The island is **strong** when `max(|SX|, |SY|)` is more than **two-thirds of your resident count**, and **weak** otherwise.
+
+So a handful of residents with the same personality produce a _strong_ vibe easily, but on a crowded island it takes a real consensus to tip past `weak`. And if `SX` and `SY` both come out exactly zero, direction and strength don't apply at all: the island is simply `balanced`.

@@ -7,6 +7,8 @@ import starlightImageZoom from 'starlight-image-zoom';
 import astroD2 from 'astro-d2';
 import savReferenceSidebar from './src/data/sidebar-save-reference.ts';
 
+import svelte from '@astrojs/svelte';
+
 export default defineConfig({
   site: 'https://docs.ltdsave.app',
   integrations: [
@@ -90,6 +92,7 @@ export default defineConfig({
                       slug: 'mechanics/coin-turn-minigame',
                     },
                     { label: 'Food taste', slug: 'mechanics/food-taste' },
+                    { label: 'Island vibe', slug: 'mechanics/island-vibe' },
                   ],
                 },
                 {
@@ -110,5 +113,6 @@ export default defineConfig({
         starlightImageZoom(),
       ],
     }),
+    svelte(),
   ],
 });
